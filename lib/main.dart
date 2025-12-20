@@ -9,7 +9,7 @@ import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
-GlobalKey<ScaffoldMessengerState>();
+    GlobalKey<ScaffoldMessengerState>();
 
 void main() {
   runApp(const MyApp());
@@ -40,13 +40,13 @@ class MyApp extends StatelessWidget {
               color: AppColors.text,
             ),
             titleMedium: TextStyle(
-              fontSize: 18.sp,
+              fontSize: 20.sp,
               fontWeight: FontWeight.w600,
               color: AppColors.text,
             ),
             titleSmall: TextStyle(
               fontSize: 16.sp,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
               color: AppColors.text,
             ),
             bodyMedium: TextStyle(

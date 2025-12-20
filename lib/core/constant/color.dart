@@ -11,6 +11,7 @@ class AppColors {
     stops: [0.1, 0.9],
   );
   static const Color surface = Color(0xFFFFFFFF);
+  static const Color surfaceBg = Color(0xFFFBFBFB);
   static const Color secondary = Color(0xFFFBECEB);
   static const Color text = Color(0xFF202020);
   static const Color textSecondary = Color(0xFF4A4A4A);
@@ -20,4 +21,5 @@ class AppColors {
   static const Color surfaceSecondary = Color(0xFFFBFBFB);
   static const Color containerBg = Color(0xFFFBEDE6);
   static const Color yellowish = Color(0xFFECA7A1);
+  static const Color blueish = Color(0xFFF2F6FF);
 }

@@ -72,13 +72,17 @@ class CheckEmailScreen extends StatelessWidget {
               PrimaryButton(title: 'Next', onTap: () {}),
 
               SizedBox(height: 16.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Didn\’t get the email?'),
-                  SizedBox(width: 4.w),
-                  Expanded(
-                    child: Obx(() {
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Didn\’t get the email?',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    SizedBox(width: 4.w),
+                    Obx(() {
                       final seconds = timerController.seconds.value;
                       return GestureDetector(
                         onTap: () {
@@ -93,16 +97,14 @@ class CheckEmailScreen extends StatelessWidget {
                           seconds == 0
                               ? 'Resend'
                               : "Resent in 00:${timerController.seconds.value.toString().padLeft(2, '0')}",
-                          style: TextStyle(
-                            color: AppColors.red,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.copyWith(color: AppColors.red),
                         ),
                       );
                     }),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

@@ -1,18 +1,19 @@
 import 'package:bridges_of_glory/core/common_widgets/custom_text_field.dart';
 import 'package:bridges_of_glory/core/common_widgets/primary_button.dart';
 import 'package:bridges_of_glory/core/constant/color.dart';
+import 'package:bridges_of_glory/core/enum/user_type.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/views/auth/login/controller/login_controller.dart';
+import 'package:bridges_of_glory/views/auth/signup/controller/signup_Controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:iconsax/iconsax.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
   final LoginController loginController = Get.find<LoginController>();
+  final SignupController signupController = Get.find<SignupController>();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,10 @@ class LoginScreen extends StatelessWidget {
                     hintText: 'justin45@company.com',
                   ),
                   SizedBox(height: 12.h),
-                  Text('Password', style: Theme.of(context).textTheme.titleSmall),
+                  Text(
+                    'Password',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
                   SizedBox(height: 8.h),
                   CustomTextField(
                     controller: loginController.passwordController,
@@ -80,15 +84,27 @@ class LoginScreen extends StatelessWidget {
                           Text('Remember Me'),
                         ],
                       ),
-                      Text(
-                        'Forget Password?',
-                        style: TextStyle(color: AppColors.red),
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed(AppRoutes.verifyEmail);
+                        },
+                        child: Text(
+                          'Forget Password?',
+                          style: TextStyle(color: AppColors.red),
+                        ),
                       ),
                     ],
                   ),
 
                   SizedBox(height: 32.h),
-                  PrimaryButton(title: 'Next', onTap: () {}),
+                  PrimaryButton(
+                    title: 'Next',
+                    onTap: () {
+                      if(signupController.selectedUser.value == UserType.donator.name) {
+                        Get.toNamed(AppRoutes.donationBottomNav);
+                      }
+                    },
+                  ),
                   SizedBox(height: 12.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

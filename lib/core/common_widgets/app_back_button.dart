@@ -22,7 +22,7 @@ class AppBackButton extends StatelessWidget {
         ),
         child: Padding(
           padding: EdgeInsets.all(8.h),
-          child: Icon(Icons.arrow_back_ios_new, size: 16.h),
+          child: Icon(Icons.arrow_back_ios_new, size: 14.h),
         ),
       ),
     );
