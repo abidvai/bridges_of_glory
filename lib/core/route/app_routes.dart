@@ -16,4 +16,5 @@ class AppRoutes {
   static const String empowerment = '/empowerment-screen';
   static const String donerHome = '/doner-home-screen';
   static const String donerSettings = '/doner-settings-screen';
+  static const String donerProfileSettings = '/doner-profile-settings-screen';
 }

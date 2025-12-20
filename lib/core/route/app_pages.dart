@@ -12,6 +12,7 @@ import 'package:bridges_of_glory/views/donation/explore/empowerment_screen.dart'
 import 'package:bridges_of_glory/views/donation/explore/explore_screen.dart';
 import 'package:bridges_of_glory/views/donation/home/donar_home_screen.dart';
 import 'package:bridges_of_glory/views/donation/profile/donar_setting_screen.dart';
+import 'package:bridges_of_glory/views/donation/profile/doner_profile_setting.dart';
 import 'package:bridges_of_glory/views/info_screen.dart';
 import 'package:get/get.dart';
 
@@ -40,5 +41,6 @@ class AppPages {
     GetPage(name: AppRoutes.empowerment, page: () => EmpowermentScreen()),
     GetPage(name: AppRoutes.donerHome, page: () => DonerHomeScreen()),
     GetPage(name: AppRoutes.donerSettings, page: () => DonerSettingScreen()),
+    GetPage(name: AppRoutes.donerProfileSettings, page: () => DonerProfileSetting()),
   ];
 }

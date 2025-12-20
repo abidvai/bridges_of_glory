@@ -95,7 +95,7 @@ class InfoWidget extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             Spacer(),
-                            PrimaryButton(title: 'Skip', onTap: onTap),
+                            PrimaryButton(text: 'Skip', onTap: onTap),
                           ],
                         ),
                       ),

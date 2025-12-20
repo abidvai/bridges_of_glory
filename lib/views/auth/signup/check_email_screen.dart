@@ -69,7 +69,7 @@ class CheckEmailScreen extends StatelessWidget {
               ),
 
               SizedBox(height: 32.h),
-              PrimaryButton(title: 'Next', onTap: () {}),
+              PrimaryButton(text: 'Next', onTap: () {}),
 
               SizedBox(height: 16.h),
               Center(

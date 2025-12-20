@@ -1,7 +1,6 @@
 import 'package:bridges_of_glory/core/common_widgets/app_top_bar.dart';
 import 'package:bridges_of_glory/core/common_widgets/primary_button.dart';
 import 'package:bridges_of_glory/core/constant/color.dart';
-import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/views/donation/bottom_nav_donation.dart';
 import 'package:bridges_of_glory/views/donation/explore/controller/empowerment_controller.dart';
 import 'package:flutter/material.dart';
@@ -91,14 +90,14 @@ class EmpowermentScreen extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(height: 70.h),
+            SizedBox(height: 50.h),
           ],
         ),
       ),
       bottomSheet: Padding(
-        padding: EdgeInsets.symmetric(vertical: 20.h),
+        padding: EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
         child: PrimaryButton(
-          title: 'Home',
+          text: 'Home',
           onTap: () {
             Get.to(BottomNavDonation(index: 0));
           },

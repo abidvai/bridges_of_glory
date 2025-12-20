@@ -98,7 +98,7 @@ class LoginScreen extends StatelessWidget {
 
                   SizedBox(height: 32.h),
                   PrimaryButton(
-                    title: 'Next',
+                    text: 'Next',
                     onTap: () {
                       if(signupController.selectedUser.value == UserType.donator.name) {
                         Get.toNamed(AppRoutes.donationBottomNav);
