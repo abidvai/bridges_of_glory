@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:bridges_of_glory/core/constant/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,7 +12,7 @@ import 'package:image_picker/image_picker.dart';
 class ImageUploaderVOne extends StatefulWidget {
   final double height;
   final String? defaultImage;
-  final ImageProvider? currentImage;
+  final String? currentImage;
   final bool enable;
   final bool loading;
   final bool showBorder;
@@ -24,7 +25,7 @@ class ImageUploaderVOne extends StatefulWidget {
     this.defaultImage,
     this.currentImage,
     this.onImageSelected,
-    this.height = 84,
+    this.height = 120,
     this.loading = false,
     this.showBorder = false,
     this.selectedImage,
@@ -68,6 +69,7 @@ class _ImageUploaderVOneState extends State<ImageUploaderVOne> {
   void _showPickerOptions() {
     showModalBottomSheet(
       context: context,
+      backgroundColor: AppColors.blueish,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
@@ -138,30 +140,24 @@ class _ImageUploaderVOneState extends State<ImageUploaderVOne> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(widget.height / 2),
                 child: _imageData != null
-                    ? Image.memory(
-                  _imageData!,
-                  fit: BoxFit.cover,
-                )
+                    ? Image.memory(_imageData!, fit: BoxFit.cover)
                     : widget.currentImage != null
-                    ? Image(
-                  image: widget.currentImage!,
-                  fit: BoxFit.cover,
-                )
+                    ? SvgPicture.asset(widget.currentImage!, fit: BoxFit.cover)
                     : Center(
-                  child: SvgPicture.asset(
-                    widget.defaultImage ?? '',
-                    width: widget.height * .6,
-                    height: widget.height * .6,
-                    color: Colors.grey,
-                    errorBuilder: (_, __, ___) {
-                      return const Icon(
-                        Icons.person,
-                        size: 40,
-                        color: Colors.grey,
-                      );
-                    },
-                  ),
-                ),
+                        child: SvgPicture.asset(
+                          widget.defaultImage ?? '',
+                          width: widget.height * .6,
+                          height: widget.height * .6,
+                          color: Colors.grey,
+                          errorBuilder: (_, __, ___) {
+                            return const Icon(
+                              Icons.person,
+                              size: 20,
+                              color: Colors.grey,
+                            );
+                          },
+                        ),
+                      ),
               ),
             ),
           ),
@@ -191,16 +187,16 @@ class _ImageUploaderVOneState extends State<ImageUploaderVOne> {
                   if (!widget.loading) _showPickerOptions();
                 },
                 child: Container(
-                  width: widget.height * .25,
-                  height: widget.height * .25,
+                  width: widget.height * .28,
+                  height: widget.height * .28,
                   decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(widget.height * .08),
+                    color: AppColors.surface,
+                    shape: BoxShape.circle,
                   ),
                   child: const Icon(
-                    Icons.edit,
-                    color: Colors.white,
-                    size: 16,
+                    Icons.camera_alt,
+                    color: AppColors.red,
+                    size: 20,
                   ),
                 ),
               ),

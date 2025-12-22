@@ -100,6 +100,9 @@ class $AssetsImagesGen {
   AssetGenImage get livingKingdom =>
       const AssetGenImage('assets/images/living_kingdom.png');
 
+  /// File path: assets/images/logout.png
+  AssetGenImage get logout => const AssetGenImage('assets/images/logout.png');
+
   /// File path: assets/images/pig.png
   AssetGenImage get pig => const AssetGenImage('assets/images/pig.png');
 
@@ -130,6 +133,7 @@ class $AssetsImagesGen {
     kingdomEmpowerment,
     leader,
     livingKingdom,
+    logout,
     pig,
     pigFarm,
     walkingWitnessWomen,

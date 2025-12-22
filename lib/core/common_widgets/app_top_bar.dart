@@ -3,8 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'app_back_button.dart';
 
-
-class AppTopBar extends StatelessWidget {
+class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String text;
 
   const AppTopBar({super.key, required this.text});
@@ -26,4 +25,8 @@ class AppTopBar extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => Size.fromHeight(60.h);
 }
