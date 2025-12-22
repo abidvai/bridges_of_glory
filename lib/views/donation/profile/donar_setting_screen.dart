@@ -1,6 +1,10 @@
 import 'package:bridges_of_glory/core/common_widgets/app_top_bar.dart';
+import 'package:bridges_of_glory/core/common_widgets/image_uploader.dart';
+import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../core/constant/color.dart';
@@ -17,8 +21,11 @@ class DonerSettingScreen extends StatelessWidget {
           child: Column(
             children: [
               AppTopBar(text: 'Settings'),
+
               SizedBox(height: 24.h),
-              _topSection(),
+              ImageUploaderVOne(),
+              SizedBox(height: 24.h),
+              _topSection(context),
               SizedBox(height: 24.h),
               _settingMenuSection(),
             ],
@@ -28,8 +35,19 @@ class DonerSettingScreen extends StatelessWidget {
     );
   }
 
-  Widget _topSection() {
-    return Column(children: [Text('Jenny Smith'), Text('jenny@gmail.com')]);
+  Widget _topSection(BuildContext context) {
+    return Column(
+      children: [
+        Text('Jenny Smith', style: Theme.of(context).textTheme.titleLarge),
+        SizedBox(height: 12.h),
+        Text(
+          'jenny@gmail.com',
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(color: AppColors.hintText),
+        ),
+      ],
+    );
   }
 
   Widget _settingMenuSection() {
@@ -40,7 +58,9 @@ class DonerSettingScreen extends StatelessWidget {
           SettingMenuCard(
             title: 'Account Information',
             leading: Iconsax.edit,
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(AppRoutes.donerProfileSettings);
+            },
           ),
           Divider(),
           SettingMenuCard(

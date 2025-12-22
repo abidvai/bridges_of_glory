@@ -117,7 +117,7 @@ class SignupScreen extends StatelessWidget {
               SizedBox(height: 32.h),
 
               PrimaryButton(
-                title: 'Next',
+                text: 'Next',
                 onTap: () {
                   Get.toNamed(AppRoutes.checkEmail);
                 },

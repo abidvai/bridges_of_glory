@@ -46,7 +46,7 @@ class SelectUserScreen extends StatelessWidget {
               ),
               SizedBox(height: 40.h),
               PrimaryButton(
-                title: 'Next',
+                text: 'Next',
                 onTap: () {
                   if (signupController.selectedUser.value.isEmpty) {
                     showCustomToast(text: 'Please select any user type');

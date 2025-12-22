@@ -48,7 +48,7 @@ class VerifyEmailScreen extends StatelessWidget {
 
             SizedBox(height: 20.h),
             PrimaryButton(
-              title: 'Next',
+              text: 'Next',
               onTap: () {
                 Get.toNamed(AppRoutes.verifyOtp);
               },

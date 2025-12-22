@@ -8,7 +8,7 @@ class AppColors {
     colors: [Color(0xFFD53F33), Color(0xFF990B00)],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
-    stops: [0.1, 0.9],
+    stops: [0.5, 1],
   );
   static const Color surface = Color(0xFFFFFFFF);
   static const Color surfaceBg = Color(0xFFFBFBFB);
