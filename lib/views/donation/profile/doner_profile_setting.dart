@@ -6,6 +6,7 @@ import '../../../core/common_widgets/primary_button.dart';
 import '../../../core/common_widgets/custom_text_field.dart';
 import '../../../core/common_widgets/app_top_bar.dart';
 import '../../../core/constant/color.dart';
+import 'change_password_screen.dart';
 import 'controller/profile_controller.dart';
 
 class DonerProfileSetting extends StatefulWidget {
@@ -29,38 +30,43 @@ class _AccountSettingState extends State<DonerProfileSetting> {
       width: double.infinity,
       padding: EdgeInsets.symmetric(vertical: 14.h),
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.hintText.withValues(alpha: 0.3))),
+        border: Border(
+          bottom: BorderSide(color: AppColors.hintText.withValues(alpha: 0.3)),
+        ),
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: AppColors.text,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w500,
+      child: GestureDetector(
+        onTap: onEditClick,
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      color: AppColors.text,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                SizedBox(height: 4.h),
-                Text(
-                  text,
-                  style: TextStyle(color: AppColors.hintText, fontSize: 14.sp),
-                ),
-              ],
+                  SizedBox(height: 4.h),
+                  Text(
+                    text,
+                    style: TextStyle(
+                      color: AppColors.hintText,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          if (showEditOption)
-            Row(
-              children: [
-                Icon(Iconsax.edit, size: 20.w),
-                SizedBox(width: 6.w),
-                GestureDetector(
-                  onTap: onEditClick,
-                  child: Text(
+            if (showEditOption)
+              Row(
+                children: [
+                  Icon(Iconsax.edit, size: 20.w),
+                  SizedBox(width: 6.w),
+                  Text(
                     editText,
                     style: TextStyle(
                       color: AppColors.text,
@@ -69,10 +75,10 @@ class _AccountSettingState extends State<DonerProfileSetting> {
                       decoration: TextDecoration.underline,
                     ),
                   ),
-                ),
-              ],
-            ),
-        ],
+                ],
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -116,11 +122,13 @@ class _AccountSettingState extends State<DonerProfileSetting> {
                     text: 'example@gmail.com',
                     showEditOption: false,
                   ),
+                  SizedBox(height: 18.h),
                   _settingsItem(
                     title: 'Password',
                     text: '●●●●●●●●●●●●',
                     editText: 'Change',
                     onEditClick: () {
+                      Get.to(UpdatePasswordScreen());
                       // Navigate to change password page
                     },
                   ),
@@ -213,7 +221,7 @@ class _CustomModalState extends State<CustomModal> {
                       onTap: () {
                         Navigator.of(context).pop();
                       },
-                      backgroundColor: AppColors.border,
+                      backgroundColor: AppColors.border.withValues(alpha: 0.2),
                       textStyle: TextStyle(
                         color: AppColors.text,
                         fontSize: 14.sp,
@@ -227,7 +235,7 @@ class _CustomModalState extends State<CustomModal> {
                       text: 'Save',
                       height: 48.h,
                       onTap: widget.onTap,
-                      backgroundColor: AppColors.text,
+                      backgroundColor: AppColors.text.withValues(alpha: 0.9),
                       textStyle: TextStyle(
                         color: AppColors.surface,
                         fontSize: 14.sp,
