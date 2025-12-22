@@ -1,6 +1,7 @@
 import 'package:bridges_of_glory/core/common_widgets/app_back_button.dart';
 import 'package:bridges_of_glory/core/constant/color.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
+import 'package:bridges_of_glory/views/donation/library/library_screen.dart';
 import 'package:bridges_of_glory/views/info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -54,21 +55,38 @@ class ExploreScreen extends StatelessWidget {
                           ExploreMenu(
                             image: Assets.images.becomeMovement,
                             onTap: () {
-                              Get.to(InfoScreen(onTap: (){
-                                Get.toNamed(AppRoutes.empowerment);
-                              }),
-                                arguments: {
-                                  'information':
+                              Get.to(
+                                InfoScreen(
+                                  isMovement: true,
+                                  onTap: () {
+                                    Get.back();
+                                    // Get.to(LibraryScreen(showAppBar: true));
+                                  },
+                                  title: 'Become The Movement',
+                                  information:
                                       'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
-                                  'description':
+                                  description:
                                       'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
-                                },
+                                ),
                               );
                             },
                           ),
                           ExploreMenu(
                             image: Assets.images.kingdomEmpowerment,
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(
+                                InfoScreen(
+                                  onTap: () {
+                                    Get.toNamed(AppRoutes.empowerment);
+                                  },
+                                  title: 'Kingdom Empowerment',
+                                  information:
+                                      'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
+                                  description:
+                                      'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
+                                ),
+                              );
+                            },
                           ),
                           ExploreMenu(
                             image: Assets.images.walkingWitnessWomen,
@@ -76,11 +94,37 @@ class ExploreScreen extends StatelessWidget {
                           ),
                           ExploreMenu(
                             image: Assets.images.adoptaVillage,
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(
+                                InfoScreen(
+                                  onTap: () {
+                                    Get.toNamed(AppRoutes.adoptProjectScreen);
+                                  },
+                                  title: 'Adopt a Village / Prison',
+                                  information:
+                                      'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
+                                  description:
+                                      'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
+                                ),
+                              );
+                            },
                           ),
                           ExploreMenu(
                             image: Assets.images.bibleBook,
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(
+                                InfoScreen(
+                                  onTap: () {
+                                    Get.to(LibraryScreen(showAppBar: true));
+                                  },
+                                  title: 'Bible Books and More',
+                                  information:
+                                      'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
+                                  description:
+                                      'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
+                                ),
+                              );
+                            },
                           ),
                           ExploreMenu(
                             image: Assets.images.livingKingdom,
@@ -124,17 +168,20 @@ class AppTopBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
-      child: Row(
-        children: [
-          AppBackButton(),
-          Spacer(),
-          Center(
-            child: Text(text, style: Theme.of(context).textTheme.titleLarge),
-          ),
-          Spacer(),
-          Opacity(opacity: 0, child: AppBackButton()),
-        ],
+      child: Center(
+        child: Text(text, style: Theme.of(context).textTheme.titleLarge),
       ),
+      // Row(
+      //   children: [
+      //     AppBackButton(),
+      //     Spacer(),
+      //     Center(
+      //       child: Text(text, style: Theme.of(context).textTheme.titleLarge),
+      //     ),
+      //     Spacer(),
+      //     Opacity(opacity: 0, child: AppBackButton()),
+      //   ],
+      // ),
     );
   }
 }

@@ -17,4 +17,8 @@ class AppRoutes {
   static const String donerHome = '/doner-home-screen';
   static const String donerSettings = '/doner-settings-screen';
   static const String donerProfileSettings = '/doner-profile-settings-screen';
+  static const String libraryScreen = '/library-screen';
+  static const String viewBookScreen = '/view-book-screen';
+  static const String adoptProjectScreen = '/adopt-project-screen';
+  static const String detailScreen = '/detail-screen';
 }

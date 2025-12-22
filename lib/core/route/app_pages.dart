@@ -8,9 +8,13 @@ import 'package:bridges_of_glory/views/auth/signup/check_email_screen.dart';
 import 'package:bridges_of_glory/views/auth/signup/signup_screen.dart';
 import 'package:bridges_of_glory/views/auth/splash/splash_screen.dart';
 import 'package:bridges_of_glory/views/donation/bottom_nav_donation.dart';
+import 'package:bridges_of_glory/views/donation/explore/adopt_project_screen.dart';
+import 'package:bridges_of_glory/views/donation/explore/detail_screen.dart';
 import 'package:bridges_of_glory/views/donation/explore/empowerment_screen.dart';
 import 'package:bridges_of_glory/views/donation/explore/explore_screen.dart';
 import 'package:bridges_of_glory/views/donation/home/donar_home_screen.dart';
+import 'package:bridges_of_glory/views/donation/library/library_screen.dart';
+import 'package:bridges_of_glory/views/donation/library/view_book_screen.dart';
 import 'package:bridges_of_glory/views/donation/profile/donar_setting_screen.dart';
 import 'package:bridges_of_glory/views/donation/profile/doner_profile_setting.dart';
 import 'package:bridges_of_glory/views/info_screen.dart';
@@ -23,7 +27,8 @@ class AppPages {
     GetPage(name: AppRoutes.splashScreen, page: () => SplashScreen()),
     GetPage(
       name: AppRoutes.infoScreen,
-      page: () => InfoScreen(onTap: () {}),
+      page: () =>
+          InfoScreen(onTap: () {}, title: '', information: '', description: ''),
     ),
     GetPage(name: AppRoutes.selectUser, page: () => SelectUserScreen()),
     GetPage(name: AppRoutes.login, page: () => LoginScreen()),
@@ -41,6 +46,16 @@ class AppPages {
     GetPage(name: AppRoutes.empowerment, page: () => EmpowermentScreen()),
     GetPage(name: AppRoutes.donerHome, page: () => DonerHomeScreen()),
     GetPage(name: AppRoutes.donerSettings, page: () => DonerSettingScreen()),
-    GetPage(name: AppRoutes.donerProfileSettings, page: () => DonerProfileSetting()),
+    GetPage(
+      name: AppRoutes.donerProfileSettings,
+      page: () => DonerProfileSetting(),
+    ),
+    GetPage(name: AppRoutes.libraryScreen, page: () => LibraryScreen()),
+    GetPage(name: AppRoutes.viewBookScreen, page: () => ViewBookScreen()),
+    GetPage(
+      name: AppRoutes.adoptProjectScreen,
+      page: () => AdoptProjectScreen(),
+    ),
+    GetPage(name: AppRoutes.detailScreen, page: () => DetailScreen()),
   ];
 }

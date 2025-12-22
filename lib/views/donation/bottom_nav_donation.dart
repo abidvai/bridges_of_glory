@@ -1,9 +1,14 @@
+import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/views/donation/explore/explore_screen.dart';
 import 'package:bridges_of_glory/views/donation/home/donar_home_screen.dart';
+import 'package:bridges_of_glory/views/donation/library/library_screen.dart';
 import 'package:bridges_of_glory/views/donation/profile/donar_setting_screen.dart';
+import 'package:bridges_of_glory/views/info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../core/constant/color.dart';
@@ -25,7 +30,7 @@ class _BottomNavState extends State<BottomNavDonation> {
     DonerHomeScreen(),
     Container(),
     ExploreScreen(),
-    Container(),
+    LibraryScreen(),
     DonerSettingScreen(),
   ];
 

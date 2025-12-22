@@ -20,6 +20,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/add.svg
   SvgGenImage get add => const SvgGenImage('assets/icons/add.svg');
 
+  /// File path: assets/icons/call.svg
+  SvgGenImage get call => const SvgGenImage('assets/icons/call.svg');
+
   /// File path: assets/icons/groups.svg
   SvgGenImage get groups => const SvgGenImage('assets/icons/groups.svg');
 
@@ -29,11 +32,22 @@ class $AssetsIconsGen {
   /// File path: assets/icons/library.svg
   SvgGenImage get library => const SvgGenImage('assets/icons/library.svg');
 
+  /// File path: assets/icons/mail.svg
+  SvgGenImage get mail => const SvgGenImage('assets/icons/mail.svg');
+
   /// File path: assets/icons/user.svg
   SvgGenImage get user => const SvgGenImage('assets/icons/user.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values => [add, groups, home, library, user];
+  List<SvgGenImage> get values => [
+    add,
+    call,
+    groups,
+    home,
+    library,
+    mail,
+    user,
+  ];
 }
 
 class $AssetsImagesGen {
@@ -55,6 +69,9 @@ class $AssetsImagesGen {
   AssetGenImage get becomeMovement =>
       const AssetGenImage('assets/images/become_movement.png');
 
+  /// File path: assets/images/bible.png
+  AssetGenImage get bible => const AssetGenImage('assets/images/bible.png');
+
   /// File path: assets/images/bible_book.png
   AssetGenImage get bibleBook =>
       const AssetGenImage('assets/images/bible_book.png');
@@ -65,6 +82,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/chicken_farm.png
   AssetGenImage get chickenFarm =>
       const AssetGenImage('assets/images/chicken_farm.png');
+
+  /// File path: assets/images/chickens_hub.png
+  AssetGenImage get chickensHub =>
+      const AssetGenImage('assets/images/chickens_hub.png');
 
   /// File path: assets/images/cooking.png
   AssetGenImage get cooking => const AssetGenImage('assets/images/cooking.png');
@@ -103,12 +124,22 @@ class $AssetsImagesGen {
   /// File path: assets/images/logout.png
   AssetGenImage get logout => const AssetGenImage('assets/images/logout.png');
 
+  /// File path: assets/images/milky_book.png
+  AssetGenImage get milkyBook =>
+      const AssetGenImage('assets/images/milky_book.png');
+
+  /// File path: assets/images/park.png
+  AssetGenImage get park => const AssetGenImage('assets/images/park.png');
+
   /// File path: assets/images/pig.png
   AssetGenImage get pig => const AssetGenImage('assets/images/pig.png');
 
   /// File path: assets/images/pig_farm.png
   AssetGenImage get pigFarm =>
       const AssetGenImage('assets/images/pig_farm.png');
+
+  /// File path: assets/images/project.png
+  AssetGenImage get project => const AssetGenImage('assets/images/project.png');
 
   /// File path: assets/images/walking_witness_women.png
   AssetGenImage get walkingWitnessWomen =>
@@ -120,9 +151,11 @@ class $AssetsImagesGen {
     appLogo,
     appLogo2,
     becomeMovement,
+    bible,
     bibleBook,
     chicken,
     chickenFarm,
+    chickensHub,
     cooking,
     cow,
     cowFarm,
@@ -134,8 +167,11 @@ class $AssetsImagesGen {
     leader,
     livingKingdom,
     logout,
+    milkyBook,
+    park,
     pig,
     pigFarm,
+    project,
     walkingWitnessWomen,
   ];
 }

@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 class AppBackButton extends StatelessWidget {
-  const AppBackButton({super.key});
+  final Color? iconColor;
+  const AppBackButton({super.key, this.iconColor});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class AppBackButton extends StatelessWidget {
         ),
         child: Padding(
           padding: EdgeInsets.all(8.h),
-          child: Icon(Icons.arrow_back_ios_new, size: 14.h),
+          child: Icon(Icons.arrow_back_ios_new, size: 14.h, color: iconColor,),
         ),
       ),
     );
