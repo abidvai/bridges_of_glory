@@ -103,6 +103,10 @@ class LoginScreen extends StatelessWidget {
                       if(signupController.selectedUser.value == UserType.donator.name) {
                         Get.toNamed(AppRoutes.donationBottomNav);
                       }
+
+                      if(signupController.selectedUser.value == UserType.projectOwner.name) {
+                        Get.toNamed(AppRoutes.ownerBottomNav);
+                      }
                     },
                   ),
                   SizedBox(height: 12.h),

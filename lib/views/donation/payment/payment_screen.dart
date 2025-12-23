@@ -4,7 +4,7 @@ import 'package:bridges_of_glory/core/common_widgets/primary_button.dart';
 import 'package:bridges_of_glory/core/constant/color.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/gen/assets.gen.dart';
-import 'package:bridges_of_glory/views/donation/payment/payment_controller.dart';
+import 'package:bridges_of_glory/views/donation/payment/controller/payment_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -99,7 +99,7 @@ class PaymentScreen extends StatelessWidget {
         child: PrimaryButton(
           text: 'Next',
           onTap: () {
-            Get.toNamed(AppRoutes.donationBottomNav);
+            Get.toNamed(AppRoutes.paymentSuccessScreen);
           },
         ),
       ),

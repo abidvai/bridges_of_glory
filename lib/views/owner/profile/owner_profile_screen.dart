@@ -1,3 +1,4 @@
+import 'package:bridges_of_glory/views/owner/profile/controller/owner_profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,18 +7,19 @@ import '../../../core/common_widgets/primary_button.dart';
 import '../../../core/common_widgets/custom_text_field.dart';
 import '../../../core/common_widgets/app_top_bar.dart';
 import '../../../core/constant/color.dart';
-import 'change_password_screen.dart';
-import 'controller/profile_controller.dart';
+import '../../donation/profile/change_password_screen.dart';
+import '../../donation/profile/controller/profile_controller.dart';
 
-class DonerProfileSetting extends StatefulWidget {
-  const DonerProfileSetting({super.key});
+
+class OwnerProfileScreen extends StatefulWidget {
+  const OwnerProfileScreen({super.key});
 
   @override
-  State<DonerProfileSetting> createState() => _AccountSettingState();
+  State<OwnerProfileScreen> createState() => _AccountSettingState();
 }
 
-class _AccountSettingState extends State<DonerProfileSetting> {
-  final DonerProfileController profileController = Get.put(DonerProfileController());
+class _AccountSettingState extends State<OwnerProfileScreen> {
+  final OwnerProfileController ownerProfileController = Get.put(OwnerProfileController());
 
   Widget _settingsItem({
     required String title,
@@ -98,15 +100,15 @@ class _AccountSettingState extends State<DonerProfileSetting> {
                 children: [
                   _settingsItem(
                     title: 'Full name',
-                    text: 'Jenny Smith',
+                    text: 'Abid',
                     onEditClick: () {
                       showDialog(
                         context: context,
                         builder: (context) {
                           return CustomModal(
-                            controller: profileController.nameController,
+                            controller: ownerProfileController.nameController,
                             title: 'Full name',
-                            text: 'Jenny Smith',
+                            text: 'Abid',
                             limit: 32,
                             onTap: () {
                               Navigator.pop(context);

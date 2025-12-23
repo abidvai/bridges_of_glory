@@ -4,35 +4,35 @@ import 'package:bridges_of_glory/views/donation/explore/explore_screen.dart';
 import 'package:bridges_of_glory/views/donation/home/donar_home_screen.dart';
 import 'package:bridges_of_glory/views/donation/library/library_screen.dart';
 import 'package:bridges_of_glory/views/donation/profile/donar_setting_screen.dart';
-import 'package:bridges_of_glory/views/info_screen.dart';
+import 'package:bridges_of_glory/views/owner/bible/bible_listing_screen.dart';
+import 'package:bridges_of_glory/views/owner/create/create_screen.dart';
+import 'package:bridges_of_glory/views/owner/home/owner_home_screen.dart';
+import 'package:bridges_of_glory/views/owner/profile/owner_profile_screen.dart';
+import 'package:bridges_of_glory/views/owner/profile/owner_profile_settings.dart';
+import 'package:bridges_of_glory/views/owner/project/owner_project_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:iconsax/iconsax.dart';
-
 import '../../core/constant/color.dart';
 import '../../gen/assets.gen.dart';
 
-class BottomNavDonation extends StatefulWidget {
+class OwnerBottomNav extends StatefulWidget {
   final int index;
 
-  const BottomNavDonation({super.key, this.index = 2});
+  const OwnerBottomNav({super.key, this.index = 2});
 
   @override
-  State<BottomNavDonation> createState() => _BottomNavState();
+  State<OwnerBottomNav> createState() => _BottomNavState();
 }
 
-class _BottomNavState extends State<BottomNavDonation> {
+class _BottomNavState extends State<OwnerBottomNav> {
   late int currentIndex = widget.index;
 
   List<Widget> pages = [
-    DonerHomeScreen(),
-    AdoptProjectScreen(showBottomButton: false,),
-    ExploreScreen(),
-    LibraryScreen(),
-    DonerSettingScreen(),
+    OwnerHomeScreen(),
+    OwnerProjectScreen(),
+    CreateScreen(),
+    BibleListingScreen(),
+    OwnerProfileSettings(),
   ];
 
   @override
@@ -79,16 +79,16 @@ class _BottomNavState extends State<BottomNavDonation> {
           BottomNavigationBarItem(
             icon: Padding(
               padding: EdgeInsets.only(top: 4.h, bottom: 5.h),
-              child: Assets.icons.groups.svg(
+              child: Assets.icons.project.svg(
                 width: 22.w,
                 height: 22.h,
                 fit: BoxFit.cover,
               ),
             ),
-            label: 'Villages',
+            label: 'Projects',
             activeIcon: Padding(
               padding: EdgeInsets.only(top: 4.h, bottom: 5.h),
-              child: Assets.icons.fillUsers.svg(
+              child: Assets.icons.fillProject.svg(
                 color: AppColors.red,
                 width: 22.w,
                 height: 22.h,
@@ -106,7 +106,7 @@ class _BottomNavState extends State<BottomNavDonation> {
                 fit: BoxFit.cover,
               ),
             ),
-            label: 'Explore',
+            label: 'Create',
             activeIcon: Padding(
               padding: EdgeInsets.only(top: 4.h, bottom: 5.h),
               child: Assets.icons.add.svg(
@@ -117,10 +117,10 @@ class _BottomNavState extends State<BottomNavDonation> {
             ),
           ),
           BottomNavigationBarItem(
-            label: 'Library',
+            label: 'Bible',
             icon: Padding(
               padding: EdgeInsets.only(top: 4.h, bottom: 5.h),
-              child: Assets.icons.library.svg(
+              child: Assets.icons.bookNoFIll.svg(
                 width: 22.w,
                 height: 22.h,
                 fit: BoxFit.cover,
@@ -128,7 +128,12 @@ class _BottomNavState extends State<BottomNavDonation> {
             ),
             activeIcon: Padding(
               padding: EdgeInsets.only(top: 4.h, bottom: 5.h),
-              child: Assets.icons.fillLibrary.svg(),
+              child: Assets.icons.book.svg(
+                color: AppColors.red,
+                width: 22.w,
+                height: 22.h,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           BottomNavigationBarItem(

@@ -13,8 +13,9 @@ import '../../../gen/assets.gen.dart';
 class EmpowermentDetailScreen extends StatelessWidget {
   EmpowermentDetailScreen({super.key});
 
-  final EmpowermentController empowermentController =
-      Get.find<EmpowermentController>();
+  final EmpowermentController empowermentController = Get.put(
+    EmpowermentController(),
+  );
 
   @override
   Widget build(BuildContext context) {

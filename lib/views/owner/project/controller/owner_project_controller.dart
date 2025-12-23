@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../model/showing_card_model.dart';
 
-class EmpowermentController extends GetxController {
+class OwnerProjectController extends GetxController {
 
   TextEditingController searchController = TextEditingController();
 

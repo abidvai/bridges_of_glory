@@ -16,14 +16,14 @@ import 'package:iconsax/iconsax.dart';
 import '../../../core/common_widgets/primary_button.dart';
 import '../../../core/constant/color.dart';
 
-class DonerSettingScreen extends StatefulWidget {
-  const DonerSettingScreen({super.key});
+class OwnerProfileSettings extends StatefulWidget {
+  const OwnerProfileSettings({super.key});
 
   @override
-  State<DonerSettingScreen> createState() => _DonerSettingScreenState();
+  State<OwnerProfileSettings> createState() => _DonerSettingScreenState();
 }
 
-class _DonerSettingScreenState extends State<DonerSettingScreen> {
+class _DonerSettingScreenState extends State<OwnerProfileSettings> {
   File? selectedImage;
 
   @override
@@ -80,7 +80,7 @@ class _DonerSettingScreenState extends State<DonerSettingScreen> {
             title: 'Account Information',
             leading: Iconsax.edit,
             onTap: () {
-              Get.toNamed(AppRoutes.donerProfileSettings);
+              Get.toNamed(AppRoutes.ownerProfileScreen);
             },
           ),
           Divider(),

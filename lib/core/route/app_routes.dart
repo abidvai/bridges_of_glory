@@ -10,6 +10,7 @@ class AppRoutes {
   static const String resetPassword = '/reset-password-screen';
 
   static const String donationBottomNav = '/donation-bottom-nav';
+  static const String ownerBottomNav = '/owner-bottom-nav';
 
   /// ------------------------------------ Donate ------------------------------------- ///
   static const String explore = '/explore-screen';
@@ -25,4 +26,14 @@ class AppRoutes {
   static const String witnessWomenScreen = '/witness-women-screen';
   static const String witnessWomenDetailScreen = '/witness-women-detail-screen';
   static const String paymentScreen = '/payment-screen';
+  static const String paymentSuccessScreen = '/payment-success-screen';
+
+  /// -------------------------------------------- owner dinner ------------------------------------------ ///
+  static const String ownerProfileScreen = '/owner-profile_screen';
+  static const String ownerBibleListing = '/owner-bible-screen';
+  static const String ownerBibleReadingScreen = '/owner-bible-read-screen';
+  static const String ownerProjectScreen = '/owner-project-screen';
+  static const String ownerProjectDetailScreen = '/owner-project-detail-screen';
+  static const String ownerHomeScreen = '/owner-home-screen';
+  static const String createScreen = '/create-screen';
 }

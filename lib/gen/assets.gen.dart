@@ -20,6 +20,13 @@ class $AssetsIconsGen {
   /// File path: assets/icons/add.svg
   SvgGenImage get add => const SvgGenImage('assets/icons/add.svg');
 
+  /// File path: assets/icons/book.svg
+  SvgGenImage get book => const SvgGenImage('assets/icons/book.svg');
+
+  /// File path: assets/icons/bookNoFIll.svg
+  SvgGenImage get bookNoFIll =>
+      const SvgGenImage('assets/icons/bookNoFIll.svg');
+
   /// File path: assets/icons/call.svg
   SvgGenImage get call => const SvgGenImage('assets/icons/call.svg');
 
@@ -28,6 +35,23 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/exlore.svg
   SvgGenImage get exlore => const SvgGenImage('assets/icons/exlore.svg');
+
+  /// File path: assets/icons/fill_home.svg
+  SvgGenImage get fillHome => const SvgGenImage('assets/icons/fill_home.svg');
+
+  /// File path: assets/icons/fill_library.svg
+  SvgGenImage get fillLibrary =>
+      const SvgGenImage('assets/icons/fill_library.svg');
+
+  /// File path: assets/icons/fill_project.svg
+  SvgGenImage get fillProject =>
+      const SvgGenImage('assets/icons/fill_project.svg');
+
+  /// File path: assets/icons/fill_user.svg
+  SvgGenImage get fillUser => const SvgGenImage('assets/icons/fill_user.svg');
+
+  /// File path: assets/icons/fill_users.svg
+  SvgGenImage get fillUsers => const SvgGenImage('assets/icons/fill_users.svg');
 
   /// File path: assets/icons/groups.svg
   SvgGenImage get groups => const SvgGenImage('assets/icons/groups.svg');
@@ -44,6 +68,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/paypal.svg
   SvgGenImage get paypal => const SvgGenImage('assets/icons/paypal.svg');
 
+  /// File path: assets/icons/project.svg
+  SvgGenImage get project => const SvgGenImage('assets/icons/project.svg');
+
   /// File path: assets/icons/stripe.svg
   SvgGenImage get stripe => const SvgGenImage('assets/icons/stripe.svg');
 
@@ -53,14 +80,22 @@ class $AssetsIconsGen {
   /// List of all assets
   List<SvgGenImage> get values => [
     add,
+    book,
+    bookNoFIll,
     call,
     cash,
     exlore,
+    fillHome,
+    fillLibrary,
+    fillProject,
+    fillUser,
+    fillUsers,
     groups,
     home,
     library,
     mail,
     paypal,
+    project,
     stripe,
     user,
   ];
@@ -102,6 +137,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/chickens_hub.png
   AssetGenImage get chickensHub =>
       const AssetGenImage('assets/images/chickens_hub.png');
+
+  /// File path: assets/images/congrats.png
+  AssetGenImage get congrats =>
+      const AssetGenImage('assets/images/congrats.png');
 
   /// File path: assets/images/cooking.png
   AssetGenImage get cooking => const AssetGenImage('assets/images/cooking.png');
@@ -172,6 +211,7 @@ class $AssetsImagesGen {
     chicken,
     chickenFarm,
     chickensHub,
+    congrats,
     cooking,
     cow,
     cowFarm,
