@@ -1,12 +1,14 @@
 import 'package:bridges_of_glory/core/common_widgets/app_back_button.dart';
+import 'package:bridges_of_glory/views/donation/library/controller/library_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/constant/color.dart';
 
 class ViewBookScreen extends StatelessWidget {
+  ViewBookScreen({super.key});
 
-  const ViewBookScreen({super.key});
+  final LibraryController libraryController = Get.put(LibraryController());
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +19,7 @@ class ViewBookScreen extends StatelessWidget {
         child: Stack(
           children: [
             SizedBox(height: 1.sh, width: 1.sw),
-                image.image(
-              width: 1.sw,
-              height: 612.h,
-              fit: BoxFit.cover,
-            ),
+            image.image(width: 1.sw, height: 612.h, fit: BoxFit.cover),
             Positioned(
               top: 260.h,
               left: 0,
@@ -62,55 +60,58 @@ class ViewBookScreen extends StatelessWidget {
                               vertical: 5.h,
                             ),
                             child: Center(
-                              child: DropdownButton<String>(
-                                padding: EdgeInsets.zero,
-                                underline: SizedBox(),
-                                isExpanded: true,
-                                value: 'English',
-                                borderRadius: BorderRadius.circular(10.r),
-                                dropdownColor: AppColors.blueish,
-                                items: [
-                                  DropdownMenuItem(
-                                    value: 'English',
-                                    child: Text(
-                                      'English',
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.bodyMedium,
+                              child: Obx(() {
+                                return DropdownButton<String>(
+                                  padding: EdgeInsets.zero,
+                                  underline: SizedBox(),
+                                  isExpanded: true,
+                                  value: libraryController.selectedLang.value,
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  dropdownColor: AppColors.blueish,
+                                  items: [
+                                    DropdownMenuItem(
+                                      value: 'English',
+                                      child: Text(
+                                        'English',
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium,
+                                      ),
                                     ),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'Spanish',
-                                    child: Text(
-                                      'Spanish',
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.bodyMedium,
+                                    DropdownMenuItem(
+                                      value: 'Spanish',
+                                      child: Text(
+                                        'Spanish',
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium,
+                                      ),
                                     ),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'Hindi',
-                                    child: Text(
-                                      'Hindi',
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.bodyMedium,
+                                    DropdownMenuItem(
+                                      value: 'Hindi',
+                                      child: Text(
+                                        'Hindi',
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium,
+                                      ),
                                     ),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'Dutch',
-                                    child: Text(
-                                      'Dutch',
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.bodyMedium,
+                                    DropdownMenuItem(
+                                      value: 'Dutch',
+                                      child: Text(
+                                        'Dutch',
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                                onChanged: (value) {
-                                  print('Selected: $value');
-                                },
-                              ),
+                                  ],
+                                  onChanged: (value) {
+                                    libraryController.selectedLang.value =
+                                        value!;
+                                  },
+                                );
+                              }),
                             ),
                           ),
                         ],

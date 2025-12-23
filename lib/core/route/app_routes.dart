@@ -14,11 +14,15 @@ class AppRoutes {
   /// ------------------------------------ Donate ------------------------------------- ///
   static const String explore = '/explore-screen';
   static const String empowerment = '/empowerment-screen';
+  static const String empowermentDetailScreen = '/empowerment-detail-screen';
   static const String donerHome = '/doner-home-screen';
   static const String donerSettings = '/doner-settings-screen';
   static const String donerProfileSettings = '/doner-profile-settings-screen';
   static const String libraryScreen = '/library-screen';
   static const String viewBookScreen = '/view-book-screen';
   static const String adoptProjectScreen = '/adopt-project-screen';
-  static const String detailScreen = '/detail-screen';
+  static const String adoptDetailScreen = '/adopt-detail-screen';
+  static const String witnessWomenScreen = '/witness-women-screen';
+  static const String witnessWomenDetailScreen = '/witness-women-detail-screen';
+  static const String paymentScreen = '/payment-screen';
 }

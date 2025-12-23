@@ -1,4 +1,5 @@
 import 'package:bridges_of_glory/core/route/app_routes.dart';
+import 'package:bridges_of_glory/views/donation/explore/adopt_project_screen.dart';
 import 'package:bridges_of_glory/views/donation/explore/explore_screen.dart';
 import 'package:bridges_of_glory/views/donation/home/donar_home_screen.dart';
 import 'package:bridges_of_glory/views/donation/library/library_screen.dart';
@@ -28,7 +29,7 @@ class _BottomNavState extends State<BottomNavDonation> {
 
   List<Widget> pages = [
     DonerHomeScreen(),
-    Container(),
+    AdoptProjectScreen(showBottomButton: false,),
     ExploreScreen(),
     LibraryScreen(),
     DonerSettingScreen(),
@@ -98,7 +99,7 @@ class _BottomNavState extends State<BottomNavDonation> {
           BottomNavigationBarItem(
             icon: Padding(
               padding: EdgeInsets.only(top: 4.h, bottom: 5.h),
-              child: Assets.icons.add.svg(
+              child: Assets.icons.exlore.svg(
                 color: AppColors.border,
                 width: 22.w,
                 height: 22.h,

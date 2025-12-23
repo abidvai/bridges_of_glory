@@ -1,12 +1,13 @@
+
+
 import 'package:get/get.dart';
+
 import '../../../../gen/assets.gen.dart';
 import '../../../../model/showing_card_model.dart';
 
-class EmpowermentController extends GetxController {
+class WitnessWomenController extends GetxController {
   List<String> menuList = ['All', 'Chicken', 'Cow', 'Goat', 'pig', 'Business'];
-  RxInt pastorSupport = RxInt(100);
-  RxInt liveStockSupport = RxInt(100);
-  RxInt churchSupport = RxInt(100);
+
   RxString selected = RxString('All');
 
   final items = <ShowingCardModel>[
@@ -46,4 +47,5 @@ class EmpowermentController extends GetxController {
       buttonTitle: 'Goat Farm',
     ),
   ];
+
 }

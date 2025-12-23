@@ -14,7 +14,10 @@ import '../../../core/constant/color.dart';
 import '../bottom_nav_donation.dart';
 
 class AdoptProjectScreen extends StatelessWidget {
-  AdoptProjectScreen({super.key});
+  final bool? showAppBar;
+  final bool? showBottomButton;
+
+  AdoptProjectScreen({super.key, this.showAppBar, this.showBottomButton});
 
   final AdoptProjectController adoptProjectController = Get.put(
     AdoptProjectController(),
@@ -24,11 +27,21 @@ class AdoptProjectScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.surfaceBg,
+      appBar: (showAppBar ?? false)
+          ? AppTopBar(text: 'ADOPT A PROJECT')
+          : AppBar(
+              centerTitle: true,
+              automaticallyImplyLeading: false,
+              backgroundColor: AppColors.surface,
+              title: Text(
+                'ADOPT A PROJECT',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
       body: SafeArea(
         bottom: true,
         child: Column(
           children: [
-            AppTopBar(text: ' ADOPT A PROJECT'),
             SizedBox(height: 16.h),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -101,26 +114,33 @@ class AdoptProjectScreen extends StatelessWidget {
                       familyCount: item.familyCount,
                       buttonTitle: item.buttonTitle,
                       onTap: () {
-                        Get.toNamed(AppRoutes.detailScreen);
+                        Get.toNamed(
+                          AppRoutes.adoptDetailScreen,
+                          arguments: {'title': item.title},
+                        );
                       },
                     ),
                   );
                 },
               ),
             ),
-            SizedBox(height: 50.h),
+            (showBottomButton ?? true)
+                ? SizedBox(height: 50.h)
+                : SizedBox(height: 0),
           ],
         ),
       ),
-      bottomSheet: Padding(
-        padding: EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
-        child: PrimaryButton(
-          text: 'Home',
-          onTap: () {
-            Get.to(BottomNavDonation(index: 0));
-          },
-        ),
-      ),
+      bottomSheet: (showBottomButton ?? true)
+          ? Padding(
+              padding: EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
+              child: PrimaryButton(
+                text: 'Home',
+                onTap: () {
+                  Get.to(BottomNavDonation(index: 0));
+                },
+              ),
+            )
+          : null,
     );
   }
 }

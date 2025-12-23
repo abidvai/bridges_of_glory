@@ -90,7 +90,20 @@ class ExploreScreen extends StatelessWidget {
                           ),
                           ExploreMenu(
                             image: Assets.images.walkingWitnessWomen,
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(
+                                InfoScreen(
+                                  onTap: () {
+                                    Get.toNamed(AppRoutes.witnessWomenScreen);
+                                  },
+                                  title: 'Walking Witness Women',
+                                  information:
+                                      'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
+                                  description:
+                                      'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
+                                ),
+                              );
+                            },
                           ),
                           ExploreMenu(
                             image: Assets.images.adoptaVillage,
@@ -128,7 +141,20 @@ class ExploreScreen extends StatelessWidget {
                           ),
                           ExploreMenu(
                             image: Assets.images.livingKingdom,
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(
+                                InfoScreen(
+                                  onTap: () {
+                                    Get.back();
+                                  },
+                                  title: 'Living in The Kingdom',
+                                  information:
+                                  'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
+                                  description:
+                                  'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),

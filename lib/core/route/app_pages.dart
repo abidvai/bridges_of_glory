@@ -9,12 +9,16 @@ import 'package:bridges_of_glory/views/auth/signup/signup_screen.dart';
 import 'package:bridges_of_glory/views/auth/splash/splash_screen.dart';
 import 'package:bridges_of_glory/views/donation/bottom_nav_donation.dart';
 import 'package:bridges_of_glory/views/donation/explore/adopt_project_screen.dart';
-import 'package:bridges_of_glory/views/donation/explore/detail_screen.dart';
+import 'package:bridges_of_glory/views/donation/explore/adopt_detail_screen.dart';
+import 'package:bridges_of_glory/views/donation/explore/empowerment_detail_screen.dart';
 import 'package:bridges_of_glory/views/donation/explore/empowerment_screen.dart';
 import 'package:bridges_of_glory/views/donation/explore/explore_screen.dart';
+import 'package:bridges_of_glory/views/donation/explore/witness_women_detail_screen.dart';
+import 'package:bridges_of_glory/views/donation/explore/witness_women_screen.dart';
 import 'package:bridges_of_glory/views/donation/home/donar_home_screen.dart';
 import 'package:bridges_of_glory/views/donation/library/library_screen.dart';
 import 'package:bridges_of_glory/views/donation/library/view_book_screen.dart';
+import 'package:bridges_of_glory/views/donation/payment/payment_screen.dart';
 import 'package:bridges_of_glory/views/donation/profile/donar_setting_screen.dart';
 import 'package:bridges_of_glory/views/donation/profile/doner_profile_setting.dart';
 import 'package:bridges_of_glory/views/info_screen.dart';
@@ -56,6 +60,22 @@ class AppPages {
       name: AppRoutes.adoptProjectScreen,
       page: () => AdoptProjectScreen(),
     ),
-    GetPage(name: AppRoutes.detailScreen, page: () => DetailScreen()),
+    GetPage(name: AppRoutes.adoptDetailScreen, page: () => AdoptDetailScreen()),
+    GetPage(
+      name: AppRoutes.witnessWomenScreen,
+      page: () => WitnessWomenScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.witnessWomenDetailScreen,
+      page: () => WitnessWomenDetailScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.empowermentDetailScreen,
+      page: () => EmpowermentDetailScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.paymentScreen,
+      page: () => PaymentScreen(),
+    ),
   ];
 }

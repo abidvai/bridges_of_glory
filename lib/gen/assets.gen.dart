@@ -23,6 +23,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/call.svg
   SvgGenImage get call => const SvgGenImage('assets/icons/call.svg');
 
+  /// File path: assets/icons/cash.svg
+  SvgGenImage get cash => const SvgGenImage('assets/icons/cash.svg');
+
+  /// File path: assets/icons/exlore.svg
+  SvgGenImage get exlore => const SvgGenImage('assets/icons/exlore.svg');
+
   /// File path: assets/icons/groups.svg
   SvgGenImage get groups => const SvgGenImage('assets/icons/groups.svg');
 
@@ -35,6 +41,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/mail.svg
   SvgGenImage get mail => const SvgGenImage('assets/icons/mail.svg');
 
+  /// File path: assets/icons/paypal.svg
+  SvgGenImage get paypal => const SvgGenImage('assets/icons/paypal.svg');
+
+  /// File path: assets/icons/stripe.svg
+  SvgGenImage get stripe => const SvgGenImage('assets/icons/stripe.svg');
+
   /// File path: assets/icons/user.svg
   SvgGenImage get user => const SvgGenImage('assets/icons/user.svg');
 
@@ -42,10 +54,14 @@ class $AssetsIconsGen {
   List<SvgGenImage> get values => [
     add,
     call,
+    cash,
+    exlore,
     groups,
     home,
     library,
     mail,
+    paypal,
+    stripe,
     user,
   ];
 }
