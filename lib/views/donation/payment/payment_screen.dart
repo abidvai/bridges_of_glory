@@ -18,80 +18,83 @@ class PaymentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.surfaceBg,
       body: SafeArea(
-        child: Column(
-          children: [
-            AppTopBar(text: 'Payment Method'),
-            SizedBox(height: 35.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 335.w,
-                    height: 190.h,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16.w,
-                      vertical: 16.h,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              AppTopBar(text: 'Payment Method'),
+              SizedBox(height: 35.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 335.w,
+                      height: 215.h,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 16.h,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12.r),
+                        border: Border.all(width: 1.2, color: AppColors.border),
+                      ),
+                      child: Column(
+                        children: [
+                          PaymentOption(
+                            icon: Assets.icons.paypal.svg(),
+                            title: 'Paypal',
+                            value: 'paypal',
+                            selectedPayment: paymentController.selectedPayment,
+                          ),
+                          Divider(),
+                          PaymentOption(
+                            icon: Assets.icons.stripe.svg(),
+                            title: 'Stripe',
+                            value: 'stripe',
+                            selectedPayment: paymentController.selectedPayment,
+                          ),
+                          Divider(),
+                          PaymentOption(
+                            icon: Assets.icons.cash.svg(),
+                            title: 'Cash App',
+                            value: 'cashApp',
+                            selectedPayment: paymentController.selectedPayment,
+                          ),
+                        ],
+                      ),
                     ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.r),
-                      border: Border.all(width: 1.2, color: AppColors.border),
+                    SizedBox(height: 32.h),
+                    Text(
+                      'Notice',
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    child: Column(
-                      children: [
-                        PaymentOption(
-                          icon: Assets.icons.paypal.svg(),
-                          title: 'Paypal',
-                          value: 'paypal',
-                          selectedPayment: paymentController.selectedPayment,
-                        ),
-                        Divider(),
-                        PaymentOption(
-                          icon: Assets.icons.stripe.svg(),
-                          title: 'Stripe',
-                          value: 'stripe',
-                          selectedPayment: paymentController.selectedPayment,
-                        ),
-                        Divider(),
-                        PaymentOption(
-                          icon: Assets.icons.cash.svg(),
-                          title: 'Cash App',
-                          value: 'cashApp',
-                          selectedPayment: paymentController.selectedPayment,
-                        ),
-                      ],
+                    SizedBox(height: 12.h),
+                    CustomTextField(
+                      controller: paymentController.noticeController,
+                      hintText:
+                          'If your payment amount is above please send us a message here...',
+                      maxLines: 10,
                     ),
-                  ),
-                  SizedBox(height: 32.h),
-                  Text(
-                    'Notice',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  SizedBox(height: 12.h),
-                  CustomTextField(
-                    controller: paymentController.noticeController,
-                    hintText:
-                        'If your payment amount is above please send us a message here...',
-                    maxLines: 10,
-                  ),
-                  SizedBox(height: 12.h),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: PrimaryButton(
-                      text: 'Send',
-                      width: 100.w,
-                      height: 40.h,
-                      backgroundColor: AppColors.text,
-                      onTap: () {},
+                    SizedBox(height: 12.h),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: PrimaryButton(
+                        text: 'Send',
+                        width: 100.w,
+                        height: 40.h,
+                        backgroundColor: AppColors.text,
+                        onTap: () {},
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       bottomSheet: Padding(

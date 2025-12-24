@@ -46,7 +46,7 @@ class CheckEmailScreen extends StatelessWidget {
 
               SizedBox(height: 20.h),
               OtpTextField(
-                numberOfFields: 6,
+                numberOfFields: 4,
                 cursorColor: AppColors.text,
                 fillColor: AppColors.surface,
                 filled: true,
@@ -69,7 +69,12 @@ class CheckEmailScreen extends StatelessWidget {
               ),
 
               SizedBox(height: 32.h),
-              PrimaryButton(text: 'Next', onTap: () {}),
+              PrimaryButton(
+                text: 'Next',
+                onTap: () {
+                  Get.toNamed(AppRoutes.login);
+                },
+              ),
 
               SizedBox(height: 16.h),
               Center(
@@ -97,9 +102,8 @@ class CheckEmailScreen extends StatelessWidget {
                           seconds == 0
                               ? 'Resend'
                               : "Resent in 00:${timerController.seconds.value.toString().padLeft(2, '0')}",
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodyMedium?.copyWith(color: AppColors.red),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(color: AppColors.red),
                         ),
                       );
                     }),

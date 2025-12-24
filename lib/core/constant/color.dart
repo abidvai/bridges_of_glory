@@ -11,6 +11,7 @@ class AppColors {
     stops: [0.5, 1],
   );
   static const Color surface = Color(0xFFFFFFFF);
+  static const Color chatBg = Color(0xFFF3F4F6);
   static const Color surfaceBg = Color(0xFFFBFBFB);
   static const Color secondary = Color(0xFFFBECEB);
   static const Color text = Color(0xFF202020);

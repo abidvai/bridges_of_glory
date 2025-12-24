@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 class DetailInfoText extends StatelessWidget {
@@ -11,10 +12,12 @@ class DetailInfoText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text('$title: ', style: Theme.of(context).textTheme.bodyLarge),
         SizedBox(width: 2),
-        Expanded(child: Text(value)),
+        Expanded(child: Padding(padding: EdgeInsets.symmetric(vertical: 2.6.h),
+        child: Text(value))),
       ],
     );
   }

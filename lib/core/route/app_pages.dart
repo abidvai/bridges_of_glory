@@ -26,6 +26,7 @@ import 'package:bridges_of_glory/views/info_screen.dart';
 import 'package:bridges_of_glory/views/owner/bible/bible_listing_screen.dart';
 import 'package:bridges_of_glory/views/owner/bible/owner_bible_reading_screen.dart';
 import 'package:bridges_of_glory/views/owner/create/create_screen.dart';
+import 'package:bridges_of_glory/views/owner/home/message_screen.dart';
 import 'package:bridges_of_glory/views/owner/home/owner_home_screen.dart';
 import 'package:bridges_of_glory/views/owner/owner_bottom_nav.dart';
 import 'package:bridges_of_glory/views/owner/profile/owner_profile_screen.dart';
@@ -110,5 +111,6 @@ class AppPages {
     ),
     GetPage(name: AppRoutes.ownerHomeScreen, page: () => OwnerHomeScreen()),
     GetPage(name: AppRoutes.createScreen, page: () => CreateScreen()),
+    GetPage(name: AppRoutes.messageScreen, page: () => MessageScreen()),
   ];
 }

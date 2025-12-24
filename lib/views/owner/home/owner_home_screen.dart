@@ -1,6 +1,9 @@
 import 'package:bridges_of_glory/core/constant/color.dart';
+import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../gen/assets.gen.dart';
@@ -38,7 +41,9 @@ class OwnerHomeScreen extends StatelessWidget {
                     ],
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed(AppRoutes.messageScreen);
+                    },
                     icon: Icon(Iconsax.message, size: 25.h),
                   ),
                 ],
@@ -108,7 +113,7 @@ class OwnerHomeScreen extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12.r),
-                        color: AppColors.text.withValues(alpha: 0.1),
+                        color: AppColors.secondary.withValues(alpha: 0.4),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,11 +121,15 @@ class OwnerHomeScreen extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Assets.icons.groups.svg(
-                                width: 25.w
-                              ),
+                              Assets.icons.groups.svg(width: 25.w),
                               SizedBox(width: 8.w),
-                              Text('Total Families', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.sp)),
+                              Text(
+                                'Total Families',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
                             ],
                           ),
                           Text(
@@ -161,14 +170,17 @@ class AnalysisInfoCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 20.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.r),
-        color: AppColors.text.withValues(alpha: 0.1),
+        color: AppColors.secondary.withValues(alpha: 0.4),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(iconData, size: 25.w),
           SizedBox(height: 8.h),
-          Text(title, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14.sp)),
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14.sp),
+          ),
           SizedBox(height: 6.h),
           Text(value, style: Theme.of(context).textTheme.titleLarge),
         ],

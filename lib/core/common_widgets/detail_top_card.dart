@@ -29,7 +29,7 @@ class DetailTopCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 164.h + 180.h,
+      height: 195.h + 180.h,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -40,7 +40,7 @@ class DetailTopCard extends StatelessWidget {
 
 
           Positioned(
-            top: 150,
+            top: 140,
             right: 0,
             left: 0,
             child: Material(
@@ -48,7 +48,7 @@ class DetailTopCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.r),
               child: Container(
                 width: 335.w,
-                height: 220.h,
+                height: 240.h,
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
                 decoration: BoxDecoration(
                   color: Colors.white,

@@ -18,7 +18,7 @@ import '../../gen/assets.gen.dart';
 class OwnerBottomNav extends StatefulWidget {
   final int index;
 
-  const OwnerBottomNav({super.key, this.index = 2});
+  const OwnerBottomNav({super.key, this.index = 0});
 
   @override
   State<OwnerBottomNav> createState() => _BottomNavState();

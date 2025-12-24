@@ -30,7 +30,7 @@ class ShowingCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.r),
         child: Container(
           width: 336.w,
-          height: 142.h,
+          height: 148.h,
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.r),

@@ -44,7 +44,7 @@ class VerifyOtpScreen extends StatelessWidget {
         
                 SizedBox(height: 20.h),
                 OtpTextField(
-                  numberOfFields: 6,
+                  numberOfFields: 4,
                   cursorColor: AppColors.text,
                   fillColor: AppColors.surface,
                   filled: true,

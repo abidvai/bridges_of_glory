@@ -36,4 +36,5 @@ class AppRoutes {
   static const String ownerProjectDetailScreen = '/owner-project-detail-screen';
   static const String ownerHomeScreen = '/owner-home-screen';
   static const String createScreen = '/create-screen';
+  static const String messageScreen = '/message-screen';
 }
