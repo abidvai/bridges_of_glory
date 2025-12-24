@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../constant/color.dart';
+import '../../utils/constant/color.dart';
 
 
 class IconContainer extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:bridges_of_glory/core/common_widgets/custom_text_field.dart';
-import 'package:bridges_of_glory/core/constant/color.dart';
+import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/views/donation/home/controller/doner_home_controller.dart';
 import 'package:flutter/material.dart';

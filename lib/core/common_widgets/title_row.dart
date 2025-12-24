@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constant/color.dart';
+import '../../utils/constant/color.dart';
 
 class TitleRow extends StatelessWidget {
   final String title;

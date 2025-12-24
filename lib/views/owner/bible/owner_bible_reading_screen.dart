@@ -4,7 +4,7 @@ import 'package:bridges_of_glory/views/owner/bible/controller/bible_controller.d
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../core/constant/color.dart';
+import '../../../utils/constant/color.dart';
 
 class OwnerBibleReadingScreen extends StatelessWidget {
   OwnerBibleReadingScreen({super.key});

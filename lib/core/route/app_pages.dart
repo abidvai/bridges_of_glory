@@ -1,12 +1,13 @@
-import 'package:bridges_of_glory/core/common_widgets/info_widget.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/views/auth/forgot/reset_password_screen.dart';
 import 'package:bridges_of_glory/views/auth/forgot/verify_email_screen.dart';
 import 'package:bridges_of_glory/views/auth/forgot/verify_otp_screen.dart';
+import 'package:bridges_of_glory/views/auth/onboarding/onboarding_screen.dart';
 import 'package:bridges_of_glory/views/auth/select_user.dart';
 import 'package:bridges_of_glory/views/auth/signup/check_email_screen.dart';
 import 'package:bridges_of_glory/views/auth/signup/signup_screen.dart';
 import 'package:bridges_of_glory/views/auth/splash/splash_screen.dart';
+import 'package:bridges_of_glory/views/auth/splash/welcoming_screen.dart';
 import 'package:bridges_of_glory/views/donation/bottom_nav_donation.dart';
 import 'package:bridges_of_glory/views/donation/explore/adopt_project_screen.dart';
 import 'package:bridges_of_glory/views/donation/explore/adopt_detail_screen.dart';
@@ -38,6 +39,7 @@ import '../../views/auth/login/login_screen.dart';
 class AppPages {
   static final pages = [
     GetPage(name: AppRoutes.splashScreen, page: () => SplashScreen()),
+    GetPage(name: AppRoutes.welcoming, page: () => WelcomingPage()),
     GetPage(
       name: AppRoutes.infoScreen,
       page: () =>
@@ -50,6 +52,7 @@ class AppPages {
     GetPage(name: AppRoutes.verifyEmail, page: () => VerifyEmailScreen()),
     GetPage(name: AppRoutes.verifyOtp, page: () => VerifyOtpScreen()),
     GetPage(name: AppRoutes.resetPassword, page: () => ResetPasswordScreen()),
+    GetPage(name: AppRoutes.onboardingScreen, page: () => OnboardingScreen()),
 
     /// --------------------------------- donation bottom nav -------------------------------------- ///
     GetPage(name: AppRoutes.donationBottomNav, page: () => BottomNavDonation()),

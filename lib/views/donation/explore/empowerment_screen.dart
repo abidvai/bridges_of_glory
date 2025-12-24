@@ -1,6 +1,6 @@
 import 'package:bridges_of_glory/core/common_widgets/app_top_bar.dart';
 import 'package:bridges_of_glory/core/common_widgets/primary_button.dart';
-import 'package:bridges_of_glory/core/constant/color.dart';
+import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/views/donation/bottom_nav_donation.dart';
 import 'package:bridges_of_glory/views/donation/explore/controller/empowerment_controller.dart';

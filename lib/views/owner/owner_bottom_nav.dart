@@ -12,7 +12,7 @@ import 'package:bridges_of_glory/views/owner/profile/owner_profile_settings.dart
 import 'package:bridges_of_glory/views/owner/project/owner_project_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../core/constant/color.dart';
+import '../../utils/constant/color.dart';
 import '../../gen/assets.gen.dart';
 
 class OwnerBottomNav extends StatefulWidget {

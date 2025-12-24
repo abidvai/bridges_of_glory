@@ -6,7 +6,7 @@ import 'package:iconsax/iconsax.dart';
 import '../../../core/common_widgets/primary_button.dart';
 import '../../../core/common_widgets/custom_text_field.dart';
 import '../../../core/common_widgets/app_top_bar.dart';
-import '../../../core/constant/color.dart';
+import '../../../utils/constant/color.dart';
 import '../../donation/profile/change_password_screen.dart';
 import '../../donation/profile/controller/profile_controller.dart';
 

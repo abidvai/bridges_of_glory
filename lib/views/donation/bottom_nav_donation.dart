@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../core/constant/color.dart';
+import '../../utils/constant/color.dart';
 import '../../gen/assets.gen.dart';
 
 class BottomNavDonation extends StatefulWidget {

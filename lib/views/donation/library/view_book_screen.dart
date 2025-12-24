@@ -3,7 +3,7 @@ import 'package:bridges_of_glory/views/donation/library/controller/library_contr
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../core/constant/color.dart';
+import '../../../utils/constant/color.dart';
 
 class ViewBookScreen extends StatelessWidget {
   ViewBookScreen({super.key});

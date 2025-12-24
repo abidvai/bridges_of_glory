@@ -14,7 +14,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../core/common_widgets/primary_button.dart';
-import '../../../core/constant/color.dart';
+import '../../../utils/constant/color.dart';
 
 class DonerSettingScreen extends StatefulWidget {
   const DonerSettingScreen({super.key});
@@ -30,12 +30,16 @@ class _DonerSettingScreenState extends State<DonerSettingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.surfaceBg,
+      appBar: AppBar(
+        title: Text('Settings'),
+        backgroundColor: AppColors.surfaceBg,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              AppTopBar(text: 'Settings'),
-
               SizedBox(height: 24.h),
               ImageUploaderVOne(
                 currentImage: Assets.icons.user.path,

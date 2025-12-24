@@ -1,11 +1,9 @@
-import 'package:bridges_of_glory/core/constant/color.dart';
+import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../gen/assets.gen.dart';
 
 class OwnerHomeScreen extends StatelessWidget {

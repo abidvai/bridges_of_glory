@@ -10,7 +10,7 @@ import '../../../core/common_widgets/app_top_bar.dart';
 import '../../../core/common_widgets/custom_text_field.dart';
 import '../../../core/common_widgets/primary_button.dart';
 import '../../../core/common_widgets/showing_card.dart';
-import '../../../core/constant/color.dart';
+import '../../../utils/constant/color.dart';
 import '../bottom_nav_donation.dart';
 
 class AdoptProjectScreen extends StatelessWidget {

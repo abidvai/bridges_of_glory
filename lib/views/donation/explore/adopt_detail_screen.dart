@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../core/common_widgets/detail_top_card.dart';
-import '../../../core/constant/color.dart';
+import '../../../utils/constant/color.dart';
 import '../../../gen/assets.gen.dart';
 
 class AdoptDetailScreen extends StatelessWidget {

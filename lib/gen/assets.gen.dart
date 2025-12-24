@@ -116,6 +116,10 @@ class $AssetsImagesGen {
   AssetGenImage get appLogo2 =>
       const AssetGenImage('assets/images/app_logo2.png');
 
+  /// File path: assets/images/app_logo_book.png
+  AssetGenImage get appLogoBook =>
+      const AssetGenImage('assets/images/app_logo_book.png');
+
   /// File path: assets/images/become_movement.png
   AssetGenImage get becomeMovement =>
       const AssetGenImage('assets/images/become_movement.png');
@@ -183,6 +187,18 @@ class $AssetsImagesGen {
   AssetGenImage get milkyBook =>
       const AssetGenImage('assets/images/milky_book.png');
 
+  /// File path: assets/images/onboarding_1.png
+  AssetGenImage get onboarding1 =>
+      const AssetGenImage('assets/images/onboarding_1.png');
+
+  /// File path: assets/images/onboarding_2.png
+  AssetGenImage get onboarding2 =>
+      const AssetGenImage('assets/images/onboarding_2.png');
+
+  /// File path: assets/images/onboarding_3.png
+  AssetGenImage get onboarding3 =>
+      const AssetGenImage('assets/images/onboarding_3.png');
+
   /// File path: assets/images/park.png
   AssetGenImage get park => const AssetGenImage('assets/images/park.png');
 
@@ -196,15 +212,24 @@ class $AssetsImagesGen {
   /// File path: assets/images/project.png
   AssetGenImage get project => const AssetGenImage('assets/images/project.png');
 
+  /// File path: assets/images/walking_logo.png
+  AssetGenImage get walkingLogo =>
+      const AssetGenImage('assets/images/walking_logo.png');
+
   /// File path: assets/images/walking_witness_women.png
   AssetGenImage get walkingWitnessWomen =>
       const AssetGenImage('assets/images/walking_witness_women.png');
+
+  /// File path: assets/images/witness_logo.png
+  AssetGenImage get witnessLogo =>
+      const AssetGenImage('assets/images/witness_logo.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
     adoptaVillage,
     appLogo,
     appLogo2,
+    appLogoBook,
     becomeMovement,
     bible,
     bibleBook,
@@ -224,19 +249,28 @@ class $AssetsImagesGen {
     livingKingdom,
     logout,
     milkyBook,
+    onboarding1,
+    onboarding2,
+    onboarding3,
     park,
     pig,
     pigFarm,
     project,
+    walkingLogo,
     walkingWitnessWomen,
+    witnessLogo,
   ];
 }
 
 class Assets {
   const Assets._();
 
+  static const String aEnv = '.env';
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+
+  /// List of all assets
+  static List<String> get values => [aEnv];
 }
 
 class AssetGenImage {

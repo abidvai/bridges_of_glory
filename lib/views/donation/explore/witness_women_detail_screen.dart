@@ -1,6 +1,6 @@
 import 'package:bridges_of_glory/core/common_widgets/app_top_bar.dart';
 import 'package:bridges_of_glory/core/common_widgets/detail_top_card.dart';
-import 'package:bridges_of_glory/core/constant/color.dart';
+import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

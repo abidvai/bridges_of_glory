@@ -1,7 +1,6 @@
-import 'package:bridges_of_glory/core/common_widgets/app_top_bar.dart';
 import 'package:bridges_of_glory/core/common_widgets/custom_text_field.dart';
 import 'package:bridges_of_glory/core/common_widgets/primary_button.dart';
-import 'package:bridges_of_glory/core/constant/color.dart';
+import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:bridges_of_glory/env_handler.dart';
 import 'package:bridges_of_glory/views/owner/create/controller/create_controller.dart';
 import 'package:bridges_of_glory/views/owner/create/google_map_search.dart';
@@ -12,6 +11,8 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
+
+import '../../../utils/enum/project_category.dart';
 
 class CreateScreen extends StatelessWidget {
   CreateScreen({super.key});
@@ -111,16 +112,17 @@ class CreateScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.r),
                     ),
-                    child: Center(
-                      child: controller.selectedImage.value != null
+                    clipBehavior: Clip.hardEdge,
+                    child: Obx(() {
+                      return controller.selectedImage.value != null
                           ? AssetEntityImage(
                               controller.selectedImage.value!,
                               isOriginal: false,
-                              thumbnailSize: ThumbnailSize.square(200),
+                              thumbnailSize: const ThumbnailSize(800, 800),
                               fit: BoxFit.cover,
                             )
-                          : Icon(Icons.image_search_outlined, size: 25.w),
-                    ),
+                          : Icon(Icons.image_search_outlined, size: 25.w);
+                    }),
                   ),
                 ),
               ),
@@ -326,22 +328,11 @@ class CreateScreen extends StatelessWidget {
 
               SizedBox(height: 60.h),
               PrimaryButton(text: 'Create'),
+              SizedBox(height: 20.h),
             ],
           ),
         ),
       ),
     );
   }
-}
-
-enum ProjectCategory {
-  chicken,
-  cow,
-  goat,
-  pig,
-  business,
-  becomeTheMovement,
-  kingdomEmpowerment,
-  walkingWitnessWomen,
-  adoptAVillagePrison,
 }

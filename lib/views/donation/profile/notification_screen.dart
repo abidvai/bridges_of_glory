@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:load_switch/load_switch.dart';
 
-import '../../../core/constant/color.dart';
+import '../../../utils/constant/color.dart';
 
 class NotificationSettings extends StatefulWidget {
   const NotificationSettings({super.key});

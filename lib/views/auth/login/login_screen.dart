@@ -1,7 +1,7 @@
 import 'package:bridges_of_glory/core/common_widgets/custom_text_field.dart';
 import 'package:bridges_of_glory/core/common_widgets/primary_button.dart';
-import 'package:bridges_of_glory/core/constant/color.dart';
-import 'package:bridges_of_glory/core/enum/user_type.dart';
+import 'package:bridges_of_glory/utils/constant/color.dart';
+import 'package:bridges_of_glory/utils/enum/user_type.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/views/auth/login/controller/login_controller.dart';
 import 'package:bridges_of_glory/views/auth/signup/controller/signup_Controller.dart';

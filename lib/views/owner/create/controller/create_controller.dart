@@ -1,4 +1,3 @@
-import 'package:bridges_of_glory/views/owner/create/create_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -52,5 +51,6 @@ class CreateController extends GetxController {
     stories.clear();
     pastor.clear();
     description.clear();
+    selectedLocationText.value = '';
   }
 }

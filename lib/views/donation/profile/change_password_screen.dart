@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/common_widgets/primary_button.dart';
-import '../../../core/constant/color.dart';
+import '../../../utils/constant/color.dart';
 
 class UpdatePasswordScreen extends StatelessWidget {
   const UpdatePasswordScreen({super.key});

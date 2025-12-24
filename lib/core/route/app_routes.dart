@@ -1,5 +1,6 @@
 class AppRoutes {
   static const String splashScreen = '/';
+  static const String welcoming = '/welcoming-screen';
   static const String infoScreen = '/info-screen';
   static const String selectUser = '/select-user-screen';
   static const String login = '/login-screen';
@@ -8,6 +9,7 @@ class AppRoutes {
   static const String verifyEmail = '/verify-email-screen';
   static const String verifyOtp = '/verify-otp-screen';
   static const String resetPassword = '/reset-password-screen';
+  static const String onboardingScreen = '/onboarding-screen';
 
   static const String donationBottomNav = '/donation-bottom-nav';
   static const String ownerBottomNav = '/owner-bottom-nav';

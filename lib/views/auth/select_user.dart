@@ -1,12 +1,12 @@
 import 'package:bridges_of_glory/core/common_widgets/custom_toast.dart';
 import 'package:bridges_of_glory/core/common_widgets/primary_button.dart';
-import 'package:bridges_of_glory/core/enum/user_type.dart';
+import 'package:bridges_of_glory/utils/enum/user_type.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/views/auth/signup/controller/signup_Controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../core/constant/color.dart';
+import '../../utils/constant/color.dart';
 import '../../gen/assets.gen.dart';
 
 class SelectUserScreen extends StatelessWidget {

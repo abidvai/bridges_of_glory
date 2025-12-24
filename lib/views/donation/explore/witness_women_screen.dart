@@ -1,4 +1,4 @@
-import 'package:bridges_of_glory/core/constant/color.dart';
+import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/views/donation/explore/controller/witness_women_controlle.dart';
 import 'package:flutter/material.dart';

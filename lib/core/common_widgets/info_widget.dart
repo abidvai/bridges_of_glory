@@ -1,11 +1,8 @@
 import 'package:bridges_of_glory/core/common_widgets/app_back_button.dart';
 import 'package:bridges_of_glory/core/common_widgets/icon_container.dart';
-import 'package:bridges_of_glory/core/common_widgets/primary_button.dart';
-import 'package:bridges_of_glory/core/constant/color.dart';
+import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
-
 import '../../gen/assets.gen.dart';
 
 class InfoWidget extends StatelessWidget {

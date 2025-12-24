@@ -10,7 +10,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../core/constant/color.dart';
+import '../../../utils/constant/color.dart';
 
 class GoogleMapSearchModel {
   String description;

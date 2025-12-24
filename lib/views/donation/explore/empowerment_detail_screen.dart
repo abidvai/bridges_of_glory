@@ -7,7 +7,7 @@ import 'package:iconsax/iconsax.dart';
 import '../../../core/common_widgets/app_top_bar.dart';
 import '../../../core/common_widgets/detail_top_card.dart';
 import '../../../core/common_widgets/primary_button.dart';
-import '../../../core/constant/color.dart';
+import '../../../utils/constant/color.dart';
 import '../../../gen/assets.gen.dart';
 
 class EmpowermentDetailScreen extends StatelessWidget {
