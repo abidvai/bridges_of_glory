@@ -101,11 +101,11 @@ class LoginScreen extends StatelessWidget {
                     text: 'Next',
                     onTap: () {
                       if(signupController.selectedUser.value == UserType.donator.name) {
-                        Get.toNamed(AppRoutes.donationBottomNav);
+                        Get.offAllNamed(AppRoutes.donationBottomNav);
                       }
 
                       if(signupController.selectedUser.value == UserType.projectOwner.name) {
-                        Get.toNamed(AppRoutes.ownerBottomNav);
+                        Get.offAllNamed(AppRoutes.ownerBottomNav);
                       }
                     },
                   ),

@@ -34,6 +34,8 @@ dependencies:
   cached_network_image: ^3.4.1
   flutter_dotenv: ^6.0.0
   smooth_page_indicator: ^2.0.1
+  flutter_native_splash: ^2.4.7
+  icons_launcher: ^3.0.3
 
 
 dev_dependencies:
@@ -48,6 +50,26 @@ flutter_gen:
   output: lib/gen
   integrations:
     flutter_svg: true
+
+icons_launcher:
+  image_path: "assets/images/app_logo_final.png"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
+
+flutter_native_splash:
+  color: "#D53F33"
+  color_dark: "#121212"
+
+  android_12:
+    color: "#D53F33"
+    color_dark: "#121212"
+
+  android: true
+  ios: true
+  web: false
 
 
 flutter:

@@ -229,7 +229,8 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
 
   Future<Map<String, dynamic>?> getPlaceDetails(String placeId) async {
     final url = Uri.parse(
-      'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=${widget.apiKey}',
+      'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=${widget
+          .apiKey}',
     );
 
     final response = await http.get(url);
@@ -249,7 +250,8 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
 
   Future<String?> getPlaceIdFromLatLng(double lat, double lng) async {
     final url = Uri.parse(
-      'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=${widget.apiKey}',
+      'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=${widget
+          .apiKey}',
     );
 
     final response = await http.get(url);
@@ -266,7 +268,8 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
   }
 
   String _googleMapPhotoUrl(String photoReference, {int maxWidth = 400}) {
-    return 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=$maxWidth&photoreference=$photoReference&key=${widget.apiKey}';
+    return 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=$maxWidth&photoreference=$photoReference&key=${widget
+        .apiKey}';
   }
 
   Map<String, dynamic>? _selectedPlaceDetails;
@@ -514,7 +517,8 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                   children: [
                     Expanded(
                       child: Text(
-                        '${_selectedPlaceDetails!['address_components'].map((e) => e['long_name']).join(', ')}',
+                        '${_selectedPlaceDetails!['address_components'].map((
+                            e) => e['long_name']).join(', ')}',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16.sp,
@@ -543,40 +547,40 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                 SizedBox(height: 12.h),
                 if (_selectedPlaceDetails != null &&
                     _selectedPlaceDetails!['photos'] != null)
-                  // SingleChildScrollView(
-                  //   scrollDirection: Axis.horizontal,
-                  //   child: Row(
-                  //     children: [
-                  //       ..._selectedPlaceDetails!['photos'].asMap().entries.map(
-                  //             (entry) {
-                  //           int index = entry.key;
-                  //           final photo = entry.value;
-                  //           return _photoWidget(
-                  //             photo: photo,
-                  //             onTap: () {
-                  //               utils.openImageViewer(
-                  //                 context: context,
-                  //                 index: index,
-                  //                 images: [
-                  //                   ..._selectedPlaceDetails!['photos'].map((
-                  //                       item,
-                  //                       ) {
-                  //                     return CachedNetworkImageProvider(
-                  //                       _googleMapPhotoUrl(
-                  //                         item['photo_reference'],
-                  //                       ),
-                  //                     );
-                  //                   }).toList(),
-                  //                 ],
-                  //               );
-                  //             },
-                  //           );
-                  //         },
-                  //       ).toList(),
-                  //     ],
-                  //   ),
-                  // ),
-                SizedBox(height: 24.h),
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   child: Row(
+                //     children: [
+                //       ..._selectedPlaceDetails!['photos'].asMap().entries.map(
+                //             (entry) {
+                //           int index = entry.key;
+                //           final photo = entry.value;
+                //           return _photoWidget(
+                //             photo: photo,
+                //             onTap: () {
+                //               utils.openImageViewer(
+                //                 context: context,
+                //                 index: index,
+                //                 images: [
+                //                   ..._selectedPlaceDetails!['photos'].map((
+                //                       item,
+                //                       ) {
+                //                     return CachedNetworkImageProvider(
+                //                       _googleMapPhotoUrl(
+                //                         item['photo_reference'],
+                //                       ),
+                //                     );
+                //                   }).toList(),
+                //                 ],
+                //               );
+                //             },
+                //           );
+                //         },
+                //       ).toList(),
+                //     ],
+                //   ),
+                // ),
+                  SizedBox(height: 24.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   spacing: 12.w,
@@ -961,10 +965,10 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
   }
 
   Future<List<Map<String, dynamic>>?> fetchAutocompletePredictions(
-      String input,
-      ) async {
+      String input,) async {
     final url = Uri.parse(
-      'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&key=${widget.apiKey}&types=geocode',
+      'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&key=${widget
+          .apiKey}&types=geocode',
     );
 
     final response = await http.get(url);
@@ -1006,7 +1010,7 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
               ),
               child: Icon(
                 Icons.arrow_back_ios_new_rounded,
-                color: AppColors.text,
+                color: Colors.white,
                 size: 14.w,
               ),
             ),
@@ -1037,10 +1041,10 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
                       },
                       controller: _searchController,
                       focusNode: _searchFocusNode,
-                      style: TextStyle(color: AppColors.text, fontSize: 14.sp),
+                      style: TextStyle(color: Colors.white, fontSize: 14.sp),
                       decoration: InputDecoration(
                         hintStyle: TextStyle(
-                          color: AppColors.text.withValues(alpha: 0.6),
+                          color: AppColors.surfaceBg.withValues(alpha: 0.6),
                           fontSize: 13.sp,
                         ),
                         isDense: true,
@@ -1065,7 +1069,8 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
                 shape: BoxShape.circle,
                 color: Colors.white.withValues(alpha: 0.1),
               ),
-              child: Icon(Icons.close, color: AppColors.text, size: 14.w),
+
+              child: Icon(Icons.close, color: Colors.white, size: 14.w),
             ),
           ),
         ],
@@ -1149,7 +1154,7 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        color: AppColors.surface,
+        color: AppColors.text,
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: SingleChildScrollView(
           child: Column(
@@ -1157,7 +1162,10 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
               _searchWidget(),
               if (_searchResults.isNotEmpty) SizedBox(height: 36.h),
               if (_searchResults.isNotEmpty)
-                ..._searchResults.asMap().entries.map((entry) {
+                ..._searchResults
+                    .asMap()
+                    .entries
+                    .map((entry) {
                   int index = entry.key;
                   GoogleMapSearchModel item = entry.value;
                   return _searchItemWidget(item, index);
@@ -1171,7 +1179,7 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
                       Text(
                         'History',
                         style: TextStyle(
-                          color: AppColors.text,
+                          color: Colors.white,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
                         ),
@@ -1191,7 +1199,10 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
                   ),
                 ),
               if (_searchResults.isEmpty)
-                ..._searchHistory.asMap().entries.map((entry) {
+                ..._searchHistory
+                    .asMap()
+                    .entries
+                    .map((entry) {
                   int index = entry.key;
                   GoogleMapSearchModel item = entry.value;
 
