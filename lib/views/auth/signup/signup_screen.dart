@@ -118,8 +118,9 @@ class SignupScreen extends StatelessWidget {
 
               PrimaryButton(
                 text: 'Next',
+                loading: signupController.isLoading.value,
                 onTap: () {
-                  Get.toNamed(AppRoutes.checkEmail);
+                  signupController.signup();
                 },
               ),
 

@@ -36,6 +36,7 @@ dependencies:
   smooth_page_indicator: ^2.0.1
   flutter_native_splash: ^2.4.7
   icons_launcher: ^3.0.3
+  connectivity_plus: ^7.0.0
 
 
 dev_dependencies:

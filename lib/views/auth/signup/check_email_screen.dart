@@ -71,8 +71,9 @@ class CheckEmailScreen extends StatelessWidget {
               SizedBox(height: 32.h),
               PrimaryButton(
                 text: 'Next',
+                loading: signupController.isLoading.value,
                 onTap: () {
-                  Get.toNamed(AppRoutes.login);
+                  signupController.verifyOtp();
                 },
               ),
 
