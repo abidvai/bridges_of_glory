@@ -100,13 +100,14 @@ class LoginScreen extends StatelessWidget {
                   PrimaryButton(
                     text: 'Next',
                     onTap: () {
-                      if(signupController.selectedUser.value == UserType.donator.name) {
-                        Get.offAllNamed(AppRoutes.donationBottomNav);
-                      }
+                      // if(signupController.selectedUser.value == UserType.donator.name) {
+                      //
+                      // }
+                      Get.offAllNamed(AppRoutes.donationBottomNav);
 
-                      if(signupController.selectedUser.value == UserType.projectOwner.name) {
-                        Get.offAllNamed(AppRoutes.ownerBottomNav);
-                      }
+                      // if(signupController.selectedUser.value == UserType.projectOwner.name) {
+                      //   Get.offAllNamed(AppRoutes.ownerBottomNav);
+                      // }
                     },
                   ),
                   SizedBox(height: 12.h),

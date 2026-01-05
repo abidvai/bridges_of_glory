@@ -42,7 +42,7 @@ class InfoScreen extends StatelessWidget {
       ),
       bottomSheet: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-        child: PrimaryButton(text: 'Skip', onTap: onTap),
+        child: PrimaryButton(text: isMovement ? 'Explore' : 'Skip', onTap: onTap),
       ),
     );
   }

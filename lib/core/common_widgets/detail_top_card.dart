@@ -13,7 +13,7 @@ class DetailTopCard extends StatelessWidget {
   final String pastor;
   final String sponsor;
   final String establish;
-  final String chicken;
+  final int chicken;
 
   const DetailTopCard({
     super.key,

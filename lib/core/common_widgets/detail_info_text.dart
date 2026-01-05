@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DetailInfoText extends StatelessWidget {
   final String title;
-  final String value;
+  final dynamic value;
 
   const DetailInfoText({super.key, required this.title, required this.value});
 
@@ -15,9 +15,9 @@ class DetailInfoText extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text('$title: ', style: Theme.of(context).textTheme.bodyLarge),
-        SizedBox(width: 2),
+        // SizedBox(width: 2),
         Expanded(child: Padding(padding: EdgeInsets.symmetric(vertical: 2.6.h),
-        child: Text(value))),
+        child: Text(value.toString()))),
       ],
     );
   }

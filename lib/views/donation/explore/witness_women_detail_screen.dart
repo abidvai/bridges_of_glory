@@ -30,8 +30,8 @@ class WitnessWomenDetailScreen extends StatelessWidget {
                 location: 'Lower Kasese, Kasese District Uganda',
                 pastor: 'Alvin',
                 sponsor: 'Eric Lumika',
-                chicken: '8/11/24',
-                establish: '30',
+                chicken: 30,
+                establish: '8/11/24',
               ),
 
               SizedBox(height: 32.h),

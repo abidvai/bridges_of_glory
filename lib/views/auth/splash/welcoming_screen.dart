@@ -32,7 +32,7 @@ class WelcomingPage extends StatelessWidget {
               Get.to(
                 InfoScreen(
                   onTap: () {
-                    Get.toNamed(AppRoutes.selectUser);
+                    Get.toNamed(AppRoutes.login);
                   },
                   title: 'Walking Witness',
                   information:

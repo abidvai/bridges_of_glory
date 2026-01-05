@@ -38,7 +38,7 @@ class AdoptDetailScreen extends StatelessWidget {
                         pastor: 'Alvin',
                         sponsor: 'Eric Lumika',
                         establish: '8/11/24',
-                        chicken: '30',
+                        chicken: 30,
                       ),
 
                       SizedBox(height: 32.h),
