@@ -12,6 +12,7 @@ class InfoScreen extends StatelessWidget {
   final String information;
   final String description;
   final bool isMovement;
+  final String? url;
 
   const InfoScreen({
     super.key,
@@ -20,6 +21,7 @@ class InfoScreen extends StatelessWidget {
     required this.information,
     required this.description,
     this.isMovement = false,
+    this.url,
   });
 
   @override
@@ -35,6 +37,7 @@ class InfoScreen extends StatelessWidget {
                 description: description,
                 onTap: onTap,
                 showMovement: isMovement,
+                url: url,
               ),
             ),
           ],
@@ -42,7 +45,10 @@ class InfoScreen extends StatelessWidget {
       ),
       bottomSheet: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-        child: PrimaryButton(text: isMovement ? 'Explore' : 'Skip', onTap: onTap),
+        child: PrimaryButton(
+          text: isMovement ? 'Explore' : 'Skip',
+          onTap: onTap,
+        ),
       ),
     );
   }

@@ -3,6 +3,12 @@ platform :ios, '11.0'
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 	<dict>
+	<key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>http</string>
+        <string>https</string>
+        <string>youtube</string>
+    </array>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>Replace with your permission description.</string>
 		<key>CFBundleDevelopmentRegion</key>

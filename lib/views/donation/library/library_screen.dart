@@ -4,12 +4,21 @@ import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../gen/assets.gen.dart';
 
 class LibraryScreen extends StatelessWidget {
   final bool? showAppBar;
 
   const LibraryScreen({super.key, this.showAppBar});
+
+  Future<void> goToYt(String link) async {
+    final Uri url = Uri.parse(link);
+
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,65 +35,83 @@ class LibraryScreen extends StatelessWidget {
               ),
             ),
       backgroundColor: AppColors.surfaceBg,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: Column(
-          children: [
-            Expanded(
-              child: GridView(
-                padding: EdgeInsets.zero,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 15.w,
-                  mainAxisSpacing: 16.h,
-                  mainAxisExtent: 258.h,
-                  // childAspectRatio: 0.7,
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  goToYt('https://www.youtube.com/@walkingwitness3785');
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('To join Our Podcast: ', style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),),
+                    Assets.icons.youtube.svg(width: 50, height: 60),
+                  ],
                 ),
-                children: [
-                  LibraryCard(
-                    image: Assets.images.bible,
-                    title: 'Bible',
-                    onTap: () {
-                      Get.toNamed(
-                        AppRoutes.viewBookScreen,
-                        arguments: Assets.images.bible,
-                      );
-                    },
-                  ),
-                  LibraryCard(
-                    image: Assets.images.milkyBook,
-                    title: 'Bible',
-                    onTap: () {
-                      Get.toNamed(
-                        AppRoutes.viewBookScreen,
-                        arguments: Assets.images.milkyBook,
-                      );
-                    },
-                  ),
-                  LibraryCard(
-                    image: Assets.images.bible,
-                    title: 'Bible',
-                    onTap: () {
-                      Get.toNamed(
-                        AppRoutes.viewBookScreen,
-                        arguments: Assets.images.bible,
-                      );
-                    },
-                  ),
-                  LibraryCard(
-                    image: Assets.images.milkyBook,
-                    title: 'Bible',
-                    onTap: () {
-                      Get.toNamed(
-                        AppRoutes.viewBookScreen,
-                        arguments: Assets.images.milkyBook,
-                      );
-                    },
-                  ),
-                ],
               ),
-            ),
-          ],
+              SizedBox(height: 10.h),
+              Expanded(
+                child: GridView(
+                  padding: EdgeInsets.zero,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 15.w,
+                    mainAxisSpacing: 16.h,
+                    mainAxisExtent: 258.h,
+                    // childAspectRatio: 0.7,
+                  ),
+                  children: [
+                    LibraryCard(
+                      image: Assets.images.bible,
+                      title: 'Bible',
+                      onTap: () {
+                        Get.toNamed(
+                          AppRoutes.viewBookScreen,
+                          arguments: Assets.images.bible,
+                        );
+                      },
+                    ),
+                    LibraryCard(
+                      image: Assets.images.milkyBook,
+                      title: 'Bible',
+                      onTap: () {
+                        Get.toNamed(
+                          AppRoutes.viewBookScreen,
+                          arguments: Assets.images.milkyBook,
+                        );
+                      },
+                    ),
+                    LibraryCard(
+                      image: Assets.images.bible,
+                      title: 'Bible',
+                      onTap: () {
+                        Get.toNamed(
+                          AppRoutes.viewBookScreen,
+                          arguments: Assets.images.bible,
+                        );
+                      },
+                    ),
+                    LibraryCard(
+                      image: Assets.images.milkyBook,
+                      title: 'Bible',
+                      onTap: () {
+                        Get.toNamed(
+                          AppRoutes.viewBookScreen,
+                          arguments: Assets.images.milkyBook,
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

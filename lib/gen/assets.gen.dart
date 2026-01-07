@@ -77,6 +77,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/user.svg
   SvgGenImage get user => const SvgGenImage('assets/icons/user.svg');
 
+  /// File path: assets/icons/youtube.svg
+  SvgGenImage get youtube => const SvgGenImage('assets/icons/youtube.svg');
+
   /// List of all assets
   List<SvgGenImage> get values => [
     add,
@@ -98,6 +101,7 @@ class $AssetsIconsGen {
     project,
     stripe,
     user,
+    youtube,
   ];
 }
 
@@ -119,6 +123,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/app_logo_book.png
   AssetGenImage get appLogoBook =>
       const AssetGenImage('assets/images/app_logo_book.png');
+
+  /// File path: assets/images/app_logo_final.png
+  AssetGenImage get appLogoFinal =>
+      const AssetGenImage('assets/images/app_logo_final.png');
 
   /// File path: assets/images/become_movement.png
   AssetGenImage get becomeMovement =>
@@ -230,6 +238,7 @@ class $AssetsImagesGen {
     appLogo,
     appLogo2,
     appLogoBook,
+    appLogoFinal,
     becomeMovement,
     bible,
     bibleBook,

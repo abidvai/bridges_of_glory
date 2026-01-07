@@ -25,7 +25,7 @@ class LoginController extends GetxController {
       Get.offAllNamed(AppRoutes.donationBottomNav);
     } else {
       isLoading.value = false;
-      showCustomToast(text: response.error ?? 'Credential not matching');
+      showCustomToast(text: 'Email and Password are Invalid');
     }
   }
 }

@@ -76,6 +76,8 @@ class ExploreScreen extends StatelessWidget {
                                         Get.back();
                                         // Get.to(LibraryScreen(showAppBar: true));
                                       },
+                                      url:
+                                          'https://www.youtube.com/watch?v=HH-Hgc3O1Ec',
                                       title: 'Become The Movement',
                                       information:
                                           'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
@@ -93,6 +95,8 @@ class ExploreScreen extends StatelessWidget {
                                       onTap: () {
                                         Get.toNamed(AppRoutes.empowerment);
                                       },
+                                      url:
+                                          'https://www.youtube.com/watch?v=R_TwTnWvGkI',
                                       title: 'Kingdom Empowerment',
                                       information:
                                           'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
@@ -112,6 +116,8 @@ class ExploreScreen extends StatelessWidget {
                                           AppRoutes.witnessWomenScreen,
                                         );
                                       },
+                                      url:
+                                          'https://www.youtube.com/watch?v=dGiW5_m4Ihc',
                                       title: 'Walking Witness Women',
                                       information:
                                           'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
@@ -131,6 +137,8 @@ class ExploreScreen extends StatelessWidget {
                                           AppRoutes.adoptProjectScreen,
                                         );
                                       },
+                                      url:
+                                          'https://www.youtube.com/watch?v=Rhw7kqPibKs',
                                       title: 'Adopt a Village / Prison',
                                       information:
                                           'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
@@ -165,6 +173,8 @@ class ExploreScreen extends StatelessWidget {
                                       onTap: () {
                                         Get.back();
                                       },
+                                      url:
+                                          'https://www.youtube.com/watch?v=EAFTFkfSa-4',
                                       title: 'Living in The Kingdom',
                                       information:
                                           'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',

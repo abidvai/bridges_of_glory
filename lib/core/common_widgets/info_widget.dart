@@ -3,7 +3,9 @@ import 'package:bridges_of_glory/core/common_widgets/icon_container.dart';
 import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iconsax/iconsax.dart';
 import '../../gen/assets.gen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InfoWidget extends StatelessWidget {
   final String information;
@@ -11,6 +13,7 @@ class InfoWidget extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
   final bool showMovement;
+  final String? url;
 
   const InfoWidget({
     super.key,
@@ -19,7 +22,16 @@ class InfoWidget extends StatelessWidget {
     required this.onTap,
     required this.title,
     this.showMovement = false,
+    this.url,
   });
+
+  Future<void> goToYt(String link) async {
+    final Uri url = Uri.parse(link);
+
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +80,52 @@ class InfoWidget extends StatelessWidget {
                             title,
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
-                          SizedBox(height: 8.h),
+                          SizedBox(height: 16.h),
+
+                          Text(
+                            'YouTube',
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'To watch our works: ',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  goToYt(
+                                    url ??
+                                        'https://www.youtube.com/watch?v=65vwVG2B138&list=PLlQVyyPF7a-qO4GVVo2IklIB_eZuKj2uM&index=11',
+                                  );
+                                },
+                                child: Row(
+                                  children: [
+                                    Assets.icons.youtube.svg(
+                                      width: 90.w,
+                                      height: 50.h,
+                                    ),
+                                    Text(
+                                      'YouTube',
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w600,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 12.h),
                           Text(
                             'Information',
                             style: TextStyle(
@@ -154,7 +211,7 @@ class ContactInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: IconContainer(path: path),
-      title: Text(title, style: TextStyle(color: AppColors.hintText),),
+      title: Text(title, style: TextStyle(color: AppColors.hintText)),
       subtitle: Text(value),
     );
   }

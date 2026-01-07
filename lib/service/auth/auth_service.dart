@@ -111,13 +111,11 @@ class AuthService {
 
         final loginModel = LoginModel.fromJson(response.data);
         return ApiResponse.success(loginModel);
-      }
-
-      if (response.data != null && response.data['message'] != null) {
+      } else if (response.data != null && response.data['message'] != null) {
         return ApiResponse.error(response.data['message']);
+      } else {
+        return ApiResponse.error(response.error ?? 'Credentials mismatch');
       }
-
-      return ApiResponse.error('Login failed. Please try again.');
     } catch (e) {
       print('SIGN IN ERROR: $e');
       return ApiResponse.error('Something went wrong. Please try again.');
