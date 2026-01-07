@@ -14,7 +14,7 @@ class CustomTextField extends StatefulWidget {
   final double? contentPaddingHorizontal;
   final double? contentPaddingVertical;
   final Widget? suffixIcon;
-  final FormFieldValidator? validator;
+  final FormFieldValidator<String>? validator;
   final Function(String)? onFieldSubmitted;
   final Function(String)? onChanged;
   final bool isPassword;
@@ -78,7 +78,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           obscuringCharacter: widget.obscure!,
           minLines: widget.minLines,
           maxLines: widget.maxLines ?? 1,
-          // validator: widget.validator,
+          validator: widget.validator,
           onFieldSubmitted: widget.onFieldSubmitted,
           onChanged: widget.onChanged,
           maxLength: widget.maxLength,

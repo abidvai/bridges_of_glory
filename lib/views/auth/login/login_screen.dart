@@ -97,19 +97,17 @@ class LoginScreen extends StatelessWidget {
                   ),
 
                   SizedBox(height: 32.h),
-                  PrimaryButton(
-                    text: 'Next',
-                    onTap: () {
-                      // if(signupController.selectedUser.value == UserType.donator.name) {
-                      //
-                      // }
-                      Get.offAllNamed(AppRoutes.donationBottomNav);
 
-                      // if(signupController.selectedUser.value == UserType.projectOwner.name) {
-                      //   Get.offAllNamed(AppRoutes.ownerBottomNav);
-                      // }
-                    },
-                  ),
+                  Obx(() {
+                    return PrimaryButton(
+                      text: 'Next',
+                      loading: loginController.isLoading.value,
+                      onTap: () {
+                        loginController.login();
+                      },
+                    );
+                  }),
+
                   SizedBox(height: 12.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

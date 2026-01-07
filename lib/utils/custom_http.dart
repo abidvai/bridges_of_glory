@@ -45,6 +45,8 @@ class CustomHttp {
           'access_token_valid_till',
         );
 
+        print(accessTokenValidTill);
+
         if (accessTokenValidTill == null ||
             accessTokenValidTill < DateTime.now().millisecondsSinceEpoch) {
           if (!await setNewAccessToken()) {
@@ -235,6 +237,7 @@ class CustomHttp {
     bool showFloatingError = true,
     bool needAuth = true,
     required CommonCustomMethods method,
+    bool retry = true,
   }) async {
     if (!await hasInternet(showError: true)) {
       return CustomHttpResult(
@@ -247,16 +250,16 @@ class CustomHttp {
       Map<String, String> _headers = {'Content-Type': 'application/json'};
       SharedPreferences localStorage = await SharedPreferences.getInstance();
 
+      // -------------------- Handle Auth --------------------
       if (needAuth) {
-        SharedPreferences localStorage = await SharedPreferences.getInstance();
-        int? accessTokenValidTill = localStorage.getInt(
-          'access_token_valid_till',
-        );
+        int? accessTokenValidTill = localStorage.getInt('access_token_valid_till');
+
 
         if (accessTokenValidTill == null ||
             accessTokenValidTill < DateTime.now().millisecondsSinceEpoch) {
-          if (!await setNewAccessToken()) {
-            // Get.offAllNamed(AppRoutes.splashScreen);
+          bool refreshed = await setNewAccessToken();
+          if (!refreshed) {
+            // Token cannot be refreshed
             return CustomHttpResult(
               statusCode: 401,
               error: 'Session expired, Please sign in again!',
@@ -265,8 +268,9 @@ class CustomHttp {
         }
 
         String? accessToken = await AppHelper.instance.getAccessToken();
-
-        _headers['Authorization'] = 'Bearer $accessToken';
+        if (accessToken != null) {
+          _headers['Authorization'] = 'Bearer $accessToken';
+        }
 
         final cookie = localStorage.getString('cookie');
         if (cookie != null) {
@@ -285,10 +289,12 @@ class CustomHttp {
       debugPrint('<===== ${method.name} REQUEST =====>');
       debugPrint('url: $url');
       debugPrint('headers: $_headers');
+      debugPrint('body: ${jsonEncode(body ?? {})}');
       debugPrint('');
 
       late http.Response response;
 
+      // -------------------- Send Request --------------------
       if (method == CommonCustomMethods.POST) {
         response = await http.post(
           uri,
@@ -310,7 +316,7 @@ class CustomHttp {
           headers: _headers,
           encoding: Encoding.getByName('utf-8'),
         );
-      } else {
+      } else if (method == CommonCustomMethods.DELETE) {
         response = await http.delete(
           uri,
           body: jsonEncode(body ?? {}),
@@ -319,21 +325,41 @@ class CustomHttp {
         );
       }
 
+      // -------------------- Handle Set-Cookie --------------------
       if (response.headers['set-cookie'] != null) {
         String cookie = response.headers['set-cookie']!;
         localStorage.setString('cookie', cookie);
       }
 
+      // -------------------- Auto Refresh & Retry --------------------
+      if (response.statusCode == 401 && retry) {
+        bool refreshed = await setNewAccessToken();
+        if (refreshed) {
+          // Retry the same request once
+          return commonRequests(
+            endpoint: endpoint,
+            headers: headers,
+            body: body,
+            showFloatingError: showFloatingError,
+            needAuth: needAuth,
+            method: method,
+            retry: false, // prevent infinite loop
+          );
+        }
+      }
+
+      // -------------------- Handle Response --------------------
       return handleResponse(response, showFloatingError);
+
     } catch (e) {
-      debugPrint('');
-      debugPrint('<===== ${method.name} REQUEST =====>');
+      debugPrint('<===== ${method.name} REQUEST ERROR =====>');
       debugPrint('url: $endpoint');
       debugPrint('error: ${e.toString()}');
       debugPrint('');
       return CustomHttpResult(statusCode: -2, error: e.toString());
     }
   }
+
 
   static Future<bool> setNewAccessToken() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -345,7 +371,7 @@ class CustomHttp {
       return false;
     }
 
-    var response = await http.get(
+    var response = await http.post(
       Uri.parse('${AppCredentials.domain}/api/v1/auth/refresh'),
       headers: {
         'Content-Type': 'application/json',

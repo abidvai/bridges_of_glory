@@ -43,12 +43,31 @@ class SignupController extends GetxController {
     isLoading.value = true;
     final userId = await AppHelper.instance.getUserId();
 
-    if(userId == null) return;
+    if (userId == null) return;
     final response = await _authService.verifyEmailSign(otp, userId);
 
     if (response.success) {
       isLoading.value = false;
-      Get.offAllNamed(AppRoutes.donerHome);
+      Get.offAllNamed(AppRoutes.donationBottomNav);
+    } else {
+      isLoading.value = false;
+      showCustomToast(text: response.error ?? 'Something went wrong');
+    }
+  }
+
+  Future<void> resendOtp() async {
+    isLoading.value = true;
+    final userId = await AppHelper.instance.getUserId();
+
+    if (userId == null) return;
+    final response = await _authService.resendOtp(userId);
+
+    if (response.success) {
+      isLoading.value = false;
+      showCustomToast(
+        text: 'Otp sent to your email.',
+        toastType: ToastTypesInfo(ToastTypes.success),
+      );
     } else {
       isLoading.value = false;
       showCustomToast(text: response.error ?? 'Something went wrong');

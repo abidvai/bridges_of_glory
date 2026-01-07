@@ -13,6 +13,7 @@ class SignupScreen extends StatelessWidget {
   SignupScreen({super.key});
 
   final SignupController signupController = Get.find<SignupController>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,89 +41,137 @@ class SignupScreen extends StatelessWidget {
               ),
 
               SizedBox(height: 20.h),
-              Text('Name', style: Theme.of(context).textTheme.titleSmall),
-              SizedBox(height: 8.h),
-              CustomTextField(
-                controller: signupController.nameController,
-                hintText: 'name',
-              ),
-
-              SizedBox(height: 12.h),
-              Text('Email', style: Theme.of(context).textTheme.titleSmall),
-              SizedBox(height: 8.h),
-              CustomTextField(
-                controller: signupController.emailController,
-                hintText: 'justin45@company.com',
-              ),
-
-              SizedBox(height: 12.h),
-              Text('Password', style: Theme.of(context).textTheme.titleSmall),
-              SizedBox(height: 8.h),
-              CustomTextField(
-                controller: signupController.passwordController,
-                hintText: 'password',
-              ),
-
-              SizedBox(height: 12.h),
-              Text(
-                'Rewrite password',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-              SizedBox(height: 8.h),
-              CustomTextField(
-                controller: signupController.rewritePasswordController,
-                hintText: 're-write password',
-              ),
-
-              SizedBox(height: 12.h),
-              Row(
-                children: [
-                  Obx(() {
-                    return Checkbox(
-                      activeColor: AppColors.red,
-                      value: signupController.isCheck.value,
-                      onChanged: (value) {
-                        signupController.isCheck.value = value!;
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Name', style: Theme.of(context).textTheme.titleSmall),
+                    SizedBox(height: 8.h),
+                    CustomTextField(
+                      controller: signupController.nameController,
+                      hintText: 'name',
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Name is required';
+                        }
+                        return null;
                       },
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    );
-                  }),
-                  Expanded(
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'By signing up , you are agreeing to ',
-                            style: TextStyle(color: AppColors.textSecondary),
-                          ),
-                          TextSpan(
-                            text: ' Terms of services ',
-                            style: TextStyle(color: AppColors.red),
-                          ),
-                          TextSpan(
-                            text: ' and ',
-                            style: TextStyle(color: AppColors.textSecondary),
-                          ),
-                          TextSpan(
-                            text: ' Privacy Policy  ',
-                            style: TextStyle(color: AppColors.red),
-                          ),
-                        ],
-                      ),
                     ),
-                  ),
-                ],
-              ),
 
+                    SizedBox(height: 12.h),
+                    Text(
+                      'Email',
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    SizedBox(height: 8.h),
+                    CustomTextField(
+                      controller: signupController.emailController,
+                      hintText: 'justin45@company.com',
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Email is required';
+                        }
+                        return null;
+                      },
+                    ),
+
+                    SizedBox(height: 12.h),
+                    Text(
+                      'Password',
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    SizedBox(height: 8.h),
+                    CustomTextField(
+                      controller: signupController.passwordController,
+                      hintText: 'password',
+                      isPassword: true,
+                      validator: (value) {
+                        if (value!.length < 8) {
+                          return 'password must be 8 character';
+                        }
+                        return null;
+                      },
+                    ),
+
+                    SizedBox(height: 12.h),
+                    Text(
+                      'Rewrite password',
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    SizedBox(height: 8.h),
+                    CustomTextField(
+                      controller: signupController.rewritePasswordController,
+                      hintText: 're-write password',
+                      isPassword: true,
+                      validator: (value) {
+                        if (value!.length < 8) {
+                          return 'password must be 8 character';
+                        }
+                        return null;
+                      },
+                    ),
+
+                    SizedBox(height: 12.h),
+                    Row(
+                      children: [
+                        Obx(() {
+                          return Checkbox(
+                            activeColor: AppColors.red,
+                            value: signupController.isCheck.value,
+                            onChanged: (value) {
+                              signupController.isCheck.value = value!;
+                            },
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                          );
+                        }),
+                        Expanded(
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'By signing up , you are agreeing to ',
+                                  style: TextStyle(
+                                    color: AppColors.textSecondary,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: ' Terms of services ',
+                                  style: TextStyle(color: AppColors.red),
+                                ),
+                                TextSpan(
+                                  text: ' and ',
+                                  style: TextStyle(
+                                    color: AppColors.textSecondary,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: ' Privacy Policy  ',
+                                  style: TextStyle(color: AppColors.red),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(height: 32.h),
 
-              PrimaryButton(
-                text: 'Next',
-                loading: signupController.isLoading.value,
-                onTap: () {
-                  signupController.signup();
-                },
-              ),
+              Obx(() {
+                return PrimaryButton(
+                  text: 'Next',
+                  loading: signupController.isLoading.value,
+                  onTap: () {
+                    if(_formKey.currentState!.validate()) {
+                      signupController.signup();
+                    }
+                  },
+                );
+              }),
 
               SizedBox(height: 12.h),
               Row(

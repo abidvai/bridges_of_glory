@@ -1,6 +1,7 @@
 import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/gen/assets.gen.dart';
 import 'package:bridges_of_glory/utils/constant/color.dart';
+import 'package:bridges_of_glory/utils/helper/app_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -67,13 +68,19 @@ class _SplashScreenState extends State<SplashScreen>
     _animationController.forward();
 
     _animationController.forward().whenComplete(() {
-      Get.offNamed(AppRoutes.onboardingScreen);
+      isLogin();
     });
-
   }
 
+  void isLogin() async {
+    final token = await AppHelper.instance.getAccessToken();
 
-
+    if (token != null) {
+      Get.offAllNamed(AppRoutes.donationBottomNav);
+    } else {
+      Get.offNamed(AppRoutes.onboardingScreen);
+    }
+  }
 
   @override
   void dispose() {

@@ -11,7 +11,10 @@ import '../../../core/common_widgets/primary_button.dart';
 class VerifyOtpScreen extends StatelessWidget {
   VerifyOtpScreen({super.key});
 
-  final TimerController timerController = Get.put(TimerController(), tag: 'verifyOtp');
+  final TimerController timerController = Get.put(
+    TimerController(),
+    tag: 'verifyOtp',
+  );
   final ForgotController forgotController = Get.find<ForgotController>();
 
   @override
@@ -36,12 +39,12 @@ class VerifyOtpScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 6.h),
                 Text(
-                  'example@gmail.com',
+                  forgotController.emailController.text.toString(),
                   style: Theme.of(
                     context,
                   ).textTheme.bodyMedium?.copyWith(color: AppColors.red),
                 ),
-        
+
                 SizedBox(height: 20.h),
                 OtpTextField(
                   numberOfFields: 4,
@@ -65,15 +68,19 @@ class VerifyOtpScreen extends StatelessWidget {
                     forgotController.otp = verificationCode;
                   },
                 ),
-        
+
                 SizedBox(height: 32.h),
-                PrimaryButton(
-                  text: 'Next',
-                  onTap: () {
-                    Get.toNamed(AppRoutes.resetPassword);
-                  },
-                ),
-        
+
+                Obx(() {
+                  return PrimaryButton(
+                    text: 'Next',
+                    loading: forgotController.isLoading.value,
+                    onTap: () {
+                      forgotController.verifyOtp();
+                    },
+                  );
+                }),
+
                 SizedBox(height: 16.h),
                 Center(
                   child: Row(
@@ -87,14 +94,9 @@ class VerifyOtpScreen extends StatelessWidget {
                       SizedBox(width: 4.w),
                       Obx(() {
                         final seconds = timerController.seconds.value;
-                        return GestureDetector(
-                          onTap: () {
-                            seconds == 0
-                                ? () {
-                                    //TODO:
-                                    return null;
-                                  }
-                                : null;
+                        return TextButton(
+                          onPressed: () {
+                            seconds == 0 ? forgotController.resendOtp() : null;
                           },
                           child: Text(
                             seconds == 0

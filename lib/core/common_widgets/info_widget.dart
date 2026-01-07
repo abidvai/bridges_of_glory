@@ -32,7 +32,7 @@ class InfoWidget extends StatelessWidget {
           color: AppColors.secondary,
         ),
         Positioned(
-          left: 96.w,
+          left: 100.w,
           top: 45.h,
           child: Assets.images.appLogo2.image(),
         ),

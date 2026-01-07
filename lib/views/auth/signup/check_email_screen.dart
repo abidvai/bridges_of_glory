@@ -36,7 +36,7 @@ class CheckEmailScreen extends StatelessWidget {
               ),
               SizedBox(height: 6.h),
               Text(
-                'example@gmail.com',
+                signupController.emailController.text.toString(),
                 style: TextStyle(
                   color: AppColors.red,
                   fontSize: 14.sp,
@@ -69,13 +69,15 @@ class CheckEmailScreen extends StatelessWidget {
               ),
 
               SizedBox(height: 32.h),
-              PrimaryButton(
-                text: 'Next',
-                loading: signupController.isLoading.value,
-                onTap: () {
-                  signupController.verifyOtp();
-                },
-              ),
+              Obx(() {
+                return PrimaryButton(
+                  text: 'Next',
+                  loading: signupController.isLoading.value,
+                  onTap: () {
+                    signupController.verifyOtp();
+                  },
+                );
+              }),
 
               SizedBox(height: 16.h),
               Center(
@@ -87,17 +89,11 @@ class CheckEmailScreen extends StatelessWidget {
                       'Didn\’t get the email?',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
-                    SizedBox(width: 4.w),
                     Obx(() {
                       final seconds = timerController.seconds.value;
-                      return GestureDetector(
-                        onTap: () {
-                          seconds == 0
-                              ? () {
-                                  //TODO:
-                                  return null;
-                                }
-                              : null;
+                      return TextButton(
+                        onPressed: () {
+                          seconds == 0 ? signupController.resendOtp() : null;
                         },
                         child: Text(
                           seconds == 0

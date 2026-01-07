@@ -4,6 +4,7 @@ import 'package:bridges_of_glory/core/common_widgets/app_top_bar.dart';
 import 'package:bridges_of_glory/core/common_widgets/image_uploader.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/gen/assets.gen.dart';
+import 'package:bridges_of_glory/utils/helper/app_helper.dart';
 import 'package:bridges_of_glory/views/donation/profile/notification_screen.dart';
 import 'package:bridges_of_glory/views/donation/profile/privacy_screen.dart';
 import 'package:flutter/material.dart';
@@ -178,7 +179,8 @@ class _DonerSettingScreenState extends State<DonerSettingScreen> {
                     text: 'Log out',
                     height: 48.h,
                     onTap: () async {
-                      Get.toNamed(AppRoutes.selectUser);
+                      AppHelper.instance.clearAllPrefValue();
+                      Get.offAllNamed(AppRoutes.login);
                     },
                     backgroundColor: AppColors.text.withValues(alpha: 0.9),
                     textStyle: TextStyle(

@@ -11,6 +11,7 @@ class ResetPasswordScreen extends StatelessWidget {
   ResetPasswordScreen({super.key});
 
   final ForgotController forgotController = Get.find<ForgotController>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,53 +28,74 @@ class ResetPasswordScreen extends StatelessWidget {
                 Center(
                   child: Text(
                     'Reset Password',
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .titleLarge,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
                 SizedBox(height: 8.h),
                 Center(
                   child: Text(
                     'Enter your new password here',
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .bodyMedium,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
 
                 SizedBox(height: 12.h),
-                Text('Password', style: Theme
-                    .of(context)
-                    .textTheme
-                    .titleSmall),
-                SizedBox(height: 8.h),
-                CustomTextField(
-                  controller: forgotController.passwordController,
-                  hintText: 'password',
-                  isPassword: true,
-                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Password',
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      SizedBox(height: 8.h),
+                      CustomTextField(
+                        controller: forgotController.passwordController,
+                        hintText: 'password',
+                        isPassword: true,
+                        validator: (value) {
+                          if (value!.length < 8) {
+                            return 'password must be 8 character';
+                          }
+                          return null;
+                        },
+                      ),
 
-                SizedBox(height: 12.h),
-                Text(
-                  'Rewrite password',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .titleSmall,
-                ),
-                SizedBox(height: 8.h),
-                CustomTextField(
-                  isPassword: true,
-                  controller: forgotController.rewritePasswordController,
-                  hintText: 're-write password',
+                      SizedBox(height: 12.h),
+                      Text(
+                        'Rewrite password',
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      SizedBox(height: 8.h),
+                      CustomTextField(
+                        isPassword: true,
+                        controller: forgotController.rewritePasswordController,
+                        hintText: 're-write password',
+                        validator: (value) {
+                          if (value!.length < 8) {
+                            return 'password must be 8 character';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                  ),
                 ),
 
                 SizedBox(height: 32.h),
-                PrimaryButton(text: 'Next', onTap: () {
-                  Get.toNamed(AppRoutes.login);
+
+                Obx(() {
+                  return PrimaryButton(
+                    text: 'Next',
+                    loading: forgotController.isLoading.value,
+                    onTap: () {
+                      if(_formKey.currentState!.validate()) {
+                        forgotController.resetPassword();
+
+                      }
+                    },
+                  );
                 }),
               ],
             ),

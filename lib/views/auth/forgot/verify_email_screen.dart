@@ -47,12 +47,16 @@ class VerifyEmailScreen extends StatelessWidget {
             ),
 
             SizedBox(height: 20.h),
-            PrimaryButton(
-              text: 'Next',
-              onTap: () {
-                Get.toNamed(AppRoutes.verifyOtp);
-              },
-            ),
+
+            Obx(() {
+              return PrimaryButton(
+                text: 'Next',
+                loading: forgotController.isLoading.value,
+                onTap: () {
+                  forgotController.verifyEmail();
+                },
+              );
+            }),
           ],
         ),
       ),

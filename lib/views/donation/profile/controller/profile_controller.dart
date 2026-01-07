@@ -100,6 +100,8 @@ class DonerProfileController extends GetxController {
   // }
 
 
+
+
   @override
   void onClose() {
     // TODO: implement onClose
