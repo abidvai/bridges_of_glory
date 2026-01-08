@@ -1,3 +1,4 @@
+import 'package:bridges_of_glory/core/common_widgets/welcoming_info_screen.dart';
 import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/views/info_screen.dart';
@@ -29,18 +30,22 @@ class WelcomingPage extends StatelessWidget {
           child: PrimaryButton(
             text: "Next",
             onTap: () {
-              Get.to(
-                InfoScreen(
-                  onTap: () {
-                    Get.toNamed(AppRoutes.login);
-                  },
-                  title: 'Walking Witness',
-                  information:
-                      'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
-                  description:
-                      'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
-                ),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => WelcomingInfoScreen()),
               );
+              // Get.to(
+              //   InfoScreen(
+              //     onTap: () {
+              //       Get.toNamed(AppRoutes.login);
+              //     },
+              //     title: 'Walking Witness',
+              //     information:
+              //         'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
+              //     description:
+              //         'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
+              //   ),
+              // );
             },
           ),
         ),

@@ -1,10 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../gen/assets.gen.dart';
 import '../../utils/constant/color.dart';
 
 class ShowingCard extends StatelessWidget {
-  final AssetGenImage image;
+  final String image;
   final String title;
   final String location;
   final int familyCount;
@@ -40,11 +41,14 @@ class ShowingCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(4.r),
-                child: image.image(
-                  width: 104.w,
-                  height: 110.h,
-                  fit: BoxFit.cover,
-                ),
+                child: image.isNotEmpty
+                    ? CachedNetworkImage(
+                        imageUrl: image,
+                        width: 104.w,
+                        height: 110.h,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.asset(image),
               ),
               SizedBox(width: 16.w),
               Column(
@@ -84,7 +88,7 @@ class ShowingCard extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        buttonTitle,
+                        '$buttonTitle Farm',
                         style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w400,

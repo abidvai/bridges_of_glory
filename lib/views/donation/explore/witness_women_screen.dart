@@ -1,6 +1,7 @@
 import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/views/donation/explore/controller/witness_women_controlle.dart';
+import 'package:bridges_of_glory/views/donation/explore/witness_women_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,12 +10,23 @@ import '../../../core/common_widgets/primary_button.dart';
 import '../../../core/common_widgets/showing_card.dart';
 import '../bottom_nav_donation.dart';
 
-class WitnessWomenScreen extends StatelessWidget {
-  WitnessWomenScreen({super.key});
+class WitnessWomenScreen extends StatefulWidget {
+  final int id;
 
-  final WitnessWomenController witnessWomenController = Get.put(
-    WitnessWomenController(),
-  );
+  const WitnessWomenScreen({super.key, required this.id});
+
+  @override
+  State<WitnessWomenScreen> createState() => _WitnessWomenScreenState();
+}
+
+class _WitnessWomenScreenState extends State<WitnessWomenScreen> {
+  late WitnessWomenController witnessWomenController;
+
+  @override
+  void initState() {
+    super.initState();
+    witnessWomenController = Get.put(WitnessWomenController(id: widget.id));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,32 +82,53 @@ class WitnessWomenScreen extends StatelessWidget {
             ),
 
             SizedBox(height: 22.h),
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                itemCount: witnessWomenController.items.length,
-                itemBuilder: (context, index) {
-                  final item = witnessWomenController.items[index];
 
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: 12.h),
-                    child: ShowingCard(
-                      image: item.image,
-                      title: item.title,
-                      location: item.location,
-                      familyCount: item.familyCount,
-                      buttonTitle: item.buttonTitle,
-                      onTap: () {
-                        Get.toNamed(
-                          AppRoutes.witnessWomenDetailScreen,
-                          arguments: {'title': item.title},
-                        );
-                      },
-                    ),
-                  );
-                },
-              ),
-            ),
+            Obx(() {
+              if (witnessWomenController.isLoading.value) {
+                return Center(child: CircularProgressIndicator());
+              }
+              return Expanded(
+                child: ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  itemCount: witnessWomenController.witnessProjectList.length,
+                  itemBuilder: (context, index) {
+                    final item =
+                        witnessWomenController.witnessProjectList[index];
+
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: 12.h),
+                      child: ShowingCard(
+                        image: item.coverImage ?? 'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
+                        title: item.title ?? 'title',
+                        location: item.location ?? 'location',
+                        //TODO: count
+                        familyCount: 24,
+                        buttonTitle: item.category?.name ?? 'category',
+                        onTap: () async {
+                          await witnessWomenController.fetchProjectDetails(
+                            item.id ?? 0,
+                          );
+
+                          // Navigate to detail screen with fetched details
+                          if (witnessWomenController
+                                  .witnessProjectDetailsList
+                                  .value !=
+                              null) {
+                            Get.to(
+                              () => WitnessWomenDetailScreen(
+                                details: witnessWomenController
+                                    .witnessProjectDetailsList
+                                    .value!,
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    );
+                  },
+                ),
+              );
+            }),
             SizedBox(height: 10.h),
           ],
         ),

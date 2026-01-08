@@ -29,7 +29,7 @@ class _BottomNavState extends State<BottomNavDonation> {
 
   List<Widget> pages = [
     DonerHomeScreen(),
-    AdoptProjectScreen(showBottomButton: false,),
+    AdoptProjectScreen(showBottomButton: false, id: 4,),
     ExploreScreen(),
     LibraryScreen(),
     DonerSettingScreen(),

@@ -32,13 +32,13 @@ class AdoptDetailScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       DetailTopCard(
-                        image: Assets.images.park,
+                        image: 'http://10.10.12.62:8000/media/projects/covers/Rectangle_4_gwWg3fv.png',
                         title: 'Adopt Prisons/ Villages',
                         location: 'Lower Kasese, Kasese District Uganda',
                         pastor: 'Alvin',
                         sponsor: 'Eric Lumika',
-                        establish: '8/11/24',
-                        chicken: 30,
+                        establish: DateTime.now(),
+                        category: '30',
                       ),
 
                       SizedBox(height: 32.h),

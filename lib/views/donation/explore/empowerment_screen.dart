@@ -70,7 +70,10 @@ class EmpowermentScreen extends StatelessWidget {
                                 item,
                                 style: isSelected
                                     ? TextStyle(color: AppColors.red)
-                                    : Theme.of(context).textTheme.bodyLarge,
+                                    : Theme
+                                    .of(context)
+                                    .textTheme
+                                    .bodyLarge,
                               ),
                             ),
                           ),
@@ -83,32 +86,40 @@ class EmpowermentScreen extends StatelessWidget {
             ),
 
             SizedBox(height: 22.h),
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                itemCount: empowermentController.items.length,
-                itemBuilder: (context, index) {
-                  final item = empowermentController.items[index];
+            Obx(() {
+              if (empowermentController.isLoading.value) {
+                return Center(
+                    child: CircularProgressIndicator());
+              }
+              return Expanded(
+                child: ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  itemCount: empowermentController.empowermentList.length,
+                  itemBuilder: (context, index) {
+                    final item =
+                    empowermentController.empowermentList[index];
 
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: 12.h),
-                    child: ShowingCard(
-                      image: item.image,
-                      title: item.title,
-                      location: item.location,
-                      familyCount: item.familyCount,
-                      buttonTitle: item.buttonTitle,
-                      onTap: () {
-                        Get.toNamed(
-                          AppRoutes.empowermentDetailScreen,
-                          arguments: {'title': item.title},
-                        );
-                      },
-                    ),
-                  );
-                },
-              ),
-            ),
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: 12.h),
+                      child: ShowingCard(
+                        image: item.coverImage ?? 'assets/images/cooking.png',
+                        title: item.title ?? 'title',
+                        location: item.location ?? 'location',
+                        //TODO: family count
+                        familyCount: 24,
+                        buttonTitle: item.category?.name ?? 'category',
+                        onTap: () {
+                          Get.toNamed(
+                            AppRoutes.empowermentDetailScreen,
+                            arguments: {'title': item.title},
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              );
+            }),
             SizedBox(height: 50.h),
           ],
         ),

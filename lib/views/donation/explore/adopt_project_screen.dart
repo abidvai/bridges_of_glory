@@ -13,21 +13,37 @@ import '../../../core/common_widgets/showing_card.dart';
 import '../../../utils/constant/color.dart';
 import '../bottom_nav_donation.dart';
 
-class AdoptProjectScreen extends StatelessWidget {
+class AdoptProjectScreen extends StatefulWidget {
   final bool? showAppBar;
   final bool? showBottomButton;
+  final int id;
 
-  AdoptProjectScreen({super.key, this.showAppBar, this.showBottomButton});
+  const AdoptProjectScreen({
+    super.key,
+    this.showAppBar,
+    this.showBottomButton,
+    required this.id,
+  });
 
-  final AdoptProjectController adoptProjectController = Get.put(
-    AdoptProjectController(),
-  );
+  @override
+  State<AdoptProjectScreen> createState() => _AdoptProjectScreenState();
+}
+
+class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
+  late AdoptProjectController adoptProjectController;
+
+  @override
+  void initState() {
+    super.initState();
+    adoptProjectController = Get.put(AdoptProjectController(id: widget.id));
+
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.surfaceBg,
-      appBar: (showAppBar ?? false)
+      appBar: (widget.showAppBar ?? false)
           ? AppTopBar(text: 'ADOPT A PROJECT')
           : AppBar(
               centerTitle: true,
@@ -98,39 +114,46 @@ class AdoptProjectScreen extends StatelessWidget {
             ),
 
             SizedBox(height: 22.h),
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                itemCount: adoptProjectController.items.length,
-                itemBuilder: (context, index) {
-                  final item = adoptProjectController.items[index];
+            Obx(() {
+              if (adoptProjectController.isLoading.value) {
+                return Center(child: CircularProgressIndicator());
+              }
+              return Expanded(
+                child: ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  itemCount: adoptProjectController.villageProjectList.length,
+                  itemBuilder: (context, index) {
+                    final item =
+                        adoptProjectController.villageProjectList[index];
 
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: 12.h),
-                    child: ShowingCard(
-                      image: item.image,
-                      title: item.title,
-                      location: item.location,
-                      familyCount: item.familyCount,
-                      buttonTitle: item.buttonTitle,
-                      onTap: () {
-                        Get.toNamed(
-                          AppRoutes.adoptDetailScreen,
-                          arguments: {'title': item.title},
-                        );
-                      },
-                    ),
-                  );
-                },
-              ),
-            ),
-            (showBottomButton ?? true)
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: 12.h),
+                      child: ShowingCard(
+                        image: item.coverImage ?? 'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
+                        title: item.title ?? 'title',
+                        location: item.location ?? 'location',
+                        //TODO: count
+                        familyCount: 24,
+                        buttonTitle: item.category?.name ?? 'category',
+                        onTap: () {
+                          Get.toNamed(
+                            AppRoutes.adoptDetailScreen,
+                            arguments: {'title': item.title},
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              );
+            }),
+            (widget.showBottomButton ?? true)
                 ? SizedBox(height: 50.h)
                 : SizedBox(height: 0),
           ],
         ),
       ),
-      bottomSheet: (showBottomButton ?? true)
+      bottomSheet: (widget.showBottomButton ?? true)
           ? Padding(
               padding: EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
               child: PrimaryButton(

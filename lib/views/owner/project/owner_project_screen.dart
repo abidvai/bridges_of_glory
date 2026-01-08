@@ -88,32 +88,32 @@ class OwnerProjectScreen extends StatelessWidget {
             ),
 
             SizedBox(height: 22.h),
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                itemCount: ownerProjectController.items.length,
-                itemBuilder: (context, index) {
-                  final item = ownerProjectController.items[index];
-
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: 12.h),
-                    child: ShowingCard(
-                      image: item.image,
-                      title: item.title,
-                      location: item.location,
-                      familyCount: item.familyCount,
-                      buttonTitle: item.buttonTitle,
-                      onTap: () {
-                        Get.toNamed(
-                          AppRoutes.ownerProjectDetailScreen,
-                          arguments: {'title': item.title},
-                        );
-                      },
-                    ),
-                  );
-                },
-              ),
-            ),
+            // Expanded(
+            //   child: ListView.builder(
+            //     padding: EdgeInsets.symmetric(horizontal: 20.w),
+            //     itemCount: ownerProjectController.items.length,
+            //     itemBuilder: (context, index) {
+            //       final item = ownerProjectController.items[index];
+            //
+            //       return Padding(
+            //         padding: EdgeInsets.only(bottom: 12.h),
+            //         child: ShowingCard(
+            //           image: item.image,
+            //           title: item.title,
+            //           location: item.location,
+            //           familyCount: item.familyCount,
+            //           buttonTitle: item.buttonTitle,
+            //           onTap: () {
+            //             Get.toNamed(
+            //               AppRoutes.ownerProjectDetailScreen,
+            //               arguments: {'title': item.title},
+            //             );
+            //           },
+            //         ),
+            //       );
+            //     },
+            //   ),
+            // ),
             SizedBox(height: 10.h),
           ],
         ),

@@ -111,38 +111,45 @@ class DonerHomeScreen extends StatelessWidget {
                   title: 'Empowerment',
                   isSeeAll: true,
                   onTap: () {
-                    Get.toNamed(AppRoutes.empowerment);
+                    Get.toNamed(AppRoutes.empowerment, arguments: {'id': 2});
                   },
                 ),
 
-                SizedBox(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    itemCount: donerHomeController.items.length,
-                    itemBuilder: (context, index) {
-                      final item = donerHomeController.items[index];
+                Obx(() {
+                  if (donerHomeController.isLoading.value) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  return SizedBox(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      itemCount: donerHomeController.empowermentList.length
+                          .clamp(0, 5),
+                      itemBuilder: (context, index) {
+                        final item = donerHomeController.empowermentList[index];
 
-                      return Padding(
-                        padding: EdgeInsets.only(bottom: 12.h),
-                        child: ShowingCard(
-                          image: item.image,
-                          title: item.title,
-                          location: item.location,
-                          familyCount: item.familyCount,
-                          buttonTitle: item.buttonTitle,
-                          onTap: () {
-                            Get.toNamed(
-                              AppRoutes.empowermentDetailScreen,
-                              arguments: {'title': item.title},
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                ),
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 12.h),
+                          child: ShowingCard(
+                            image: item.coverImage ?? 'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
+                            title: item.title ?? 'title',
+                            location: item.location ?? 'location',
+                            //TODO: count
+                            familyCount: 24,
+                            buttonTitle: item.category?.name ?? 'category',
+                            onTap: () {
+                              Get.toNamed(
+                                AppRoutes.empowermentDetailScreen,
+                                arguments: {'title': item.title},
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                }),
                 SizedBox(height: 20.h),
               ],
             ),

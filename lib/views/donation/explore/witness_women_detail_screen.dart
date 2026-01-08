@@ -1,23 +1,31 @@
 import 'package:bridges_of_glory/core/common_widgets/app_top_bar.dart';
 import 'package:bridges_of_glory/core/common_widgets/detail_top_card.dart';
+import 'package:bridges_of_glory/model/project_detail_model.dart';
 import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 import '../../../core/common_widgets/primary_button.dart';
 import '../../../gen/assets.gen.dart';
 
-class WitnessWomenDetailScreen extends StatelessWidget {
-  const WitnessWomenDetailScreen({super.key});
+class WitnessWomenDetailScreen extends StatefulWidget {
+  final ProjectDetailsModel details;
+
+  const WitnessWomenDetailScreen({super.key, required this.details});
 
   @override
-  Widget build(BuildContext context) {
-    final title = Get.arguments['title'];
+  State<WitnessWomenDetailScreen> createState() =>
+      _WitnessWomenDetailScreenState();
+}
 
+class _WitnessWomenDetailScreenState extends State<WitnessWomenDetailScreen> {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.surfaceBg,
-      appBar: AppTopBar(text: title),
+      appBar: AppTopBar(text: widget.details.title ?? 'title'),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -25,20 +33,22 @@ class WitnessWomenDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               DetailTopCard(
-                image: Assets.images.chickensHub,
-                title: 'Chicken Project by WWW',
-                location: 'Lower Kasese, Kasese District Uganda',
-                pastor: 'Alvin',
-                sponsor: 'Eric Lumika',
-                chicken: 30,
-                establish: '8/11/24',
+                image:
+                    widget.details.coverImage ??
+                    'http://10.10.12.62:8000/media/projects/covers/Rectangle_4_gwWg3fv.png',
+                title: widget.details.title ?? 'title',
+                location: widget.details.location ?? 'location',
+                pastor: widget.details.pastorName ?? 'pastor name',
+                sponsor: widget.details.sponsorName ?? 'sponsor name',
+                category: widget.details.category?.name ?? 'category',
+                establish: widget.details.establishedDate ?? DateTime.now(),
               ),
 
               SizedBox(height: 32.h),
               Text('Stories', style: Theme.of(context).textTheme.titleSmall),
               SizedBox(height: 12.h),
               Text(
-                'Village is called kathi village found in busongora north, kasese district under the leadership of Rev Eric Lumika. This church started in 2020 after a team of evangelists conducted a door-to-door preaching in thisvillage, where 4 households accepted Jesus as Lord and Savior, who could travel a long distance ofabout 5km to reach the neighbouring church called kitswamba full gospel for fellowshipAs these 4 families continued to testify to others about how the Lord had healed their diseases,chased our demons that tormented them, the number increased.Then the mother church, together with the regional council, sat down and found that there is a needto plant a church in kathi village for the already converted members.They mobilized funds and bought land where we are building a church without walls. This is actually a miracle that they have received. Members and non-members are surprised by what the Lord has doneThe church is currently attended by 36 members every Sunday, with hopes that after theconstruction of this church, the number might increase based on the hunger these people have forthe gospel',
+                widget.details.projectStories ?? 'project stories',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   letterSpacing: 0.8,
                   wordSpacing: 1.2,
@@ -57,12 +67,12 @@ class WitnessWomenDetailScreen extends StatelessWidget {
                 children: [
                   Icon(Iconsax.calendar_1, size: 20.w),
                   SizedBox(width: 3.w),
-                  Text('Nov 15, 2024'),
+                  Text(formatDate(widget.details.updatedAt)),
                 ],
               ),
               SizedBox(height: 8.h),
               Text(
-                'The first batch of cow farm training has been successfully completed.',
+                widget.details.recentUpdates ?? 'recent update',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   letterSpacing: 0.8,
                   wordSpacing: 1.2,
@@ -77,7 +87,7 @@ class WitnessWomenDetailScreen extends StatelessWidget {
               ),
               SizedBox(height: 12.h),
               Text(
-                '120 families have directly benefited from our projects.',
+                widget.details.impact ?? 'impact',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   letterSpacing: 0.8,
                   wordSpacing: 1.2,
@@ -100,5 +110,22 @@ class WitnessWomenDetailScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+
+String formatDate(dynamic value) {
+  if (value == null) return '';
+
+  try {
+    DateTime date;
+    if (value is DateTime) {
+      date = value;
+    } else {
+      date = DateTime.parse(value.toString());
+    }
+    return DateFormat('MMM d, yyyy').format(date); // Nov 15, 2024
+  } catch (_) {
+    return value.toString(); // if not a date, return as-is
   }
 }

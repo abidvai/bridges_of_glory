@@ -38,13 +38,13 @@ class OwnerProjectDetails extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       DetailTopCard(
-                        image: Assets.images.chickensHub,
+                        image: 'http://10.10.12.62:8000/media/projects/covers/Rectangle_4_gwWg3fv.png',
                         title: 'Project Details',
                         location: 'Lower Kasese, Kasese District Uganda',
                         pastor: 'Alvin',
                         sponsor: 'Eric Lumika',
-                        chicken: 30,
-                        establish: '8/11/24',
+                        category: '30',
+                        establish: DateTime.now(),
                       ),
 
                       SizedBox(height: 32.h),

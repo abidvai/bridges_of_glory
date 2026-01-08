@@ -40,11 +40,7 @@ class AppPages {
   static final pages = [
     GetPage(name: AppRoutes.splashScreen, page: () => SplashScreen()),
     GetPage(name: AppRoutes.welcoming, page: () => WelcomingPage()),
-    GetPage(
-      name: AppRoutes.infoScreen,
-      page: () =>
-          InfoScreen(onTap: () {}, title: '', information: '', description: ''),
-    ),
+    // GetPage(name: AppRoutes.infoScreen, page: () => InfoScreen(id: null,)),
     GetPage(name: AppRoutes.selectUser, page: () => SelectUserScreen()),
     GetPage(name: AppRoutes.login, page: () => LoginScreen()),
     GetPage(name: AppRoutes.signup, page: () => SignupScreen()),
@@ -68,19 +64,19 @@ class AppPages {
     ),
     GetPage(name: AppRoutes.libraryScreen, page: () => LibraryScreen()),
     GetPage(name: AppRoutes.viewBookScreen, page: () => ViewBookScreen()),
-    GetPage(
-      name: AppRoutes.adoptProjectScreen,
-      page: () => AdoptProjectScreen(),
-    ),
+    // GetPage(
+    //   name: AppRoutes.adoptProjectScreen,
+    //   page: () => AdoptProjectScreen(),
+    // ),
     GetPage(name: AppRoutes.adoptDetailScreen, page: () => AdoptDetailScreen()),
-    GetPage(
-      name: AppRoutes.witnessWomenScreen,
-      page: () => WitnessWomenScreen(),
-    ),
-    GetPage(
-      name: AppRoutes.witnessWomenDetailScreen,
-      page: () => WitnessWomenDetailScreen(),
-    ),
+    // GetPage(
+    //   name: AppRoutes.witnessWomenScreen,
+    //   page: () => WitnessWomenScreen(),
+    // ),
+    // GetPage(
+    //   name: AppRoutes.witnessWomenDetailScreen,
+    //   page: () => WitnessWomenDetailScreen(),
+    // ),
     GetPage(
       name: AppRoutes.empowermentDetailScreen,
       page: () => EmpowermentDetailScreen(),

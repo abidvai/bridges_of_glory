@@ -6,7 +6,7 @@ class ShowingCardModel {
   final String location;
   final int familyCount;
   final String buttonTitle;
-  final AssetGenImage image;
+  final String image;
 
   ShowingCardModel({
     required this.title,

@@ -1,4 +1,5 @@
 import 'package:bridges_of_glory/utils/constant/color.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -7,13 +8,13 @@ import '../../views/donation/explore/adopt_detail_screen.dart';
 import 'detail_info_text.dart';
 
 class DetailTopCard extends StatelessWidget {
-  final AssetGenImage image;
+  final String image;
   final String title;
   final String location;
   final String pastor;
   final String sponsor;
-  final String establish;
-  final int chicken;
+  final DateTime establish;
+  final String category;
 
   const DetailTopCard({
     super.key,
@@ -22,7 +23,7 @@ class DetailTopCard extends StatelessWidget {
     required this.location,
     required this.pastor,
     required this.sponsor,
-    required this.chicken,
+    required this.category,
     required this.establish,
   });
 
@@ -35,9 +36,13 @@ class DetailTopCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(12.r),
-            child: image.image(height: 164.h, width: 335.w, fit: BoxFit.cover),
+            child: CachedNetworkImage(
+              imageUrl: image,
+              height: 164.h,
+              width: 335.w,
+              fit: BoxFit.cover,
+            ),
           ),
-
 
           Positioned(
             top: 140,
@@ -73,7 +78,7 @@ class DetailTopCard extends StatelessWidget {
                     SizedBox(height: 8.h),
                     DetailInfoText(title: 'Established', value: establish),
                     SizedBox(height: 8.h),
-                    DetailInfoText(title: 'Chickens', value: chicken),
+                    DetailInfoText(title: 'Category', value: category),
                   ],
                 ),
               ),

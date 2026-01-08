@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController(text: 'jvai420@gmail.com');
+  final TextEditingController passwordController = TextEditingController(text: 'jvai1660');
 
   RxBool isCheck = RxBool(false);
   RxBool isLoading = RxBool(false);
