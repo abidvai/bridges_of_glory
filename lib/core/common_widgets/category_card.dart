@@ -5,7 +5,7 @@ import '../../gen/assets.gen.dart';
 import '../../utils/constant/color.dart';
 
 class CategoryCard extends StatelessWidget {
-  final AssetGenImage image;
+  final String image;
   final String title;
   final VoidCallback onTap;
 
@@ -19,7 +19,7 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -31,7 +31,12 @@ class CategoryCard extends StatelessWidget {
               shape: BoxShape.circle,
               color: AppColors.blueish,
             ),
-            child: image.image(width: 32.w, height: 32.h, fit: BoxFit.cover),
+            child: Image.network(
+              image,
+              width: 32.w,
+              height: 32.h,
+              fit: BoxFit.cover,
+            ),
           ),
           Text(title, style: Theme.of(context).textTheme.bodyMedium),
         ],

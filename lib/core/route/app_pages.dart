@@ -55,7 +55,7 @@ class AppPages {
 
     /// ------------------------------------------- Donation ----------------------------------------///
     GetPage(name: AppRoutes.explore, page: () => ExploreScreen()),
-    GetPage(name: AppRoutes.empowerment, page: () => EmpowermentScreen()),
+    // GetPage(name: AppRoutes.empowerment, page: () => EmpowermentScreen()),
     GetPage(name: AppRoutes.donerHome, page: () => DonerHomeScreen()),
     GetPage(name: AppRoutes.donerSettings, page: () => DonerSettingScreen()),
     GetPage(
@@ -68,7 +68,7 @@ class AppPages {
     //   name: AppRoutes.adoptProjectScreen,
     //   page: () => AdoptProjectScreen(),
     // ),
-    GetPage(name: AppRoutes.adoptDetailScreen, page: () => AdoptDetailScreen()),
+    // GetPage(name: AppRoutes.adoptDetailScreen, page: () => AdoptDetailScreen()),
     // GetPage(
     //   name: AppRoutes.witnessWomenScreen,
     //   page: () => WitnessWomenScreen(),
@@ -77,10 +77,10 @@ class AppPages {
     //   name: AppRoutes.witnessWomenDetailScreen,
     //   page: () => WitnessWomenDetailScreen(),
     // ),
-    GetPage(
-      name: AppRoutes.empowermentDetailScreen,
-      page: () => EmpowermentDetailScreen(),
-    ),
+    // GetPage(
+    //   name: AppRoutes.empowermentDetailScreen,
+    //   page: () => EmpowermentDetailScreen(),
+    // ),
     GetPage(name: AppRoutes.paymentScreen, page: () => PaymentScreen()),
     GetPage(
       name: AppRoutes.paymentSuccessScreen,

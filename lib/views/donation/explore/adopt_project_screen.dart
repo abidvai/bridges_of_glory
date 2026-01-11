@@ -1,11 +1,10 @@
 import 'package:bridges_of_glory/core/route/app_routes.dart';
+import 'package:bridges_of_glory/views/donation/explore/adopt_detail_screen.dart';
 import 'package:bridges_of_glory/views/donation/explore/controller/adopt_project_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../core/common_widgets/app_top_bar.dart';
 import '../../../core/common_widgets/custom_text_field.dart';
 import '../../../core/common_widgets/primary_button.dart';
@@ -36,7 +35,6 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
   void initState() {
     super.initState();
     adoptProjectController = Get.put(AdoptProjectController(id: widget.id));
-
   }
 
   @override
@@ -121,10 +119,10 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
               return Expanded(
                 child: ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  itemCount: adoptProjectController.villageProjectList.length,
+                  itemCount: adoptProjectController.filterVillageProjectList.length,
                   itemBuilder: (context, index) {
                     final item =
-                        adoptProjectController.villageProjectList[index];
+                        adoptProjectController.filterVillageProjectList[index];
 
                     return Padding(
                       padding: EdgeInsets.only(bottom: 12.h),
@@ -132,14 +130,25 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
                         image: item.coverImage ?? 'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
                         title: item.title ?? 'title',
                         location: item.location ?? 'location',
-                        //TODO: count
-                        familyCount: 24,
+                        familyCount: item.totalBenefitedFamilies ?? 0,
                         buttonTitle: item.category?.name ?? 'category',
-                        onTap: () {
-                          Get.toNamed(
-                            AppRoutes.adoptDetailScreen,
-                            arguments: {'title': item.title},
+                        onTap: () async {
+                          await adoptProjectController.fetchProjectDetails(
+                            item.id ?? 0,
                           );
+
+                          if (adoptProjectController
+                              .adoptProjectDetail
+                              .value !=
+                              null) {
+                            Get.to(
+                                  () => AdoptDetailScreen(
+                                details: adoptProjectController
+                                    .adoptProjectDetail
+                                    .value!,
+                              ),
+                            );
+                          }
                         },
                       ),
                     );

@@ -2,6 +2,7 @@ import 'package:bridges_of_glory/core/common_widgets/info_widget.dart';
 import 'package:bridges_of_glory/utils/enum/explore_type.dart';
 import 'package:bridges_of_glory/views/donation/explore/adopt_project_screen.dart';
 import 'package:bridges_of_glory/views/donation/explore/controller/explore_controller.dart';
+import 'package:bridges_of_glory/views/donation/explore/empowerment_screen.dart';
 import 'package:bridges_of_glory/views/donation/explore/witness_women_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -73,10 +74,7 @@ class _InfoScreenState extends State<InfoScreen> {
                 Get.back();
                 break;
               case ExploreType.kingdomEmpowerment:
-                Get.toNamed(
-                  AppRoutes.empowerment,
-                  arguments: {'id': controller.exploreDetail.value!.id!},
-                );
+                Get.to(EmpowermentScreen(id: widget.id));
                 break;
               case ExploreType.walkingWitnessWomen:
                 Get.to(WitnessWomenScreen(id: widget.id));

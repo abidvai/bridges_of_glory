@@ -1,6 +1,10 @@
 import 'package:bridges_of_glory/core/common_widgets/custom_text_field.dart';
 import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
+import 'package:bridges_of_glory/views/donation/explore/controller/empowerment_controller.dart';
+import 'package:bridges_of_glory/views/donation/explore/empowerment_detail_screen.dart';
+import 'package:bridges_of_glory/views/donation/explore/empowerment_screen.dart';
+import 'package:bridges_of_glory/views/donation/home/category_wise_project_screen.dart';
 import 'package:bridges_of_glory/views/donation/home/controller/doner_home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,6 +21,9 @@ class DonerHomeScreen extends StatelessWidget {
 
   final DonerHomeController donerHomeController = Get.put(
     DonerHomeController(),
+  );
+  final EmpowermentController empowermentController = Get.put(
+    EmpowermentController(id: 2),
   );
 
   @override
@@ -88,30 +95,47 @@ class DonerHomeScreen extends StatelessWidget {
                 SizedBox(height: 32.h),
                 TitleRow(title: 'Categories'),
                 SizedBox(height: 16.h),
-                SizedBox(
-                  height: 100.h,
-                  child: ListView.separated(
-                    padding: EdgeInsets.zero,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: donerHomeController.categoryList.length,
-                    separatorBuilder: (context, index) {
-                      return SizedBox(width: 16.w);
-                    },
-                    itemBuilder: (context, index) {
-                      final category = donerHomeController.categoryList[index];
-                      return CategoryCard(
-                        image: category.image,
-                        title: category.title,
-                        onTap: () {},
-                      );
-                    },
-                  ),
-                ),
+                Obx(() {
+                  if (donerHomeController.isLoading.value) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  return SizedBox(
+                    height: 100.h,
+                    child: ListView.separated(
+                      padding: EdgeInsets.zero,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: donerHomeController.categoryList.length,
+                      separatorBuilder: (context, index) {
+                        return SizedBox(width: 16.w);
+                      },
+                      itemBuilder: (context, index) {
+                        final category =
+                            donerHomeController.categoryList[index];
+                        return CategoryCard(
+                          image:
+                              category.image ??
+                              'http://10.10.12.62:8000/media/categories/business.png',
+                          title: category.name ?? 'category',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => CategoryWiseProjectScreen(
+                                  categoryModel: category,
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  );
+                }),
                 TitleRow(
                   title: 'Empowerment',
                   isSeeAll: true,
                   onTap: () {
-                    Get.toNamed(AppRoutes.empowerment, arguments: {'id': 2});
+                    Get.to(EmpowermentScreen(id: 2));
                   },
                 ),
 
@@ -132,17 +156,31 @@ class DonerHomeScreen extends StatelessWidget {
                         return Padding(
                           padding: EdgeInsets.only(bottom: 12.h),
                           child: ShowingCard(
-                            image: item.coverImage ?? 'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
+                            image:
+                                item.coverImage ??
+                                'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
                             title: item.title ?? 'title',
                             location: item.location ?? 'location',
-                            //TODO: count
-                            familyCount: 24,
+                            familyCount: item.totalBenefitedFamilies ?? 0,
                             buttonTitle: item.category?.name ?? 'category',
-                            onTap: () {
-                              Get.toNamed(
-                                AppRoutes.empowermentDetailScreen,
-                                arguments: {'title': item.title},
+                            onTap: () async {
+                              await empowermentController.fetchProjectDetails(
+                                item.id ?? 0,
                               );
+
+                              // Navigate to detail screen with fetched details
+                              if (empowermentController
+                                      .empowermentDetail
+                                      .value !=
+                                  null) {
+                                Get.to(
+                                  () => EmpowermentDetailScreen(
+                                    details: empowermentController
+                                        .empowermentDetail
+                                        .value!,
+                                  ),
+                                );
+                              }
                             },
                           ),
                         );

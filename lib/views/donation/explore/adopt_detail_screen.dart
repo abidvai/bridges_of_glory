@@ -1,28 +1,34 @@
 import 'package:bridges_of_glory/core/common_widgets/app_top_bar.dart';
 import 'package:bridges_of_glory/core/common_widgets/primary_button.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
+import 'package:bridges_of_glory/views/donation/explore/controller/adopt_project_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../core/common_widgets/detail_top_card.dart';
+import '../../../model/project_detail_model.dart';
 import '../../../utils/constant/color.dart';
 import '../../../gen/assets.gen.dart';
+import '../../../utils/formate_date.dart';
 
 class AdoptDetailScreen extends StatelessWidget {
-  const AdoptDetailScreen({super.key});
+  final ProjectDetailsModel details;
+
+  AdoptDetailScreen({super.key, required this.details});
+
+  final AdoptProjectController adoptProjectController =
+      Get.find<AdoptProjectController>();
 
   @override
   Widget build(BuildContext context) {
-    final args = Get.arguments as Map<String, dynamic>;
-
     return Scaffold(
       backgroundColor: AppColors.surfaceBg,
       body: SafeArea(
         child: Column(
           children: [
-            AppTopBar(text: args['title']),
+            AppTopBar(text: details.title ?? 'title'),
             SizedBox(height: 14.h),
             Expanded(
               child: SingleChildScrollView(
@@ -32,13 +38,15 @@ class AdoptDetailScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       DetailTopCard(
-                        image: 'http://10.10.12.62:8000/media/projects/covers/Rectangle_4_gwWg3fv.png',
-                        title: 'Adopt Prisons/ Villages',
-                        location: 'Lower Kasese, Kasese District Uganda',
-                        pastor: 'Alvin',
-                        sponsor: 'Eric Lumika',
-                        establish: DateTime.now(),
-                        category: '30',
+                        image:
+                            details.coverImage ??
+                            'https://walkingwitness.org/wp-content/uploads/2025/02/Black-Ivory-Classy-Feminine-Real-Estate-Logo.png',
+                        title: details.title ?? 'title',
+                        location: details.location ?? 'location',
+                        pastor: details.pastorName ?? 'pastor name',
+                        sponsor: details.sponsorName ?? 'sponsor name',
+                        establish: details.establishedDate ?? DateTime.now(),
+                        category: details.category?.name ?? 'category name',
                       ),
 
                       SizedBox(height: 32.h),
@@ -48,7 +56,7 @@ class AdoptDetailScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 12.h),
                       Text(
-                        'Village is called kathi village found in busongora north, kasese district under the leadership of Rev Eric Lumika. This church started in 2020 after a team of evangelists conducted a door-to-door preaching in thisvillage, where 4 households accepted Jesus as Lord and Savior, who could travel a long distance ofabout 5km to reach the neighbouring church called kitswamba full gospel for fellowshipAs these 4 families continued to testify to others about how the Lord had healed their diseases,chased our demons that tormented them, the number increased.Then the mother church, together with the regional council, sat down and found that there is a needto plant a church in kathi village for the already converted members.They mobilized funds and bought land where we are building a church without walls. This is actually a miracle that they have received. Members and non-members are surprised by what the Lord has doneThe church is currently attended by 36 members every Sunday, with hopes that after theconstruction of this church, the number might increase based on the hunger these people have forthe gospel',
+                        details.projectStories ?? 'project story',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           letterSpacing: 0.8,
                           wordSpacing: 1.2,
@@ -67,12 +75,12 @@ class AdoptDetailScreen extends StatelessWidget {
                         children: [
                           Icon(Iconsax.calendar_1, size: 20.w),
                           SizedBox(width: 3.w),
-                          Text('Nov 15, 2024'),
+                          Text(formatDate(details.updatedAt)),
                         ],
                       ),
                       SizedBox(height: 8.h),
                       Text(
-                        'The first batch of cow farm training has been successfully completed.',
+                        details.recentUpdates ?? 'recent update',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           letterSpacing: 0.8,
                           wordSpacing: 1.2,
@@ -87,7 +95,7 @@ class AdoptDetailScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 12.h),
                       Text(
-                        '120 families have directly benefited from our projects.',
+                        details.impact ?? 'impact so far',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           letterSpacing: 0.8,
                           wordSpacing: 1.2,
@@ -95,6 +103,95 @@ class AdoptDetailScreen extends StatelessWidget {
                         ),
                       ),
 
+                      SizedBox(height: 30.h),
+                      Text(
+                        'Contribute Us',
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      SizedBox(height: 10.h),
+                      ExpansionTile(
+                        title: Text('Pastor Support'),
+                        shape: InputBorder.none,
+                        children: [
+                          Obx(
+                            () => Column(
+                              children: details.pastorSupportPrices!.map((
+                                item,
+                              ) {
+                                return RadioListTile<String>(
+                                  title: Text(item.name ?? 'Pastor Support'),
+                                  value: 'pastor${item.name}',
+                                  groupValue: adoptProjectController
+                                      .selectedSupport
+                                      .value,
+                                  onChanged: (val) {
+                                    adoptProjectController
+                                            .selectedSupport
+                                            .value =
+                                        val!;
+                                  },
+                                  activeColor: AppColors.red,
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      ExpansionTile(
+                        title: Text('LiveStock for Village'),
+                        shape: InputBorder.none,
+                        children: [
+                          Obx(
+                            () => Column(
+                              children: details.livestockItems!.map((item) {
+                                return RadioListTile<String>(
+                                  title: Text(
+                                    item.name ?? 'LiveStock for Village',
+                                  ),
+                                  value: 'liveStock${item.name}',
+                                  groupValue: adoptProjectController
+                                      .selectedSupport
+                                      .value,
+                                  onChanged: (val) {
+                                    adoptProjectController
+                                            .selectedSupport
+                                            .value =
+                                        val!;
+                                  },
+                                  activeColor: AppColors.red,
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ExpansionTile(
+                        title: Text('Other Supports'),
+                        shape: InputBorder.none,
+                        children: [
+                          Obx(
+                            () => Column(
+                              children: details.otherSupports!.map((item) {
+                                return RadioListTile<String>(
+                                  title: Text(item.name ?? 'Other Supports'),
+                                  value: 'other${item.name}',
+                                  groupValue: adoptProjectController
+                                      .selectedSupport
+                                      .value,
+                                  onChanged: (val) {
+                                    adoptProjectController
+                                            .selectedSupport
+                                            .value =
+                                        val!;
+                                  },
+                                  activeColor: AppColors.red,
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ],
+                      ),
                       SizedBox(height: 100.h),
                     ],
                   ),

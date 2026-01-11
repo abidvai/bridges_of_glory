@@ -44,15 +44,19 @@ class _WitnessWomenScreenState extends State<WitnessWomenScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Obx(() {
+                  if (witnessWomenController.isLoading.value) {
+                    return Center(child: CircularProgressIndicator());
+                  }
                   return Row(
                     children: [
-                      ...witnessWomenController.menuList.map((item) {
+                      ...witnessWomenController.categoryList.map((item) {
                         final isSelected =
-                            item == witnessWomenController.selected.value;
+                            item.name == witnessWomenController.selected.value;
 
                         return GestureDetector(
                           onTap: () {
-                            witnessWomenController.selected.value = item;
+                            witnessWomenController.selected.value =
+                                item.name ?? 'All';
                           },
                           child: Container(
                             height: 40.h,
@@ -66,7 +70,7 @@ class _WitnessWomenScreenState extends State<WitnessWomenScreen> {
                             ),
                             child: Center(
                               child: Text(
-                                item,
+                                item.name ?? '',
                                 style: isSelected
                                     ? TextStyle(color: AppColors.red)
                                     : Theme.of(context).textTheme.bodyLarge,
@@ -90,19 +94,21 @@ class _WitnessWomenScreenState extends State<WitnessWomenScreen> {
               return Expanded(
                 child: ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  itemCount: witnessWomenController.witnessProjectList.length,
+                  itemCount:
+                  witnessWomenController.filteredWitnessProjectList.length,
                   itemBuilder: (context, index) {
-                    final item =
-                        witnessWomenController.witnessProjectList[index];
+                    final item = witnessWomenController
+                        .filteredWitnessProjectList[index];
 
                     return Padding(
                       padding: EdgeInsets.only(bottom: 12.h),
                       child: ShowingCard(
-                        image: item.coverImage ?? 'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
+                        image:
+                        item.coverImage ??
+                            'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
                         title: item.title ?? 'title',
                         location: item.location ?? 'location',
-                        //TODO: count
-                        familyCount: 24,
+                        familyCount: item.totalBenefitedFamilies ?? 0,
                         buttonTitle: item.category?.name ?? 'category',
                         onTap: () async {
                           await witnessWomenController.fetchProjectDetails(
@@ -111,11 +117,11 @@ class _WitnessWomenScreenState extends State<WitnessWomenScreen> {
 
                           // Navigate to detail screen with fetched details
                           if (witnessWomenController
-                                  .witnessProjectDetailsList
-                                  .value !=
+                              .witnessProjectDetailsList
+                              .value !=
                               null) {
                             Get.to(
-                              () => WitnessWomenDetailScreen(
+                                  () => WitnessWomenDetailScreen(
                                 details: witnessWomenController
                                     .witnessProjectDetailsList
                                     .value!,

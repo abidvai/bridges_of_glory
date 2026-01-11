@@ -4,6 +4,7 @@ import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/views/donation/bottom_nav_donation.dart';
 import 'package:bridges_of_glory/views/donation/explore/controller/empowerment_controller.dart';
+import 'package:bridges_of_glory/views/donation/explore/empowerment_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -11,12 +12,23 @@ import 'package:iconsax/iconsax.dart';
 import '../../../core/common_widgets/custom_text_field.dart';
 import '../../../core/common_widgets/showing_card.dart';
 
-class EmpowermentScreen extends StatelessWidget {
-  EmpowermentScreen({super.key});
+class EmpowermentScreen extends StatefulWidget {
+  final int id;
 
-  final EmpowermentController empowermentController = Get.put(
-    EmpowermentController(),
-  );
+  const EmpowermentScreen({super.key, required this.id});
+
+  @override
+  State<EmpowermentScreen> createState() => _EmpowermentScreenState();
+}
+
+class _EmpowermentScreenState extends State<EmpowermentScreen> {
+  late EmpowermentController empowermentController;
+
+  @override
+  void initState() {
+    super.initState();
+    empowermentController = Get.put(EmpowermentController(id: widget.id));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,15 +57,19 @@ class EmpowermentScreen extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Obx(() {
+                  if(empowermentController.isLoading.value) {
+                    return Center(child: CircularProgressIndicator() ,);
+                  }
+
                   return Row(
                     children: [
-                      ...empowermentController.menuList.map((item) {
+                      ...empowermentController.categoryList.map((item) {
                         final isSelected =
-                            item == empowermentController.selected.value;
+                            item.name == empowermentController.selected.value;
 
                         return GestureDetector(
                           onTap: () {
-                            empowermentController.selected.value = item;
+                            empowermentController.selected.value = item.name ?? 'All';
                           },
                           child: Container(
                             height: 40.h,
@@ -67,13 +83,10 @@ class EmpowermentScreen extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                item,
+                                item.name ?? 'category',
                                 style: isSelected
                                     ? TextStyle(color: AppColors.red)
-                                    : Theme
-                                    .of(context)
-                                    .textTheme
-                                    .bodyLarge,
+                                    : Theme.of(context).textTheme.bodyLarge,
                               ),
                             ),
                           ),
@@ -88,16 +101,14 @@ class EmpowermentScreen extends StatelessWidget {
             SizedBox(height: 22.h),
             Obx(() {
               if (empowermentController.isLoading.value) {
-                return Center(
-                    child: CircularProgressIndicator());
+                return Center(child: CircularProgressIndicator());
               }
               return Expanded(
                 child: ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  itemCount: empowermentController.empowermentList.length,
+                  itemCount: empowermentController.filterEmpowermentList.length,
                   itemBuilder: (context, index) {
-                    final item =
-                    empowermentController.empowermentList[index];
+                    final item = empowermentController.filterEmpowermentList[index];
 
                     return Padding(
                       padding: EdgeInsets.only(bottom: 12.h),
@@ -105,14 +116,24 @@ class EmpowermentScreen extends StatelessWidget {
                         image: item.coverImage ?? 'assets/images/cooking.png',
                         title: item.title ?? 'title',
                         location: item.location ?? 'location',
-                        //TODO: family count
-                        familyCount: 24,
+                        familyCount: item.totalBenefitedFamilies ?? 0,
                         buttonTitle: item.category?.name ?? 'category',
-                        onTap: () {
-                          Get.toNamed(
-                            AppRoutes.empowermentDetailScreen,
-                            arguments: {'title': item.title},
+                        onTap: () async {
+                          await empowermentController.fetchProjectDetails(
+                            item.id ?? 0,
                           );
+
+                          // Navigate to detail screen with fetched details
+                          if (empowermentController.empowermentDetail.value !=
+                              null) {
+                            Get.to(
+                              () => EmpowermentDetailScreen(
+                                details: empowermentController
+                                    .empowermentDetail
+                                    .value!,
+                              ),
+                            );
+                          }
                         },
                       ),
                     );
