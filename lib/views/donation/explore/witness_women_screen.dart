@@ -90,12 +90,26 @@ class _WitnessWomenScreenState extends State<WitnessWomenScreen> {
             Obx(() {
               if (witnessWomenController.isLoading.value) {
                 return Center(child: CircularProgressIndicator());
+              } else if (witnessWomenController
+                  .filteredWitnessProjectList
+                  .isEmpty) {
+                return Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 120.h),
+                    child: Text(
+                      'No result found in ${witnessWomenController.selected} category',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: AppColors.hintText,
+                      ),
+                    ),
+                  ),
+                );
               }
               return Expanded(
                 child: ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
                   itemCount:
-                  witnessWomenController.filteredWitnessProjectList.length,
+                      witnessWomenController.filteredWitnessProjectList.length,
                   itemBuilder: (context, index) {
                     final item = witnessWomenController
                         .filteredWitnessProjectList[index];
@@ -104,7 +118,7 @@ class _WitnessWomenScreenState extends State<WitnessWomenScreen> {
                       padding: EdgeInsets.only(bottom: 12.h),
                       child: ShowingCard(
                         image:
-                        item.coverImage ??
+                            item.coverImage ??
                             'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
                         title: item.title ?? 'title',
                         location: item.location ?? 'location',
@@ -117,11 +131,11 @@ class _WitnessWomenScreenState extends State<WitnessWomenScreen> {
 
                           // Navigate to detail screen with fetched details
                           if (witnessWomenController
-                              .witnessProjectDetailsList
-                              .value !=
+                                  .witnessProjectDetailsList
+                                  .value !=
                               null) {
                             Get.to(
-                                  () => WitnessWomenDetailScreen(
+                              () => WitnessWomenDetailScreen(
                                 details: witnessWomenController
                                     .witnessProjectDetailsList
                                     .value!,

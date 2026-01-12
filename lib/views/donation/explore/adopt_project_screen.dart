@@ -115,11 +115,26 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
             Obx(() {
               if (adoptProjectController.isLoading.value) {
                 return Center(child: CircularProgressIndicator());
+              } else if (adoptProjectController
+                  .filterVillageProjectList
+                  .isEmpty) {
+                return Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 120.h),
+                    child: Text(
+                      'No result found in ${adoptProjectController.selected} category',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: AppColors.hintText,
+                      ),
+                    ),
+                  ),
+                );
               }
               return Expanded(
                 child: ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  itemCount: adoptProjectController.filterVillageProjectList.length,
+                  itemCount:
+                      adoptProjectController.filterVillageProjectList.length,
                   itemBuilder: (context, index) {
                     final item =
                         adoptProjectController.filterVillageProjectList[index];
@@ -127,7 +142,9 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
                     return Padding(
                       padding: EdgeInsets.only(bottom: 12.h),
                       child: ShowingCard(
-                        image: item.coverImage ?? 'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
+                        image:
+                            item.coverImage ??
+                            'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
                         title: item.title ?? 'title',
                         location: item.location ?? 'location',
                         familyCount: item.totalBenefitedFamilies ?? 0,
@@ -137,12 +154,10 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
                             item.id ?? 0,
                           );
 
-                          if (adoptProjectController
-                              .adoptProjectDetail
-                              .value !=
+                          if (adoptProjectController.adoptProjectDetail.value !=
                               null) {
                             Get.to(
-                                  () => AdoptDetailScreen(
+                              () => AdoptDetailScreen(
                                 details: adoptProjectController
                                     .adoptProjectDetail
                                     .value!,

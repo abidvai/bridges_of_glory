@@ -57,8 +57,8 @@ class _EmpowermentScreenState extends State<EmpowermentScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Obx(() {
-                  if(empowermentController.isLoading.value) {
-                    return Center(child: CircularProgressIndicator() ,);
+                  if (empowermentController.isLoading.value) {
+                    return Center(child: CircularProgressIndicator());
                   }
 
                   return Row(
@@ -69,7 +69,8 @@ class _EmpowermentScreenState extends State<EmpowermentScreen> {
 
                         return GestureDetector(
                           onTap: () {
-                            empowermentController.selected.value = item.name ?? 'All';
+                            empowermentController.selected.value =
+                                item.name ?? 'All';
                           },
                           child: Container(
                             height: 40.h,
@@ -102,13 +103,26 @@ class _EmpowermentScreenState extends State<EmpowermentScreen> {
             Obx(() {
               if (empowermentController.isLoading.value) {
                 return Center(child: CircularProgressIndicator());
+              } else if (empowermentController.filterEmpowermentList.isEmpty) {
+                return Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 120.h),
+                    child: Text(
+                      'No result found in ${empowermentController.selected} category',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: AppColors.hintText,
+                      ),
+                    ),
+                  ),
+                );
               }
               return Expanded(
                 child: ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
                   itemCount: empowermentController.filterEmpowermentList.length,
                   itemBuilder: (context, index) {
-                    final item = empowermentController.filterEmpowermentList[index];
+                    final item =
+                        empowermentController.filterEmpowermentList[index];
 
                     return Padding(
                       padding: EdgeInsets.only(bottom: 12.h),

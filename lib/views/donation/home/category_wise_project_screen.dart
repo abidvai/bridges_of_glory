@@ -41,6 +41,17 @@ class _CategoryWiseProjectScreenState extends State<CategoryWiseProjectScreen> {
       body: Obx(() {
         if (donerHomeController.isLoading.value) {
           return Center(child: CircularProgressIndicator());
+        } else if (donerHomeController.categoryProjectList.isEmpty) {
+          return Center(
+            child: Expanded(
+              child: Text(
+                'No result found in ${widget.categoryModel.name} category',
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(color: AppColors.hintText),
+              ),
+            ),
+          );
         }
 
         return SingleChildScrollView(
