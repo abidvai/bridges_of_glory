@@ -1,18 +1,19 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+
+import 'package:bridges_of_glory/utils/constant/color.dart';
 
 /// ===============================
 /// IMAGE UPLOADER WIDGET
 /// ===============================
 class ImageUploaderVOne extends StatefulWidget {
   final double height;
-  final String? defaultImage;
-  final String? currentImage;
+  final String? defaultImage; // Local SVG asset
+  final String? currentImage; // Remote image URL
   final bool enable;
   final bool loading;
   final bool showBorder;
@@ -36,13 +37,12 @@ class ImageUploaderVOne extends StatefulWidget {
 }
 
 class _ImageUploaderVOneState extends State<ImageUploaderVOne> {
-  File? _imageFile;
-  Uint8List? _imageData;
+  File? _imageFile;         // Local picked image
+  Uint8List? _imageData;    // Bytes of picked image
 
-  /// pick image from camera or gallery
+  /// Pick image from camera or gallery
   Future<void> _pickImage(ImageSource source) async {
     final ImagePicker picker = ImagePicker();
-
     try {
       final XFile? file = await picker.pickImage(
         source: source,
@@ -65,7 +65,7 @@ class _ImageUploaderVOneState extends State<ImageUploaderVOne> {
     }
   }
 
-  /// bottom sheet (camera / gallery)
+  /// Bottom sheet for camera/gallery selection
   void _showPickerOptions() {
     showModalBottomSheet(
       context: context,
@@ -139,25 +139,7 @@ class _ImageUploaderVOneState extends State<ImageUploaderVOne> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(widget.height / 2),
-                child: _imageData != null
-                    ? Image.memory(_imageData!, fit: BoxFit.cover)
-                    : widget.currentImage != null
-                    ? SvgPicture.asset(widget.currentImage!, fit: BoxFit.cover)
-                    : Center(
-                        child: SvgPicture.asset(
-                          widget.defaultImage ?? '',
-                          width: widget.height * .6,
-                          height: widget.height * .6,
-                          color: Colors.grey,
-                          errorBuilder: (_, __, ___) {
-                            return const Icon(
-                              Icons.person,
-                              size: 20,
-                              color: Colors.grey,
-                            );
-                          },
-                        ),
-                      ),
+                child: _buildImageWidget(),
               ),
             ),
           ),
@@ -202,6 +184,60 @@ class _ImageUploaderVOneState extends State<ImageUploaderVOne> {
               ),
             ),
         ],
+      ),
+    );
+  }
+
+  /// Returns the correct widget depending on what is available
+  Widget _buildImageWidget() {
+    // 1. Show picked local image
+    if (_imageData != null) {
+      return Image.memory(_imageData!, fit: BoxFit.cover);
+    }
+
+    // 2. Show remote image from URL (JPG/PNG)
+    if (widget.currentImage != null && widget.currentImage!.isNotEmpty) {
+      if (widget.currentImage!.endsWith('.svg')) {
+        return SvgPicture.network(
+          widget.currentImage!,
+          fit: BoxFit.cover,
+          placeholderBuilder: (_) => const Center(child: CircularProgressIndicator()),
+          alignment: Alignment.center,
+        );
+      } else {
+        return Image.network(
+          widget.currentImage!,
+          fit: BoxFit.cover,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return const Center(child: CircularProgressIndicator());
+          },
+          errorBuilder: (context, error, stackTrace) {
+            return const Center(child: Icon(Icons.person, color: Colors.grey));
+          },
+        );
+      }
+    }
+
+    // 3. Show default asset SVG
+    if (widget.defaultImage != null && widget.defaultImage!.isNotEmpty) {
+      return SvgPicture.asset(
+        widget.defaultImage!,
+        fit: BoxFit.cover,
+        width: widget.height * .6,
+        height: widget.height * .6,
+        color: Colors.grey,
+        alignment: Alignment.center,
+        placeholderBuilder: (_) => const Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    // 4. Fallback icon
+    return const Center(
+      child: Icon(
+        Icons.person,
+        size: 40,
+        color: Colors.grey,
       ),
     );
   }

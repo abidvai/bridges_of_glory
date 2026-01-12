@@ -3,6 +3,7 @@ import 'package:bridges_of_glory/core/common_widgets/icon_container.dart';
 import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../gen/assets.gen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -172,11 +173,13 @@ class InfoWidget extends StatelessWidget {
                               title: 'Contact Number',
                               value: '+1 (555) 123-4567',
                               path: Assets.icons.call.path,
+                              urlScheme: 'tel:+15551234567',
                             ),
                             ContactInfoCard(
                               title: 'Mail address',
                               value: 'example@gmail.com',
                               path: Assets.icons.mail.path,
+                              urlScheme: 'mailto:example@gmail.com',
                             ),
                           ],
                           // Spacer(),
@@ -199,20 +202,36 @@ class ContactInfoCard extends StatelessWidget {
   final String title;
   final String value;
   final String path;
+  final String? urlScheme;
 
   const ContactInfoCard({
     super.key,
     required this.title,
     required this.value,
     required this.path,
+    this.urlScheme,
   });
+
+  Future<void> _launchUrl() async {
+    if (urlScheme == null) return;
+
+    final Uri uri = Uri.parse(urlScheme!);
+
+    if (!await launchUrl(uri)) {
+      throw 'Could not launch $urlScheme';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: IconContainer(path: path),
-      title: Text(title, style: TextStyle(color: AppColors.hintText)),
-      subtitle: Text(value),
+    return GestureDetector(
+      onTap: _launchUrl,
+      child: ListTile(
+        leading: SvgPicture.asset(path, width: 35, height: 35),
+        title: Text(title),
+        subtitle: Text(value),
+        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+      ),
     );
   }
 }

@@ -9,15 +9,11 @@ import '../../../utils/constant/color.dart';
 import 'change_password_screen.dart';
 import 'controller/profile_controller.dart';
 
-class DonerProfileSetting extends StatefulWidget {
-  const DonerProfileSetting({super.key});
+class DonerProfileSetting extends StatelessWidget {
+  DonerProfileSetting({super.key});
 
-  @override
-  State<DonerProfileSetting> createState() => _AccountSettingState();
-}
-
-class _AccountSettingState extends State<DonerProfileSetting> {
-  final DonerProfileController profileController = Get.put(DonerProfileController());
+  final DonerProfileController profileController =
+      Get.find<DonerProfileController>();
 
   Widget _settingsItem({
     required String title,
@@ -96,36 +92,52 @@ class _AccountSettingState extends State<DonerProfileSetting> {
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Column(
                 children: [
-                  _settingsItem(
-                    title: 'Full name',
-                    text: 'Jenny Smith',
-                    onEditClick: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return CustomModal(
-                            controller: profileController.nameController,
-                            title: 'Full name',
-                            text: 'Jenny Smith',
-                            limit: 32,
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                          );
-                        },
-                      );
-                    },
-                  ),
+                  Obx(() {
+                    return _settingsItem(
+                      title: 'Full Name',
+                      text:
+                          profileController.profileInfo.value?.data?.fullName ??
+                          'name',
+                      onEditClick: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return CustomModal(
+                              controller: profileController.nameController,
+                              title: 'Full name',
+                              text:
+                                  profileController
+                                      .profileInfo
+                                      .value
+                                      ?.data
+                                      ?.fullName ??
+                                  'name',
+                              limit: 32,
+                              onTap: () {
+                                profileController.updateName(
+                                  profileController.nameController.text
+                                      .toString(),
+                                );
+                                Navigator.pop(context);
+                              },
+                            );
+                          },
+                        );
+                      },
+                    );
+                  }),
                   SizedBox(height: 18.h),
                   _settingsItem(
                     title: 'Email',
-                    text: 'example@gmail.com',
+                    text:
+                        profileController.profileInfo.value?.data?.email ??
+                        'email',
                     showEditOption: false,
                   ),
                   SizedBox(height: 18.h),
                   _settingsItem(
                     title: 'Password',
-                    text: '●●●●●●●●●●●●',
+                    text: '●●●●●●●●',
                     editText: 'Change',
                     onEditClick: () {
                       Get.to(UpdatePasswordScreen());
@@ -163,7 +175,8 @@ class CustomModal extends StatefulWidget {
 }
 
 class _CustomModalState extends State<CustomModal> {
-  final DonerProfileController profileController = Get.find<DonerProfileController>();
+  final DonerProfileController profileController =
+      Get.find<DonerProfileController>();
 
   @override
   void initState() {

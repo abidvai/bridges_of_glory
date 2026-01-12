@@ -76,7 +76,7 @@ class PaymentScreen extends StatelessWidget {
                     CustomTextField(
                       controller: paymentController.noticeController,
                       hintText:
-                          'If your payment amount is above please send us a message here...',
+                          'If your payment amount is above \$1000 please send us a message here...',
                       maxLines: 10,
                     ),
                     SizedBox(height: 12.h),

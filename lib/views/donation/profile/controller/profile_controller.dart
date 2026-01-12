@@ -1,8 +1,13 @@
+import 'dart:io';
 
-
+import 'package:bridges_of_glory/model/privacy_model.dart';
+import 'package:bridges_of_glory/model/profile_info_model.dart';
+import 'package:bridges_of_glory/service/profile/profile_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+
+import '../../../../core/common_widgets/custom_toast.dart' as utils;
 
 class DonerProfileController extends GetxController {
   RxBool isLoading = RxBool(false);
@@ -10,101 +15,85 @@ class DonerProfileController extends GetxController {
   TextEditingController textController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   RxInt textCharCount = 0.obs;
+  Rxn<ProfileInfoModel> profileInfo = Rxn<ProfileInfoModel>(null);
+  RxList<PrivacyModel> privacyList = RxList<PrivacyModel>();
+  File? selectedImage;
 
-  // Future<void> fetchProfileData() async {
-  //   try {
-  //     isLoading.value = true;
-  //
-  //     final token = await AppHelper.instance.getAccessToken();
-  //
-  //     if (token == null) return;
-  //     final response = await profileAuth.fetchProfile(token);
-  //
-  //     if (response != null) {
-  //       profileInfo.value = response;
-  //     } else {
-  //       utils.showCustomToast(text: 'fetching data not found');
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
+  final ProfileService _profileService = ProfileService();
 
-  // Future<void> updatePhoneNumber(String number) async {
-  //   try {
-  //     isLoading.value = true;
-  //     final token = await AppHelper.instance.getAccessToken();
-  //     if (token == null) return;
-  //
-  //     final response = await profileAuth.updateNumber(token, number);
-  //
-  //     if (response) {
-  //       utils.showCustomToast(
-  //         text: 'number updated',
-  //         toastType: utils.ToastTypesInfo(utils.ToastTypes.success),
-  //       );
-  //       fetchProfileData();
-  //     } else {
-  //       utils.showCustomToast(text: 'Something went wrong');
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
-  //
-  // Future<void> updateName(String name) async {
-  //   try {
-  //     isLoading.value = true;
-  //     final token = await AppHelper.instance.getAccessToken();
-  //     if (token == null) return;
-  //
-  //     final response = await profileAuth.updateName(token, name);
-  //
-  //
-  //     if (response.success == true) {
-  //       utils.showCustomToast(
-  //         text: 'name updated',
-  //         toastType: utils.ToastTypesInfo(utils.ToastTypes.success),
-  //       );
-  //       fetchProfileData();
-  //     } else {
-  //       utils.showCustomToast(text: 'Something went wrong');
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
-  //
-  // Future<void> uploadImage() async {
-  //   final response = await profileAuth.uploadProImage(profilePic.value!);
-  //
-  //   if (response?.data != null) {
-  //     utils.showCustomToast(
-  //       text: 'upload image successfully',
-  //       toastType: utils.ToastTypesInfo(utils.ToastTypes.success),
-  //     );
-  //
-  //     // profileInfo.refresh();
-  //     fetchProfileData();
-  //   } else {
-  //     // utils.showCustomToast(
-  //     //   text: response?.error ?? 'something went wrong',
-  //     // );
-  //   }
-  // }
+  Future<void> fetchProfileData() async {
+    isLoading.value = true;
 
+    final response = await _profileService.fetchUserInfo();
 
+    if (response.data != null) {
+      isLoading.value = false;
+      profileInfo.value = response.data;
+    } else {
+      isLoading.value = false;
+      utils.showCustomToast(text: 'fetching data not found');
+    }
+  }
 
+  Future<void> fetchPrivacy() async {
+    isLoading.value = true;
+
+    final response = await _profileService.fetchPrivacy();
+
+    if (response.data != null) {
+      isLoading.value = false;
+      privacyList.assignAll(response.data!);
+    } else {
+      isLoading.value = false;
+      utils.showCustomToast(text: 'privacy data not found');
+    }
+  }
+
+  Future<void> updateName(String name) async {
+    isLoading.value = true;
+
+    final response = await _profileService.updateName(name);
+
+    if (response.data != null) {
+      isLoading.value = false;
+      profileInfo.value = response.data;
+      profileInfo.refresh();
+      utils.showCustomToast(
+        text: 'user name changed successfully',
+        toastType: utils.ToastTypesInfo(utils.ToastTypes.success),
+      );
+    } else {
+      isLoading.value = false;
+      utils.showCustomToast(text: 'privacy data not found');
+    }
+  }
+
+  Future<void> updateImage() async {
+    final response = await _profileService.updateProfilePic(selectedImage!);
+
+    if (response.data != null) {
+      utils.showCustomToast(
+        text: 'upload image successfully',
+        toastType: utils.ToastTypesInfo(utils.ToastTypes.success),
+      );
+
+      profileInfo.refresh();
+    } else {
+      utils.showCustomToast(
+        text: response.error ?? 'something went wrong',
+      );
+    }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchProfileData();
+    fetchPrivacy();
+  }
 
   @override
   void onClose() {
-    // TODO: implement onClose
     super.onClose();
     textController.dispose();
     nameController.dispose();

@@ -5,6 +5,7 @@ import 'package:bridges_of_glory/core/common_widgets/image_uploader.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/gen/assets.gen.dart';
 import 'package:bridges_of_glory/utils/helper/app_helper.dart';
+import 'package:bridges_of_glory/views/donation/profile/controller/profile_controller.dart';
 import 'package:bridges_of_glory/views/donation/profile/notification_screen.dart';
 import 'package:bridges_of_glory/views/donation/profile/privacy_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,15 +18,12 @@ import 'package:iconsax/iconsax.dart';
 import '../../../core/common_widgets/primary_button.dart';
 import '../../../utils/constant/color.dart';
 
-class DonerSettingScreen extends StatefulWidget {
-  const DonerSettingScreen({super.key});
+class DonerSettingScreen extends StatelessWidget {
+  DonerSettingScreen({super.key});
 
-  @override
-  State<DonerSettingScreen> createState() => _DonerSettingScreenState();
-}
-
-class _DonerSettingScreenState extends State<DonerSettingScreen> {
-  File? selectedImage;
+  final DonerProfileController _donerProfileController = Get.put(
+    DonerProfileController(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +40,19 @@ class _DonerSettingScreenState extends State<DonerSettingScreen> {
           child: Column(
             children: [
               SizedBox(height: 24.h),
-              ImageUploaderVOne(
-                currentImage: Assets.icons.user.path,
-                defaultImage: Assets.icons.user.path,
-                onImageSelected: (file) {
-                  selectedImage = file;
-                  print(selectedImage);
-                },
-              ),
+              Obx(() {
+                return ImageUploaderVOne(
+                  currentImage:
+                      _donerProfileController.profileInfo.value?.data?.avatar,
+                  defaultImage: Assets.icons.user.path,
+                  onImageSelected: (file) {
+                    _donerProfileController.selectedImage = file;
+                    if (_donerProfileController.selectedImage != null) {
+                      _donerProfileController.updateImage();
+                    }
+                  },
+                );
+              }),
               SizedBox(height: 24.h),
               _topSection(context),
               SizedBox(height: 24.h),
@@ -64,10 +67,17 @@ class _DonerSettingScreenState extends State<DonerSettingScreen> {
   Widget _topSection(BuildContext context) {
     return Column(
       children: [
-        Text('Jenny Smith', style: Theme.of(context).textTheme.titleLarge),
+        Obx(() {
+          return Text(
+            _donerProfileController.profileInfo.value?.data?.fullName ??
+                'user name',
+            style: Theme.of(context).textTheme.titleLarge,
+          );
+        }),
         SizedBox(height: 12.h),
         Text(
-          'jenny@gmail.com',
+          _donerProfileController.profileInfo.value?.data?.email ??
+              'user email',
           style: Theme.of(
             context,
           ).textTheme.bodyMedium?.copyWith(color: AppColors.hintText),
