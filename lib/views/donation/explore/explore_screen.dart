@@ -33,10 +33,8 @@ class ExploreScreen extends StatelessWidget {
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(vertical: 20.h),
             child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // AppTopBar(text: 'Explore'),
                 Material(
                   elevation: 1,
                   borderRadius: BorderRadius.circular(20.r),
@@ -65,9 +63,8 @@ class ExploreScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 30.h),
                         Obx(() {
-                          return Skeletonizer(
-                            enabled: exploreController.isLoading.value,
-                            child: SizedBox(
+                          if (exploreController.isLoading.value) {
+                            return SizedBox(
                               height: 400.h,
                               child: GridView.builder(
                                 padding: EdgeInsets.zero,
@@ -77,13 +74,43 @@ class ExploreScreen extends StatelessWidget {
                                       crossAxisCount: 2,
                                       mainAxisSpacing: 8.h,
                                       crossAxisSpacing: 16.w,
-                                      childAspectRatio: 1.06
+                                      childAspectRatio: 1.06,
+                                    ),
+                                itemCount: 6,
+                                itemBuilder: (context, index) {
+                                  return Skeletonizer(
+                                    enabled: true,
+                                    child: Container(
+                                      width: 100.w,
+                                      height: 99.h,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[300],
+                                        borderRadius: BorderRadius.circular(
+                                          12.r,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          } else {
+                            return SizedBox(
+                              height: 400.h,
+                              child: GridView.builder(
+                                padding: EdgeInsets.zero,
+                                shrinkWrap: true,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 8.h,
+                                      crossAxisSpacing: 16.w,
+                                      childAspectRatio: 1.06,
                                     ),
                                 itemCount: exploreController.exploreMenu.length,
                                 itemBuilder: (context, index) {
                                   final exploreMenu =
                                       exploreController.exploreMenu[index];
-
                                   return ExploreMenu(
                                     image: exploreMenu.image ?? '',
                                     onTap: () {
@@ -98,137 +125,9 @@ class ExploreScreen extends StatelessWidget {
                                   );
                                 },
                               ),
-                            ),
-                          );
+                            );
+                          }
                         }),
-                        // Center(
-                        //   child: Wrap(
-                        //     spacing: 39.w,
-                        //     runSpacing: 18.h,
-                        //     alignment: WrapAlignment.center,
-                        //     direction: Axis.horizontal,
-                        //     children: [
-                        //       ExploreMenu(
-                        //         image: Assets.images.becomeMovement,
-                        //         onTap: () {
-                        //           Get.to(
-                        //             InfoScreen(
-                        //               isMovement: true,
-                        //               onTap: () {
-                        //                 Get.back();
-                        //                 // Get.to(LibraryScreen(showAppBar: true));
-                        //               },
-                        //               url:
-                        //                   'https://www.youtube.com/watch?v=HH-Hgc3O1Ec',
-                        //               title: 'Become The Movement',
-                        //               information:
-                        //                   'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
-                        //               description:
-                        //                   'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
-                        //             ),
-                        //           );
-                        //         },
-                        //       ),
-                        //       ExploreMenu(
-                        //         image: Assets.images.kingdomEmpowerment,
-                        //         onTap: () {
-                        //           Get.to(
-                        //             InfoScreen(
-                        //               onTap: () {
-                        //                 Get.toNamed(AppRoutes.empowerment);
-                        //               },
-                        //               url:
-                        //                   'https://www.youtube.com/watch?v=R_TwTnWvGkI',
-                        //               title: 'Kingdom Empowerment',
-                        //               information:
-                        //                   'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
-                        //               description:
-                        //                   'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
-                        //             ),
-                        //           );
-                        //         },
-                        //       ),
-                        //       ExploreMenu(
-                        //         image: Assets.images.walkingWitnessWomen,
-                        //         onTap: () {
-                        //           Get.to(
-                        //             InfoScreen(
-                        //               onTap: () {
-                        //                 Get.toNamed(
-                        //                   AppRoutes.witnessWomenScreen,
-                        //                 );
-                        //               },
-                        //               url:
-                        //                   'https://www.youtube.com/watch?v=dGiW5_m4Ihc',
-                        //               title: 'Walking Witness Women',
-                        //               information:
-                        //                   'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
-                        //               description:
-                        //                   'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
-                        //             ),
-                        //           );
-                        //         },
-                        //       ),
-                        //       ExploreMenu(
-                        //         image: Assets.images.adoptaVillage,
-                        //         onTap: () {
-                        //           Get.to(
-                        //             InfoScreen(
-                        //               onTap: () {
-                        //                 Get.toNamed(
-                        //                   AppRoutes.adoptProjectScreen,
-                        //                 );
-                        //               },
-                        //               url:
-                        //                   'https://www.youtube.com/watch?v=Rhw7kqPibKs',
-                        //               title: 'Adopt a Village / Prison',
-                        //               information:
-                        //                   'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
-                        //               description:
-                        //                   'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
-                        //             ),
-                        //           );
-                        //         },
-                        //       ),
-                        //       ExploreMenu(
-                        //         image: Assets.images.bibleBook,
-                        //         onTap: () {
-                        //           Get.to(
-                        //             InfoScreen(
-                        //               onTap: () {
-                        //                 Get.to(LibraryScreen(showAppBar: true));
-                        //               },
-                        //               title: 'Bible Books and More',
-                        //               information:
-                        //                   'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
-                        //               description:
-                        //                   'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
-                        //             ),
-                        //           );
-                        //         },
-                        //       ),
-                        //       ExploreMenu(
-                        //         image: Assets.images.livingKingdom,
-                        //         onTap: () {
-                        //           Get.to(
-                        //             InfoScreen(
-                        //               onTap: () {
-                        //                 Get.back();
-                        //               },
-                        //               url:
-                        //                   'https://www.youtube.com/watch?v=EAFTFkfSa-4',
-                        //               title: 'Living in The Kingdom',
-                        //               information:
-                        //                   'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
-                        //               description:
-                        //                   'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
-                        //             ),
-                        //           );
-                        //         },
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),

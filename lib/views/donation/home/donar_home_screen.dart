@@ -6,10 +6,12 @@ import 'package:bridges_of_glory/views/donation/explore/empowerment_detail_scree
 import 'package:bridges_of_glory/views/donation/explore/empowerment_screen.dart';
 import 'package:bridges_of_glory/views/donation/home/category_wise_project_screen.dart';
 import 'package:bridges_of_glory/views/donation/home/controller/doner_home_controller.dart';
+import 'package:bridges_of_glory/views/donation/profile/controller/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../core/common_widgets/category_card.dart';
 import '../../../core/common_widgets/showing_card.dart';
@@ -25,6 +27,9 @@ class DonerHomeScreen extends StatelessWidget {
   final EmpowermentController empowermentController = Get.put(
     EmpowermentController(id: 2),
   );
+  final DonerProfileController _donerProfileController = Get.put(
+    DonerProfileController(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -37,19 +42,49 @@ class DonerHomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Location', style: Theme.of(context).textTheme.bodyLarge),
-                SizedBox(height: 7.h),
+                SizedBox(height: 20.h),
                 Row(
                   children: [
-                    Icon(Iconsax.location, size: 24.w),
-                    SizedBox(width: 3.w),
+                    CircleAvatar(
+                      radius: 20,
+                      // optional size
+                      backgroundImage:
+                          _donerProfileController
+                                  .profileInfo
+                                  .value
+                                  ?.data
+                                  ?.avatar !=
+                              null
+                          ? NetworkImage(
+                              _donerProfileController
+                                  .profileInfo
+                                  .value!
+                                  .data!
+                                  .avatar!,
+                            )
+                          : null,
+                      backgroundColor: Colors.grey[300],
+                      child:
+                          _donerProfileController
+                                  .profileInfo
+                                  .value
+                                  ?.data
+                                  ?.avatar ==
+                              null
+                          ? Icon(Icons.person, size: 30)
+                          : null,
+                    ),
+                    SizedBox(width: 10.w),
                     Text(
-                      'New York, USA',
-                      style: Theme.of(context).textTheme.titleMedium,
+                      'Hi! ${_donerProfileController.profileInfo.value?.data?.fullName}' ??
+                          'user name',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
                     ),
                   ],
                 ),
-                SizedBox(height: 32.h),
+                SizedBox(height: 22.h),
                 CustomTextField(
                   controller: donerHomeController.searchController,
                   prefixIcon: Icon(Iconsax.search_normal_14),
@@ -96,38 +131,38 @@ class DonerHomeScreen extends StatelessWidget {
                 TitleRow(title: 'Categories'),
                 SizedBox(height: 16.h),
                 Obx(() {
-                  if (donerHomeController.isLoading.value) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  return SizedBox(
-                    height: 100.h,
-                    child: ListView.separated(
-                      padding: EdgeInsets.zero,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: donerHomeController.categoryList.length,
-                      separatorBuilder: (context, index) {
-                        return SizedBox(width: 16.w);
-                      },
-                      itemBuilder: (context, index) {
-                        final category =
-                            donerHomeController.categoryList[index];
-                        return CategoryCard(
-                          image:
-                              category.image ??
-                              'http://10.10.12.62:8000/media/categories/business.png',
-                          title: category.name ?? 'category',
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => CategoryWiseProjectScreen(
-                                  categoryModel: category,
+                  return Skeletonizer(
+                    enabled: donerHomeController.isLoading.value,
+                    child: SizedBox(
+                      height: 100.h,
+                      child: ListView.separated(
+                        padding: EdgeInsets.zero,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: donerHomeController.categoryList.length,
+                        separatorBuilder: (context, index) {
+                          return SizedBox(width: 16.w);
+                        },
+                        itemBuilder: (context, index) {
+                          final category =
+                              donerHomeController.categoryList[index];
+                          return CategoryCard(
+                            image:
+                                category.image ??
+                                'http://10.10.12.62:8000/media/categories/business.png',
+                            title: category.name ?? 'category',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => CategoryWiseProjectScreen(
+                                    categoryModel: category,
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        );
-                      },
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
                   );
                 }),
@@ -140,51 +175,52 @@ class DonerHomeScreen extends StatelessWidget {
                 ),
 
                 Obx(() {
-                  if (donerHomeController.isLoading.value) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  return SizedBox(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.zero,
-                      itemCount: donerHomeController.empowermentList.length
-                          .clamp(0, 5),
-                      itemBuilder: (context, index) {
-                        final item = donerHomeController.empowermentList[index];
+                  return Skeletonizer(
+                    enabled: donerHomeController.isLoading.value,
+                    child: SizedBox(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.zero,
+                        itemCount: donerHomeController.empowermentList.length
+                            .clamp(0, 5),
+                        itemBuilder: (context, index) {
+                          final item =
+                              donerHomeController.empowermentList[index];
 
-                        return Padding(
-                          padding: EdgeInsets.only(bottom: 12.h),
-                          child: ShowingCard(
-                            image:
-                                item.coverImage ??
-                                'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
-                            title: item.title ?? 'title',
-                            location: item.location ?? 'location',
-                            familyCount: item.totalBenefitedFamilies ?? 0,
-                            buttonTitle: item.category?.name ?? 'category',
-                            onTap: () async {
-                              await empowermentController.fetchProjectDetails(
-                                item.id ?? 0,
-                              );
-
-                              // Navigate to detail screen with fetched details
-                              if (empowermentController
-                                      .empowermentDetail
-                                      .value !=
-                                  null) {
-                                Get.to(
-                                  () => EmpowermentDetailScreen(
-                                    details: empowermentController
-                                        .empowermentDetail
-                                        .value!,
-                                  ),
+                          return Padding(
+                            padding: EdgeInsets.only(bottom: 12.h),
+                            child: ShowingCard(
+                              image:
+                                  item.coverImage ??
+                                  'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
+                              title: item.title ?? 'title',
+                              location: item.location ?? 'location',
+                              familyCount: item.totalBenefitedFamilies ?? 0,
+                              buttonTitle: item.category?.name ?? 'category',
+                              onTap: () async {
+                                await empowermentController.fetchProjectDetails(
+                                  item.id ?? 0,
                                 );
-                              }
-                            },
-                          ),
-                        );
-                      },
+
+                                // Navigate to detail screen with fetched details
+                                if (empowermentController
+                                        .empowermentDetail
+                                        .value !=
+                                    null) {
+                                  Get.to(
+                                    () => EmpowermentDetailScreen(
+                                      details: empowermentController
+                                          .empowermentDetail
+                                          .value!,
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   );
                 }),
