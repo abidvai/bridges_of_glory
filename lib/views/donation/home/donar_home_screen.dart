@@ -45,35 +45,37 @@ class DonerHomeScreen extends StatelessWidget {
                 SizedBox(height: 20.h),
                 Row(
                   children: [
-                    CircleAvatar(
-                      radius: 20,
-                      // optional size
-                      backgroundImage:
-                          _donerProfileController
-                                  .profileInfo
-                                  .value
-                                  ?.data
-                                  ?.avatar !=
-                              null
-                          ? NetworkImage(
-                              _donerProfileController
-                                  .profileInfo
-                                  .value!
-                                  .data!
-                                  .avatar!,
-                            )
-                          : null,
-                      backgroundColor: Colors.grey[300],
-                      child:
-                          _donerProfileController
-                                  .profileInfo
-                                  .value
-                                  ?.data
-                                  ?.avatar ==
-                              null
-                          ? Icon(Icons.person, size: 30)
-                          : null,
-                    ),
+                    Obx(() {
+                      return CircleAvatar(
+                        radius: 20,
+                        // optional size
+                        backgroundImage:
+                            _donerProfileController
+                                    .profileInfo
+                                    .value
+                                    ?.data
+                                    ?.avatar !=
+                                null
+                            ? NetworkImage(
+                                _donerProfileController
+                                    .profileInfo
+                                    .value!
+                                    .data!
+                                    .avatar!,
+                              )
+                            : null,
+                        backgroundColor: Colors.grey[300],
+                        child:
+                            _donerProfileController
+                                    .profileInfo
+                                    .value
+                                    ?.data
+                                    ?.avatar ==
+                                null
+                            ? Icon(Icons.person, size: 30)
+                            : null,
+                      );
+                    }),
                     SizedBox(width: 10.w),
                     Text(
                       'Hi! ${_donerProfileController.profileInfo.value?.data?.fullName}' ??
@@ -92,9 +94,7 @@ class DonerHomeScreen extends StatelessWidget {
                   filled: true,
                   filColor: AppColors.border.withValues(alpha: 0.1),
                 ),
-                SizedBox(height: 32.h),
-
-                Container(
+                SizedBox(height: 32.h), Container(
                   width: 335.w,
                   height: 119.h,
                   decoration: BoxDecoration(

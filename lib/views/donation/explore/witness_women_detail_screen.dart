@@ -22,6 +22,8 @@ class WitnessWomenDetailScreen extends StatelessWidget {
   final WitnessWomenController witnessWomenController =
       Get.find<WitnessWomenController>();
 
+  // var isVerify = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,6 +99,8 @@ class WitnessWomenDetailScreen extends StatelessWidget {
               ),
 
               SizedBox(height: 32.h),
+
+              //TODO: use visibility to display this section after verified
               Text(
                 'Contribute Us',
                 style: Theme.of(context).textTheme.titleSmall,
@@ -178,6 +182,7 @@ class WitnessWomenDetailScreen extends StatelessWidget {
       bottomSheet: Padding(
         padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
         child: PrimaryButton(
+          // text : isVerify ? 'Sponsor' : 'Click to Sponsor'
           text: 'Click to Sponsor',
           onTap: () {
             showDialog(

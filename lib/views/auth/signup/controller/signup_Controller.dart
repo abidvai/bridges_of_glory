@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class SignupController extends GetxController {
-  AuthService _authService = AuthService();
+  final AuthService _authService = AuthService();
 
   RxString selectedUser = RxString('');
   RxBool isCheck = RxBool(false);
@@ -16,7 +16,9 @@ class SignupController extends GetxController {
   String otp = '';
 
   TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController emailController = TextEditingController(
+    text: 'alphabytes.gpt@gmail.com',
+  );
   TextEditingController passwordController = TextEditingController();
   TextEditingController rewritePasswordController = TextEditingController();
 

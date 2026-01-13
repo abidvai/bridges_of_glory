@@ -104,6 +104,8 @@ class AdoptDetailScreen extends StatelessWidget {
                       ),
 
                       SizedBox(height: 30.h),
+
+                      //TODO: use visibility to display this section after verified
                       Text(
                         'Contribute Us',
                         style: Theme.of(context).textTheme.titleSmall,

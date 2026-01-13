@@ -46,8 +46,8 @@ class DonerSettingScreen extends StatelessWidget {
                       _donerProfileController.profileInfo.value?.data?.avatar,
                   defaultImage: _donerProfileController.profileInfo.value?.data?.avatar,
                   onImageSelected: (file) {
-                    _donerProfileController.selectedImage = file;
-                    if (_donerProfileController.selectedImage != null) {
+                    _donerProfileController.selectedImage.value = file;
+                    if (_donerProfileController.selectedImage.value != null) {
                       _donerProfileController.updateImage();
                     }
                   },

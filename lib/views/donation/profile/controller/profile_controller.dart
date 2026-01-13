@@ -17,7 +17,7 @@ class DonerProfileController extends GetxController {
   RxInt textCharCount = 0.obs;
   Rxn<ProfileInfoModel> profileInfo = Rxn<ProfileInfoModel>(null);
   RxList<PrivacyModel> privacyList = RxList<PrivacyModel>();
-  File? selectedImage;
+  Rx<File?> selectedImage = Rx<File?>(null);
 
   final ProfileService _profileService = ProfileService();
 
@@ -69,7 +69,7 @@ class DonerProfileController extends GetxController {
   }
 
   Future<void> updateImage() async {
-    final response = await _profileService.updateProfilePic(selectedImage!);
+    final response = await _profileService.updateProfilePic(selectedImage.value!);
 
     if (response.data != null) {
       utils.showCustomToast(
