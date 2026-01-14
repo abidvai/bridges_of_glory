@@ -3,6 +3,7 @@ import 'package:bridges_of_glory/model/project_detail_model.dart';
 import 'package:bridges_of_glory/model/project_model.dart';
 import 'package:bridges_of_glory/service/category/category_service.dart';
 import 'package:bridges_of_glory/service/project_service/project_service.dart';
+import 'package:bridges_of_glory/service/search/search_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../../../../core/common_widgets/custom_toast.dart';
@@ -11,6 +12,7 @@ import '../../../../model/category_model.dart';
 class DonerHomeController extends GetxController {
   TextEditingController searchController = TextEditingController();
   final ProjectService _projectService = ProjectService();
+  final SearchService _searchService = SearchService();
 
   final CategoryService _categoryService = CategoryService();
   RxList<CategoryModel> categoryList = <CategoryModel>[].obs;
@@ -18,8 +20,10 @@ class DonerHomeController extends GetxController {
       <CategoryWiseprojectModel>[].obs;
   Rxn<ProjectDetailsModel> projectDetail = Rxn<ProjectDetailsModel>(null);
 
+  RxString searchText = ''.obs;
   RxBool isLoading = RxBool(false);
   RxList<ProjectModel> empowermentList = <ProjectModel>[].obs;
+  RxList<ProjectModel> searchProjectList = <ProjectModel>[].obs;
 
 
   Future<void> fetchEmpowermentProject() async {
@@ -71,6 +75,19 @@ class DonerHomeController extends GetxController {
       showCustomToast(text: response.error ?? 'Failed to load project details');
     }
     isLoading.value = false;
+  }
+
+  Future<void> search({required String searchText}) async {
+    isLoading.value = true;
+    final response = await _searchService.search(searchText: searchText);
+
+    if (response.data != null) {
+      isLoading.value = false;
+      searchProjectList.assignAll(response.data!);
+    } else {
+      isLoading.value = false;
+      showCustomToast(text: response.error ?? 'Something went wrong 404.');
+    }
   }
 
   @override

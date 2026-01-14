@@ -7,6 +7,7 @@ import '../../../../model/project_model.dart';
 import '../../../../model/showing_card_model.dart';
 import '../../../../service/category/category_service.dart';
 import '../../../../service/project_service/project_service.dart';
+import '../../../../service/search/search_service.dart';
 
 class AdoptProjectController extends GetxController {
   final int id;
@@ -16,9 +17,13 @@ class AdoptProjectController extends GetxController {
   RxList<ProjectModel> villageProjectList = <ProjectModel>[].obs;
   RxList<ProjectModel> filterVillageProjectList = <ProjectModel>[].obs;
   final ProjectService _projectService = ProjectService();
+  final SearchService _searchService = SearchService();
+
   Rxn<ProjectDetailsModel> adoptProjectDetail = Rxn(null);
+  RxList<ProjectModel> searchProjectList = <ProjectModel>[].obs;
 
   RxString selectedSupport = ''.obs;
+  RxString searchText = ''.obs;
 
   List<String> menuList = ['All', 'Chicken', 'Cow', 'Goat', 'pig', 'Business'];
 
@@ -79,6 +84,22 @@ class AdoptProjectController extends GetxController {
                 selected.value.toLowerCase(),
           )
           .toList();
+    }
+  }
+
+  Future<void> search({required String searchText}) async {
+    isLoading.value = true;
+    final response = await _searchService.search(
+      searchText: searchText,
+      categoryID: id,
+    );
+
+    if (response.data != null) {
+      isLoading.value = false;
+      searchProjectList.assignAll(response.data!);
+    } else {
+      isLoading.value = false;
+      showCustomToast(text: response.error ?? 'Something went wrong 404.');
     }
   }
 

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../../model/category_model.dart';
 import '../../../../model/project_detail_model.dart';
 import '../../../../service/category/category_service.dart';
+import '../../../../service/search/search_service.dart';
 
 class EmpowermentController extends GetxController {
   final int id;
@@ -16,11 +17,15 @@ class EmpowermentController extends GetxController {
 
   List<String> menuList = ['All', 'Chicken', 'Cow', 'Goat', 'pig', 'Business'];
   RxString selectedSupport = ''.obs;
+  RxString searchText = ''.obs;
   RxString selected = RxString('All');
   RxBool isLoading = RxBool(false);
 
   final ProjectService _projectService = ProjectService();
+  final SearchService _searchService = SearchService();
+
   RxList<ProjectModel> empowermentList = <ProjectModel>[].obs;
+  RxList<ProjectModel> searchProjectList = <ProjectModel>[].obs;
   RxList<ProjectModel> filterEmpowermentList = <ProjectModel>[].obs;
   Rxn<ProjectDetailsModel> empowermentDetail = Rxn(null);
 
@@ -75,6 +80,22 @@ class EmpowermentController extends GetxController {
       isLoading.value = false;
       categoryList.assignAll([CategoryModel(name: 'All'), ...response.data!]);
 
+    } else {
+      isLoading.value = false;
+      showCustomToast(text: response.error ?? 'Something went wrong 404.');
+    }
+  }
+
+  Future<void> search({required String searchText}) async {
+    isLoading.value = true;
+    final response = await _searchService.search(
+      searchText: searchText,
+      categoryID: id,
+    );
+
+    if (response.data != null) {
+      isLoading.value = false;
+      searchProjectList.assignAll(response.data!);
     } else {
       isLoading.value = false;
       showCustomToast(text: response.error ?? 'Something went wrong 404.');

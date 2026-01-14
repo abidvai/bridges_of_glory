@@ -78,8 +78,7 @@ class DonerHomeScreen extends StatelessWidget {
                     }),
                     SizedBox(width: 10.w),
                     Text(
-                      'Hi! ${_donerProfileController.profileInfo.value?.data?.fullName}' ??
-                          'user name',
+                      'Hi! ${_donerProfileController.profileInfo.value?.data?.fullName}',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: AppColors.textSecondary,
                       ),
@@ -93,88 +92,19 @@ class DonerHomeScreen extends StatelessWidget {
                   hintText: 'Search',
                   filled: true,
                   filColor: AppColors.border.withValues(alpha: 0.1),
-                ),
-                SizedBox(height: 32.h), Container(
-                  width: 335.w,
-                  height: 119.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.r),
-                    color: AppColors.red.withValues(alpha: 0.1),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Assets.images.appLogo2.image(),
-                          SizedBox(height: 8.h),
-                          Text(
-                            '#BecomeTheMovement',
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 14.w),
-                      Assets.images.jar.image(
-                        width: 116.w,
-                        height: 82.h,
-                        fit: BoxFit.cover,
-                      ),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: 32.h),
-                TitleRow(title: 'Categories'),
-                SizedBox(height: 16.h),
-                Obx(() {
-                  return Skeletonizer(
-                    enabled: donerHomeController.isLoading.value,
-                    child: SizedBox(
-                      height: 100.h,
-                      child: ListView.separated(
-                        padding: EdgeInsets.zero,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: donerHomeController.categoryList.length,
-                        separatorBuilder: (context, index) {
-                          return SizedBox(width: 16.w);
-                        },
-                        itemBuilder: (context, index) {
-                          final category =
-                              donerHomeController.categoryList[index];
-                          return CategoryCard(
-                            image:
-                                category.image ??
-                                'http://10.10.12.62:8000/media/categories/business.png',
-                            title: category.name ?? 'category',
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => CategoryWiseProjectScreen(
-                                    categoryModel: category,
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                }),
-                TitleRow(
-                  title: 'Empowerment',
-                  isSeeAll: true,
-                  onTap: () {
-                    Get.to(EmpowermentScreen(id: 2));
+                  onChanged: (value) {
+                    donerHomeController.searchText.value = value;
+                    donerHomeController.search(searchText: value);
                   },
                 ),
+                SizedBox(height: 26.h),
 
                 Obx(() {
+                  if (donerHomeController.searchText.value.isEmpty) {
+                    return _homeWidget(context);
+                  } else if (donerHomeController.searchProjectList.isEmpty) {
+                    return Center(child: Text('No search result found'));
+                  }
                   return Skeletonizer(
                     enabled: donerHomeController.isLoading.value,
                     child: SizedBox(
@@ -182,17 +112,15 @@ class DonerHomeScreen extends StatelessWidget {
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.zero,
-                        itemCount: donerHomeController.empowermentList.length
-                            .clamp(0, 5),
+                        itemCount: donerHomeController.searchProjectList.length,
                         itemBuilder: (context, index) {
-                          final item =
-                              donerHomeController.empowermentList[index];
+                          final item = donerHomeController.searchProjectList[index];
 
                           return Padding(
-                            padding: EdgeInsets.only(bottom: 12.h),
+                            padding: EdgeInsets.only(bottom: 12.h, left: 20.w),
                             child: ShowingCard(
                               image:
-                                  item.coverImage ??
+                              item.coverImage ??
                                   'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
                               title: item.title ?? 'title',
                               location: item.location ?? 'location',
@@ -204,12 +132,10 @@ class DonerHomeScreen extends StatelessWidget {
                                 );
 
                                 // Navigate to detail screen with fetched details
-                                if (empowermentController
-                                        .empowermentDetail
-                                        .value !=
+                                if (empowermentController.empowermentDetail.value !=
                                     null) {
                                   Get.to(
-                                    () => EmpowermentDetailScreen(
+                                        () => EmpowermentDetailScreen(
                                       details: empowermentController
                                           .empowermentDetail
                                           .value!,
@@ -224,12 +150,148 @@ class DonerHomeScreen extends StatelessWidget {
                     ),
                   );
                 }),
+
                 SizedBox(height: 20.h),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _homeWidget(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: 335.w,
+          height: 119.h,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.r),
+            color: AppColors.red.withValues(alpha: 0.1),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Assets.images.appLogo2.image(),
+                  SizedBox(height: 8.h),
+                  Text(
+                    '#BecomeTheMovement',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ],
+              ),
+              SizedBox(width: 14.w),
+              Assets.images.jar.image(
+                width: 116.w,
+                height: 82.h,
+                fit: BoxFit.cover,
+              ),
+            ],
+          ),
+        ),
+
+        SizedBox(height: 32.h),
+        TitleRow(title: 'Categories'),
+        SizedBox(height: 16.h),
+        Obx(() {
+          return Skeletonizer(
+            enabled: donerHomeController.isLoading.value,
+            child: SizedBox(
+              height: 100.h,
+              child: ListView.separated(
+                padding: EdgeInsets.zero,
+                scrollDirection: Axis.horizontal,
+                itemCount: donerHomeController.categoryList.length,
+                separatorBuilder: (context, index) {
+                  return SizedBox(width: 16.w);
+                },
+                itemBuilder: (context, index) {
+                  final category = donerHomeController.categoryList[index];
+                  return CategoryCard(
+                    image:
+                        category.image ??
+                        'http://10.10.12.62:8000/media/categories/business.png',
+                    title: category.name ?? 'category',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => CategoryWiseProjectScreen(
+                            categoryModel: category,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          );
+        }),
+        TitleRow(
+          title: 'Empowerment',
+          isSeeAll: true,
+          onTap: () {
+            Get.to(EmpowermentScreen(id: 2));
+          },
+        ),
+
+        Obx(() {
+          return Skeletonizer(
+            enabled: donerHomeController.isLoading.value,
+            child: SizedBox(
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
+                itemCount: donerHomeController.empowermentList.length.clamp(
+                  0,
+                  5,
+                ),
+                itemBuilder: (context, index) {
+                  final item = donerHomeController.empowermentList[index];
+
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: 12.h),
+                    child: ShowingCard(
+                      image:
+                          item.coverImage ??
+                          'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
+                      title: item.title ?? 'title',
+                      location: item.location ?? 'location',
+                      familyCount: item.totalBenefitedFamilies ?? 0,
+                      buttonTitle: item.category?.name ?? 'category',
+                      onTap: () async {
+                        await empowermentController.fetchProjectDetails(
+                          item.id ?? 0,
+                        );
+
+                        // Navigate to detail screen with fetched details
+                        if (empowermentController.empowermentDetail.value !=
+                            null) {
+                          Get.to(
+                            () => EmpowermentDetailScreen(
+                              details: empowermentController
+                                  .empowermentDetail
+                                  .value!,
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+          );
+        }),
+      ],
     );
   }
 }
