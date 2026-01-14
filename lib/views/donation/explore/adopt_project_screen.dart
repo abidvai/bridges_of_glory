@@ -106,7 +106,7 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
   Widget _buildSearchResults() {
     return Obx(() {
       if (adoptProjectController.isLoading.value) {
-        return Center(child: CircularProgressIndicator());
+        return Center(child: CircularProgressIndicator(color: AppColors.red,));
       }
 
       if (adoptProjectController.searchProjectList.isEmpty) {
@@ -181,7 +181,7 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
   Widget _buildFilteredProjects() {
     return Obx(() {
       if (adoptProjectController.isLoading.value) {
-        return Center(child: CircularProgressIndicator());
+        return Center(child: CircularProgressIndicator(color: AppColors.red,));
       }
 
       if (adoptProjectController.filterVillageProjectList.isEmpty) {

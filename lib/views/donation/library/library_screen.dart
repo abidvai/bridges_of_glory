@@ -1,6 +1,8 @@
 import 'package:bridges_of_glory/core/common_widgets/app_top_bar.dart';
 import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
+import 'package:bridges_of_glory/views/donation/library/controller/library_controller.dart';
+import 'package:bridges_of_glory/views/donation/library/view_book_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -10,7 +12,9 @@ import '../../../gen/assets.gen.dart';
 class LibraryScreen extends StatelessWidget {
   final bool? showAppBar;
 
-  const LibraryScreen({super.key, this.showAppBar});
+  LibraryScreen({super.key, this.showAppBar});
+
+  final LibraryController _libraryController = Get.put(LibraryController());
 
   Future<void> goToYt(String link) async {
     final Uri url = Uri.parse(link);
@@ -47,69 +51,53 @@ class LibraryScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('To join Our Podcast: ', style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
-                    ),),
+                    Text(
+                      'To join Our Podcast: ',
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                     Assets.icons.youtube.svg(width: 50, height: 60),
                   ],
                 ),
               ),
               SizedBox(height: 10.h),
-              Expanded(
-                child: GridView(
-                  padding: EdgeInsets.zero,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 15.w,
-                    mainAxisSpacing: 16.h,
-                    mainAxisExtent: 258.h,
-                    // childAspectRatio: 0.7,
+              Obx(() {
+                if (_libraryController.isLoading.value) {
+                  return Center(
+                    child: CircularProgressIndicator(color: AppColors.red),
+                  );
+                }
+                return Expanded(
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 15.w,
+                      mainAxisSpacing: 16.h,
+                      mainAxisExtent: 258.h,
+                      // childAspectRatio: 0.7,
+                    ),
+                    itemCount: _libraryController.bookList.length,
+                    itemBuilder: (context, index) {
+                      final book = _libraryController.bookList[index];
+                      return LibraryCard(
+                        image: book.cover,
+                        title: book.name,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) =>
+                                  ViewBookScreen(bookListModel: book),
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
-                  children: [
-                    LibraryCard(
-                      image: Assets.images.bible,
-                      title: 'Bible',
-                      onTap: () {
-                        Get.toNamed(
-                          AppRoutes.viewBookScreen,
-                          arguments: Assets.images.bible,
-                        );
-                      },
-                    ),
-                    LibraryCard(
-                      image: Assets.images.milkyBook,
-                      title: 'Bible',
-                      onTap: () {
-                        Get.toNamed(
-                          AppRoutes.viewBookScreen,
-                          arguments: Assets.images.milkyBook,
-                        );
-                      },
-                    ),
-                    LibraryCard(
-                      image: Assets.images.bible,
-                      title: 'Bible',
-                      onTap: () {
-                        Get.toNamed(
-                          AppRoutes.viewBookScreen,
-                          arguments: Assets.images.bible,
-                        );
-                      },
-                    ),
-                    LibraryCard(
-                      image: Assets.images.milkyBook,
-                      title: 'Bible',
-                      onTap: () {
-                        Get.toNamed(
-                          AppRoutes.viewBookScreen,
-                          arguments: Assets.images.milkyBook,
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
+                );
+              }),
             ],
           ),
         ),
@@ -119,7 +107,7 @@ class LibraryScreen extends StatelessWidget {
 }
 
 class LibraryCard extends StatelessWidget {
-  final AssetGenImage image;
+  final String image;
   final String title;
   final VoidCallback onTap;
 
@@ -139,7 +127,7 @@ class LibraryCard extends StatelessWidget {
         elevation: 1,
         child: Container(
           width: 150.w,
-          height: 258.h,
+          height: 250.h,
           padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.r),
@@ -147,9 +135,22 @@ class LibraryCard extends StatelessWidget {
           ),
           child: Column(
             children: [
-              image.image(width: 134.w, height: 210.h, fit: BoxFit.cover),
-              SizedBox(height: 8.h),
-              Text(title, style: Theme.of(context).textTheme.titleSmall),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10.r),
+                child: Image.network(
+                  image,
+                  width: 134.w,
+                  height: 210.h,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(height: 5.h),
+              Expanded(
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+              ),
             ],
           ),
         ),

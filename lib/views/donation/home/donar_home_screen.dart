@@ -78,7 +78,7 @@ class DonerHomeScreen extends StatelessWidget {
                     }),
                     SizedBox(width: 10.w),
                     Text(
-                      'Hi! ${_donerProfileController.profileInfo.value?.data?.fullName}',
+                      'Hi! ${_donerProfileController.profileInfo.value?.data?.fullName ?? 'userName'}',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: AppColors.textSecondary,
                       ),
@@ -114,13 +114,14 @@ class DonerHomeScreen extends StatelessWidget {
                         padding: EdgeInsets.zero,
                         itemCount: donerHomeController.searchProjectList.length,
                         itemBuilder: (context, index) {
-                          final item = donerHomeController.searchProjectList[index];
+                          final item =
+                              donerHomeController.searchProjectList[index];
 
                           return Padding(
                             padding: EdgeInsets.only(bottom: 12.h, left: 20.w),
                             child: ShowingCard(
                               image:
-                              item.coverImage ??
+                                  item.coverImage ??
                                   'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
                               title: item.title ?? 'title',
                               location: item.location ?? 'location',
@@ -132,10 +133,12 @@ class DonerHomeScreen extends StatelessWidget {
                                 );
 
                                 // Navigate to detail screen with fetched details
-                                if (empowermentController.empowermentDetail.value !=
+                                if (empowermentController
+                                        .empowermentDetail
+                                        .value !=
                                     null) {
                                   Get.to(
-                                        () => EmpowermentDetailScreen(
+                                    () => EmpowermentDetailScreen(
                                       details: empowermentController
                                           .empowermentDetail
                                           .value!,
@@ -200,37 +203,38 @@ class DonerHomeScreen extends StatelessWidget {
         TitleRow(title: 'Categories'),
         SizedBox(height: 16.h),
         Obx(() {
-          return Skeletonizer(
-            enabled: donerHomeController.isLoading.value,
-            child: SizedBox(
-              height: 100.h,
-              child: ListView.separated(
-                padding: EdgeInsets.zero,
-                scrollDirection: Axis.horizontal,
-                itemCount: donerHomeController.categoryList.length,
-                separatorBuilder: (context, index) {
-                  return SizedBox(width: 16.w);
-                },
-                itemBuilder: (context, index) {
-                  final category = donerHomeController.categoryList[index];
-                  return CategoryCard(
-                    image:
-                        category.image ??
-                        'http://10.10.12.62:8000/media/categories/business.png',
-                    title: category.name ?? 'category',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => CategoryWiseProjectScreen(
-                            categoryModel: category,
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
+          if (empowermentController.isLoading.value) {
+            return Center(
+              child: CircularProgressIndicator(color: AppColors.red),
+            );
+          }
+          return SizedBox(
+            height: 100.h,
+            child: ListView.separated(
+              padding: EdgeInsets.zero,
+              scrollDirection: Axis.horizontal,
+              itemCount: donerHomeController.categoryList.length,
+              separatorBuilder: (context, index) {
+                return SizedBox(width: 16.w);
+              },
+              itemBuilder: (context, index) {
+                final category = donerHomeController.categoryList[index];
+                return CategoryCard(
+                  image:
+                      category.image ??
+                      'http://10.10.12.62:8000/media/categories/business.png',
+                  title: category.name ?? 'category',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            CategoryWiseProjectScreen(categoryModel: category),
+                      ),
+                    );
+                  },
+                );
+              },
             ),
           );
         }),
@@ -243,51 +247,49 @@ class DonerHomeScreen extends StatelessWidget {
         ),
 
         Obx(() {
-          return Skeletonizer(
-            enabled: donerHomeController.isLoading.value,
-            child: SizedBox(
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.zero,
-                itemCount: donerHomeController.empowermentList.length.clamp(
-                  0,
-                  5,
-                ),
-                itemBuilder: (context, index) {
-                  final item = donerHomeController.empowermentList[index];
+          if (empowermentController.isLoading.value) {
+            return Center(
+              child: CircularProgressIndicator(color: AppColors.red),
+            );
+          }
+          return SizedBox(
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              itemCount: donerHomeController.empowermentList.length.clamp(0, 5),
+              itemBuilder: (context, index) {
+                final item = donerHomeController.empowermentList[index];
 
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: 12.h),
-                    child: ShowingCard(
-                      image:
-                          item.coverImage ??
-                          'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
-                      title: item.title ?? 'title',
-                      location: item.location ?? 'location',
-                      familyCount: item.totalBenefitedFamilies ?? 0,
-                      buttonTitle: item.category?.name ?? 'category',
-                      onTap: () async {
-                        await empowermentController.fetchProjectDetails(
-                          item.id ?? 0,
+                return Padding(
+                  padding: EdgeInsets.only(bottom: 12.h),
+                  child: ShowingCard(
+                    image:
+                        item.coverImage ??
+                        'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
+                    title: item.title ?? 'title',
+                    location: item.location ?? 'location',
+                    familyCount: item.totalBenefitedFamilies ?? 0,
+                    buttonTitle: item.category?.name ?? 'category',
+                    onTap: () async {
+                      await empowermentController.fetchProjectDetails(
+                        item.id ?? 0,
+                      );
+
+                      // Navigate to detail screen with fetched details
+                      if (empowermentController.empowermentDetail.value !=
+                          null) {
+                        Get.to(
+                          () => EmpowermentDetailScreen(
+                            details:
+                                empowermentController.empowermentDetail.value!,
+                          ),
                         );
-
-                        // Navigate to detail screen with fetched details
-                        if (empowermentController.empowermentDetail.value !=
-                            null) {
-                          Get.to(
-                            () => EmpowermentDetailScreen(
-                              details: empowermentController
-                                  .empowermentDetail
-                                  .value!,
-                            ),
-                          );
-                        }
-                      },
-                    ),
-                  );
-                },
-              ),
+                      }
+                    },
+                  ),
+                );
+              },
             ),
           );
         }),

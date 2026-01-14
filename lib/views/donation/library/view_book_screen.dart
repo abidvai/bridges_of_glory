@@ -1,146 +1,140 @@
 import 'package:bridges_of_glory/core/common_widgets/app_back_button.dart';
+import 'package:bridges_of_glory/model/book_list_model.dart';
 import 'package:bridges_of_glory/views/donation/library/controller/library_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+
 import '../../../utils/constant/color.dart';
 
 class ViewBookScreen extends StatelessWidget {
-  ViewBookScreen({super.key});
+  final Datum bookListModel;
 
-  final LibraryController libraryController = Get.put(LibraryController());
+  ViewBookScreen({
+    super.key,
+    required this.bookListModel,
+  });
+
+  final LibraryController libraryController =
+  Get.find<LibraryController>();
 
   @override
   Widget build(BuildContext context) {
-    final image = Get.arguments;
-
     return Scaffold(
       body: SafeArea(
         child: Stack(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
           children: [
-            SizedBox(height: 1.sh, width: 1.sw),
-            image.image(width: 1.sw, height: 612.h, fit: BoxFit.cover),
+            Obx(() {
+              final lang = libraryController.selectedLang.value;
+
+              String? pdfUrl;
+              if (lang == 'en') {
+                pdfUrl = bookListModel.pdfs.en;
+              } else if (lang == 'bn') {
+                pdfUrl = bookListModel.pdfs.bn;
+              }
+
+              if (pdfUrl == null || pdfUrl.isEmpty) {
+                return const Center(
+                  child: Text('PDF not available'),
+                );
+              }
+
+              return SfPdfViewer.network(
+                pdfUrl,
+                key: ValueKey(pdfUrl),
+                controller: libraryController.pdfViewerController,
+                initialZoomLevel: 1.2,
+                onDocumentLoaded: (details) {
+                  debugPrint(
+                      'PDF Loaded: ${details.document.pages.count} pages');
+                },
+                onDocumentLoadFailed: (details) {
+                  Get.snackbar('Error', 'Failed to load PDF');
+                },
+              );
+            }),
+
+            /// 🔙 Back Button
             Positioned(
-              top: 260.h,
-              left: 0,
-              right: 0,
-              bottom: 0,
+              top: 20.h,
+              left: 16.w,
+              child: const AppBackButton(),
+            ),
+
+            Positioned(
+              right: 16.w,
+              top: 20.h,
               child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                width: 100.w,
+                height: 32.h,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(12.r),
+                  borderRadius: BorderRadius.circular(12.r),
+                  border: Border.all(
+                    color: AppColors.border,
+                    width: 1.2,
                   ),
-                  color: AppColors.surface,
                 ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Intro',
-                            style: Theme.of(context).textTheme.titleMedium,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 8.w,
+                ),
+                child: Center(
+                  child: Obx(() {
+                    return DropdownButton<String>(
+                      value: libraryController.selectedLang.value,
+                      isExpanded: true,
+                      underline: const SizedBox(),
+                      dropdownColor: AppColors.blueish,
+                      items: bookListModel.languages.map((lang) {
+                        return DropdownMenuItem<String>(
+                          value: lang,
+                          child: Text(
+                            _getLanguageName(lang),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium,
                           ),
-                          Container(
-                            width: 87.w,
-                            height: 30.h,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12.r),
-                              border: Border.all(
-                                color: AppColors.border,
-                                width: 1.2,
-                              ),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 8.w,
-                              vertical: 5.h,
-                            ),
-                            child: Center(
-                              child: Obx(() {
-                                return DropdownButton<String>(
-                                  padding: EdgeInsets.zero,
-                                  underline: SizedBox(),
-                                  isExpanded: true,
-                                  value: libraryController.selectedLang.value,
-                                  borderRadius: BorderRadius.circular(10.r),
-                                  dropdownColor: AppColors.blueish,
-                                  items: [
-                                    DropdownMenuItem(
-                                      value: 'English',
-                                      child: Text(
-                                        'English',
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.bodyMedium,
-                                      ),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: 'Spanish',
-                                      child: Text(
-                                        'Spanish',
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.bodyMedium,
-                                      ),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: 'Hindi',
-                                      child: Text(
-                                        'Hindi',
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.bodyMedium,
-                                      ),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: 'Dutch',
-                                      child: Text(
-                                        'Dutch',
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.bodyMedium,
-                                      ),
-                                    ),
-                                  ],
-                                  onChanged: (value) {
-                                    libraryController.selectedLang.value =
-                                        value!;
-                                  },
-                                );
-                              }),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 24.h),
-                      Text(
-                        'Lorem ipsum dolor sit amet consectetur. Nec egestas tempor turpis enim. Bibendum nulla placerat risus habitant. Eu pellentesque pretium massa orci. Cursus tincidunt purus congue blandit massa quam tortor diam.',
-                      ),
-                      SizedBox(height: 20.h),
-                      Text(
-                        'Lorem ipsum dolor sit amet consectetur. Nec egestas tempor turpis enim. Bibendum nulla placerat risus habitant. Eu pellentesque pretium massa orci. Cursus tincidunt purus congue blandit massa quam tortor diam.Lorem ipsum dolor sit amet consectetur. Nec egestas tempor turpis enim. Bibendum nulla placerat risus habitant. Eu pellentesque pretium massa orci. Cursus tincidunt purus congue blandit massa quam tortor diam.',
-                      ),
-                      SizedBox(height: 20.h),
-                      Text(
-                        'Lorem ipsum dolor sit amet consectetur. Nec egestas tempor turpis enim. Bibendum nulla placerat risus habitant. Eu pellentesque pretium massa orci Eu pellentesque pretium massa orci. Cursus tincidunt purus congue blandit massa quam tortor diam.',
-                      ),
-                    ],
-                  ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        libraryController.selectedLang.value =
+                        value!;
+                        libraryController
+                            .pdfViewerController
+                            .firstPage();
+                      },
+                    );
+                  }),
                 ),
               ),
-            ),
-            Positioned(
-              top: 20,
-              left: 20,
-              child: AppBackButton(iconColor: AppColors.surface),
             ),
           ],
         ),
       ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          libraryController.pdfViewerController.firstPage();
+        },
+        child: const Icon(Icons.arrow_upward),
+      ),
     );
+  }
+}
+
+String _getLanguageName(String code) {
+  switch (code) {
+    case 'en':
+      return 'English';
+    case 'bn':
+      return 'Bangla';
+    case 'hi':
+      return 'Hindi';
+    case 'es':
+      return 'Spanish';
+    default:
+      return code.toUpperCase();
   }
 }

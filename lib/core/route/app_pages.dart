@@ -63,7 +63,7 @@ class AppPages {
       page: () => DonerProfileSetting(),
     ),
     GetPage(name: AppRoutes.libraryScreen, page: () => LibraryScreen()),
-    GetPage(name: AppRoutes.viewBookScreen, page: () => ViewBookScreen()),
+    // GetPage(name: AppRoutes.viewBookScreen, page: () => ViewBookScreen()),
     // GetPage(
     //   name: AppRoutes.adoptProjectScreen,
     //   page: () => AdoptProjectScreen(),
