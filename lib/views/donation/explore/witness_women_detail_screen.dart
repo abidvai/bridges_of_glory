@@ -112,10 +112,10 @@ class WitnessWomenDetailScreen extends StatelessWidget {
                 children: [
                   Obx(
                     () => Column(
-                      children: details.pastorSupportPrices!.map((item) {
+                      children: details.pastorSupportPrices.map((item) {
                         return RadioListTile<String>(
-                          title: Text(item.name ?? 'Pastor Support'),
-                          value: 'pastor${item.name}',
+                          title: Text('\$${item.amount}'),
+                          value: item.amount,
                           groupValue:
                               witnessWomenController.selectedSupport.value,
                           onChanged: (val) {
@@ -135,10 +135,12 @@ class WitnessWomenDetailScreen extends StatelessWidget {
                 children: [
                   Obx(
                     () => Column(
-                      children: details.livestockItems!.map((item) {
+                      children: details.livestockItems.map((item) {
                         return RadioListTile<String>(
-                          title: Text(item.name ?? 'LiveStock for Village'),
-                          value: 'liveStock${item.name}',
+                          title: Text(
+                            '\$${item.amount} ${item.name} (${item.quantity})',
+                          ),
+                          value: item.amount,
                           groupValue:
                               witnessWomenController.selectedSupport.value,
                           onChanged: (val) {
@@ -157,10 +159,10 @@ class WitnessWomenDetailScreen extends StatelessWidget {
                 children: [
                   Obx(
                     () => Column(
-                      children: details.otherSupports!.map((item) {
+                      children: details.otherSupports.map((item) {
                         return RadioListTile<String>(
-                          title: Text(item.name ?? 'Other Supports'),
-                          value: 'other${item.name}',
+                          title: Text('\$${item.amount}'),
+                          value: item.amount,
                           groupValue:
                               witnessWomenController.selectedSupport.value,
                           onChanged: (val) {

@@ -47,7 +47,7 @@ class EmpowermentDetailScreen extends StatelessWidget {
                         location: details.location ?? 'location',
                         pastor: details.pastorName ?? 'pastor name',
                         sponsor: details.sponsorName ?? 'sponsor name',
-                        category: details.category?.name ?? 'category',
+                        category: details.category.name ?? 'category',
                         establish: details.establishedDate ?? DateTime.now(),
                       ),
 
@@ -119,12 +119,12 @@ class EmpowermentDetailScreen extends StatelessWidget {
                         children: [
                           Obx(
                             () => Column(
-                              children: details.pastorSupportPrices!.map((
+                              children: details.pastorSupportPrices.map((
                                 item,
                               ) {
                                 return RadioListTile<String>(
-                                  title: Text(item.name ?? 'Pastor Support'),
-                                  value: 'pastor${item.name}',
+                                  title: Text('\$${item.amount}'),
+                                  value: item.amount,
                                   groupValue: empowermentController
                                       .selectedSupport
                                       .value,
@@ -148,12 +148,10 @@ class EmpowermentDetailScreen extends StatelessWidget {
                         children: [
                           Obx(
                             () => Column(
-                              children: details.livestockItems!.map((item) {
+                              children: details.livestockItems.map((item) {
                                 return RadioListTile<String>(
-                                  title: Text(
-                                    item.name ?? 'LiveStock for Village',
-                                  ),
-                                  value: 'liveStock${item.name}',
+                                  title: Text('\$${item.amount} ${item.name} (${item.quantity})'),
+                                  value: item.amount,
                                   groupValue: empowermentController
                                       .selectedSupport
                                       .value,
@@ -176,10 +174,10 @@ class EmpowermentDetailScreen extends StatelessWidget {
                         children: [
                           Obx(
                             () => Column(
-                              children: details.otherSupports!.map((item) {
+                              children: details.otherSupports.map((item) {
                                 return RadioListTile<String>(
-                                  title: Text(item.name ?? 'Other Supports'),
-                                  value: 'other${item.name}',
+                                  title: Text('\$${item.amount}'),
+                                  value: item.amount,
                                   groupValue: empowermentController
                                       .selectedSupport
                                       .value,
