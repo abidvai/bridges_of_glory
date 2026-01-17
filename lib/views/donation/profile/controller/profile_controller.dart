@@ -56,7 +56,7 @@ class DonerProfileController extends GetxController {
 
     if (response.data != null) {
       isLoading.value = false;
-      profileInfo.value = response.data;
+      fetchProfileData();
       profileInfo.refresh();
       utils.showCustomToast(
         text: 'user name changed successfully',
@@ -69,7 +69,9 @@ class DonerProfileController extends GetxController {
   }
 
   Future<void> updateImage() async {
-    final response = await _profileService.updateProfilePic(selectedImage.value!);
+    final response = await _profileService.updateProfilePic(
+      selectedImage.value!,
+    );
 
     if (response.data != null) {
       utils.showCustomToast(
@@ -77,11 +79,10 @@ class DonerProfileController extends GetxController {
         toastType: utils.ToastTypesInfo(utils.ToastTypes.success),
       );
 
+      fetchProfileData();
       profileInfo.refresh();
     } else {
-      utils.showCustomToast(
-        text: response.error ?? 'something went wrong',
-      );
+      utils.showCustomToast(text: response.error ?? 'something went wrong');
     }
   }
 

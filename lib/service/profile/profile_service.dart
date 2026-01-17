@@ -115,7 +115,7 @@ class ProfileService {
 
       final response = await CustomHttp.multipart(
         endpoint: 'settings/personal-info/me',
-        method: CommonCustomMethods.PUT,
+        method: CommonCustomMethods.PATCH,
         files: [multipartFile],
       );
 
@@ -142,7 +142,7 @@ class ProfileService {
   /// ------------------------------- update name ------------------------------------- ///
   Future<ApiResponse<ProfileInfoModel>> updateName(String name) async {
     try {
-      final response = await CustomHttp.put(
+      final response = await CustomHttp.patch(
         endpoint: 'settings/personal-info/me',
         needAuth: true,
         showFloatingError: false,

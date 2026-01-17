@@ -6,18 +6,27 @@ import '../../../../model/project_model.dart';
 import '../../../../model/showing_card_model.dart';
 import '../../../../service/category/category_service.dart';
 import '../../../../service/project_service/project_service.dart';
+import '../../../../service/view_count/project_view_service.dart';
 
 class WitnessWomenController extends GetxController {
   final int id;
 
   WitnessWomenController({required this.id});
 
-
-  RxList<String> menuList = ['All', 'Chicken', 'Cow', 'Goat', 'pig', 'Business'].obs;
+  RxList<String> menuList = [
+    'All',
+    'Chicken',
+    'Cow',
+    'Goat',
+    'pig',
+    'Business',
+  ].obs;
   RxString selected = RxString('All');
 
   RxBool isLoading = RxBool(false);
   final ProjectService _projectService = ProjectService();
+  final ProjectViewCountService _projectViewCountService =
+      ProjectViewCountService();
   RxList<ProjectModel> witnessProjectList = <ProjectModel>[].obs;
   RxList<ProjectModel> filteredWitnessProjectList = <ProjectModel>[].obs;
   Rxn<ProjectDetailsModel> witnessProjectDetailsList = Rxn(null);
@@ -26,8 +35,6 @@ class WitnessWomenController extends GetxController {
   RxList<CategoryModel> categoryList = <CategoryModel>[].obs;
 
   RxString selectedSupport = ''.obs;
-
-
 
   Future<void> fetchWitnessProject(int id) async {
     isLoading.value = true;
@@ -43,13 +50,13 @@ class WitnessWomenController extends GetxController {
     }
   }
 
-
   Future<void> fetchProjectDetails(int projectId) async {
     isLoading.value = true;
     final response = await _projectService.fetchProjectDetail(projectId);
 
     if (response.data != null) {
       witnessProjectDetailsList.value = response.data!;
+      _projectViewCountService.postView(projectId);
     } else {
       showCustomToast(text: response.error ?? 'Failed to load project details');
     }
@@ -61,7 +68,11 @@ class WitnessWomenController extends GetxController {
       filteredWitnessProjectList.value = List.from(witnessProjectList);
     } else {
       filteredWitnessProjectList.value = witnessProjectList
-          .where((project) => project.category?.name?.toLowerCase() == selected.value.toLowerCase())
+          .where(
+            (project) =>
+                project.category?.name?.toLowerCase() ==
+                selected.value.toLowerCase(),
+          )
           .toList();
     }
   }
@@ -73,7 +84,6 @@ class WitnessWomenController extends GetxController {
     if (response.data != null) {
       isLoading.value = false;
       categoryList.assignAll([CategoryModel(name: 'All'), ...response.data!]);
-
     } else {
       isLoading.value = false;
       showCustomToast(text: response.error ?? 'Something went wrong 404.');
@@ -88,5 +98,4 @@ class WitnessWomenController extends GetxController {
 
     super.onInit();
   }
-
 }

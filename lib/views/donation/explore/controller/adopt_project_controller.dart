@@ -1,3 +1,4 @@
+import 'package:bridges_of_glory/service/view_count/project_view_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../../../../core/common_widgets/custom_toast.dart';
@@ -18,6 +19,8 @@ class AdoptProjectController extends GetxController {
   RxList<ProjectModel> filterVillageProjectList = <ProjectModel>[].obs;
   final ProjectService _projectService = ProjectService();
   final SearchService _searchService = SearchService();
+  final ProjectViewCountService _projectViewCountService =
+      ProjectViewCountService();
 
   Rxn<ProjectDetailsModel> adoptProjectDetail = Rxn(null);
   RxList<ProjectModel> searchProjectList = <ProjectModel>[].obs;
@@ -54,6 +57,7 @@ class AdoptProjectController extends GetxController {
 
     if (response.data != null) {
       adoptProjectDetail.value = response.data!;
+      _projectViewCountService.postView(projectId);
     } else {
       showCustomToast(text: response.error ?? 'Failed to load project details');
     }

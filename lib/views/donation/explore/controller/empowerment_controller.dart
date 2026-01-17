@@ -7,6 +7,7 @@ import '../../../../model/category_model.dart';
 import '../../../../model/project_detail_model.dart';
 import '../../../../service/category/category_service.dart';
 import '../../../../service/search/search_service.dart';
+import '../../../../service/view_count/project_view_service.dart';
 
 class EmpowermentController extends GetxController {
   final int id;
@@ -23,6 +24,8 @@ class EmpowermentController extends GetxController {
 
   final ProjectService _projectService = ProjectService();
   final SearchService _searchService = SearchService();
+  final ProjectViewCountService _projectViewCountService =
+      ProjectViewCountService();
 
   RxList<ProjectModel> empowermentList = <ProjectModel>[].obs;
   RxList<ProjectModel> searchProjectList = <ProjectModel>[].obs;
@@ -52,6 +55,7 @@ class EmpowermentController extends GetxController {
 
     if (response.data != null) {
       empowermentDetail.value = response.data!;
+      _projectViewCountService.postView(projectId);
     } else {
       showCustomToast(text: response.error ?? 'Failed to load project details');
     }
@@ -79,7 +83,6 @@ class EmpowermentController extends GetxController {
     if (response.data != null) {
       isLoading.value = false;
       categoryList.assignAll([CategoryModel(name: 'All'), ...response.data!]);
-
     } else {
       isLoading.value = false;
       showCustomToast(text: response.error ?? 'Something went wrong 404.');
@@ -106,7 +109,7 @@ class EmpowermentController extends GetxController {
   void onInit() {
     fetchEmpowermentProject(id);
     fetchCategory();
-    ever(selected,(_) => applyFilter());
+    ever(selected, (_) => applyFilter());
     super.onInit();
   }
 }

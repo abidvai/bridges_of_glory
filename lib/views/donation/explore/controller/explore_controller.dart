@@ -39,15 +39,6 @@ class ExploreController extends GetxController {
     }
   }
 
-  // Future<void> fetchEmpowermentProject(int id) async {
-  //   final response = await _projectService.fetchProject(id);
-  //
-  //   if (response.data != null) {
-  //     empowermentList.assignAll(response.data!);
-  //   } else {
-  //     showCustomToast(text: response.error ?? 'Something went wrong 404.');
-  //   }
-  // }
 
   @override
   void onInit() {

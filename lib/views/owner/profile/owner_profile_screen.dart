@@ -175,12 +175,12 @@ class _CustomModalState extends State<CustomModal> {
     widget.controller.text = widget.text;
 
     // listener for char count
-    widget.controller.addListener(() {
-      profileController.textCharCount.value = widget.controller.text.length;
-    });
+    // widget.controller.addListener(() {
+    //   profileController.textCharCount.value = widget.controller.text.length;
+    // });
 
     // initial value
-    profileController.textCharCount.value = widget.controller.text.length;
+    // profileController.textCharCount.value = widget.controller.text.length;
   }
 
   @override
