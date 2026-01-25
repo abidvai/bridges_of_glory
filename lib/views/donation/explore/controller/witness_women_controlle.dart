@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import '../../../../core/common_widgets/custom_toast.dart';
 import '../../../../model/category_model.dart';
 import '../../../../model/project_model.dart';
-import '../../../../model/showing_card_model.dart';
 import '../../../../service/category/category_service.dart';
 import '../../../../service/project_service/project_service.dart';
 import '../../../../service/view_count/project_view_service.dart';

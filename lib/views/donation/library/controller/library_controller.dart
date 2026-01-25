@@ -14,7 +14,7 @@ class LibraryController extends GetxController {
 
   final LibraryService _libraryService = LibraryService();
   RxBool isLoading = RxBool(false);
-  RxList<Datum> bookList = <Datum>[].obs;
+  RxList<Book> bookList = <Book>[].obs;
   Rxn<BookDetailsModel> bookDetails = Rxn<BookDetailsModel>(null);
 
   Future<void> fetchBook() async {

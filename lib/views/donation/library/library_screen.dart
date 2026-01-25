@@ -89,7 +89,7 @@ class LibraryScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (_) =>
-                                  ViewBookScreen(bookListModel: book),
+                                  ViewBookScreen(book: book),
                             ),
                           );
                         },
