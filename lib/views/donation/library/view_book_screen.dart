@@ -5,24 +5,45 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:flutter/services.dart';
 
 import '../../../utils/constant/color.dart';
 
-class ViewBookScreen extends StatelessWidget {
+class ViewBookScreen extends StatefulWidget {
   final Book book;
 
-  ViewBookScreen({
-    super.key,
-    required this.book,
-  });
+  const ViewBookScreen({super.key, required this.book});
 
-  final LibraryController libraryController =
-  Get.find<LibraryController>();
+  @override
+  State<ViewBookScreen> createState() => _ViewBookScreenState();
+}
+
+class _ViewBookScreenState extends State<ViewBookScreen> {
+  final LibraryController libraryController = Get.find<LibraryController>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // ✅ Allow system rotation for this screen
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+  }
+
+  @override
+  void dispose() {
+    // ✅ Lock back to portrait when leaving this screen
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     // Remove duplicate languages
-    final List<String> uniqueLanguages = book.languages.toSet().toList();
+    final List<String> uniqueLanguages = widget.book.languages.toSet().toList();
 
     // Ensure selected language exists in the list
     if (!uniqueLanguages.contains(libraryController.selectedLang.value)) {
@@ -36,9 +57,9 @@ class ViewBookScreen extends StatelessWidget {
         child: Stack(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           children: [
+            // PDF Viewer
             Obx(() {
-              final String selectedLang =
-                  libraryController.selectedLang.value;
+              final String selectedLang = libraryController.selectedLang.value;
 
               // safe selected language
               final String safeLang = uniqueLanguages.contains(selectedLang)
@@ -46,15 +67,15 @@ class ViewBookScreen extends StatelessWidget {
                   : (uniqueLanguages.isNotEmpty ? uniqueLanguages.first : '');
 
               // get pdf dynamically
-              String? pdfUrl = book.pdfs[safeLang];
+              String? pdfUrl = widget.book.pdfs[safeLang];
 
               // fallback if selected language pdf not available
-              pdfUrl ??= book.pdfs.isNotEmpty ? book.pdfs.values.first : null;
+              pdfUrl ??= widget.book.pdfs.isNotEmpty
+                  ? widget.book.pdfs.values.first
+                  : null;
 
               if (pdfUrl == null || pdfUrl.isEmpty) {
-                return const Center(
-                  child: Text('PDF not available'),
-                );
+                return const Center(child: Text('PDF not available'));
               }
 
               return SfPdfViewer.network(
@@ -73,12 +94,10 @@ class ViewBookScreen extends StatelessWidget {
               );
             }),
 
-            Positioned(
-              top: 20.h,
-              left: 16.w,
-              child: const AppBackButton(),
-            ),
+            // Back button
+            Positioned(top: 20.h, left: 16.w, child: const AppBackButton()),
 
+            // Language dropdown
             Positioned(
               right: 16.w,
               top: 20.h,
@@ -87,10 +106,7 @@ class ViewBookScreen extends StatelessWidget {
                 height: 34.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12.r),
-                  border: Border.all(
-                    color: AppColors.border,
-                    width: 1.2,
-                  ),
+                  border: Border.all(color: AppColors.border, width: 1.2),
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 8.w),
                 child: Center(
@@ -126,6 +142,7 @@ class ViewBookScreen extends StatelessWidget {
         ),
       ),
 
+      // Scroll to first page FAB
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           libraryController.pdfViewerController.firstPage();
@@ -136,6 +153,7 @@ class ViewBookScreen extends StatelessWidget {
   }
 }
 
+// Language name mapping
 String _getLanguageName(String code) {
   switch (code) {
     case 'en':

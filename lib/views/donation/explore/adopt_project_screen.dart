@@ -44,14 +44,14 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
       appBar: (widget.showAppBar ?? false)
           ? AppTopBar(text: 'ADOPT A PROJECT')
           : AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        backgroundColor: AppColors.surface,
-        title: Text(
-          'ADOPT A PROJECT',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ),
+              centerTitle: true,
+              automaticallyImplyLeading: false,
+              backgroundColor: AppColors.surface,
+              title: Text(
+                'ADOPT A PROJECT',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
       body: SafeArea(
         bottom: true,
         child: Column(
@@ -79,14 +79,14 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
       ),
       bottomSheet: (widget.showBottomButton ?? true)
           ? Padding(
-        padding: EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
-        child: PrimaryButton(
-          text: 'Home',
-          onTap: () {
-            Get.to(() => BottomNavDonation(index: 0));
-          },
-        ),
-      )
+              padding: EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
+              child: PrimaryButton(
+                text: 'Home',
+                onTap: () {
+                  Get.to(() => BottomNavDonation(index: 0));
+                },
+              ),
+            )
           : null,
     );
   }
@@ -106,17 +106,16 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
   Widget _buildSearchResults() {
     return Obx(() {
       if (adoptProjectController.isLoading.value) {
-        return Center(child: CircularProgressIndicator(color: AppColors.red,));
+        return Center(child: CircularProgressIndicator(color: AppColors.red));
       }
 
       if (adoptProjectController.searchProjectList.isEmpty) {
         return Center(
           child: Text(
             'No search results found',
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge
-                ?.copyWith(color: AppColors.hintText),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyLarge?.copyWith(color: AppColors.hintText),
           ),
         );
       }
@@ -145,12 +144,21 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Obx(() {
+          if (adoptProjectController.isLoading.value) {
+            return Center(child: CircularProgressIndicator());
+          }
+
           return Row(
-            children: adoptProjectController.menuList.map((item) {
-              final isSelected = item == adoptProjectController.selected.value;
+            children: adoptProjectController.categoryList.map((item) {
+              final isSelected =
+                  item.name == adoptProjectController.selected.value;
 
               return GestureDetector(
-                onTap: () => adoptProjectController.selected.value = item,
+                onTap: () {
+                  adoptProjectController.selected.value = item.name ?? 'All';
+                  adoptProjectController.selectedCategoryId.value =
+                      item.id ?? 0;
+                },
                 child: Container(
                   height: 40.h,
                   margin: EdgeInsets.only(right: 8.w),
@@ -163,7 +171,7 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
                   ),
                   child: Center(
                     child: Text(
-                      item,
+                      item.name ?? 'category',
                       style: isSelected
                           ? TextStyle(color: AppColors.red)
                           : Theme.of(context).textTheme.bodyLarge,
@@ -181,7 +189,7 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
   Widget _buildFilteredProjects() {
     return Obx(() {
       if (adoptProjectController.isLoading.value) {
-        return Center(child: CircularProgressIndicator(color: AppColors.red,));
+        return Center(child: CircularProgressIndicator(color: AppColors.red));
       }
 
       if (adoptProjectController.filterVillageProjectList.isEmpty) {
@@ -190,10 +198,9 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
             padding: EdgeInsets.symmetric(vertical: 120.h),
             child: Text(
               'No result found in ${adoptProjectController.selected.value} category',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  ?.copyWith(color: AppColors.hintText),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(color: AppColors.hintText),
             ),
           ),
         );
@@ -208,9 +215,9 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
 
   // Reusable project list builder
   Widget _buildProjectList(
-      List<dynamic> projects, {
-        bool showHorizontalPadding = false,
-      }) {
+    List<dynamic> projects, {
+    bool showHorizontalPadding = false,
+  }) {
     return Obx(() {
       return Skeletonizer(
         enabled: adoptProjectController.isLoading.value,
@@ -224,7 +231,8 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
             return Padding(
               padding: EdgeInsets.only(bottom: 12.h),
               child: ShowingCard(
-                image: item.coverImage ??
+                image:
+                    item.coverImage ??
                     'http://10.10.12.62:8000/media/projects/covers/Screenshot_2025-08-14_111157_CPWUbyT.png',
                 title: item.title ?? 'title',
                 location: item.location ?? 'location',
@@ -252,7 +260,7 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
 
       if (adoptProjectController.adoptProjectDetail.value != null) {
         Get.to(
-              () => AdoptDetailScreen(
+          () => AdoptDetailScreen(
             details: adoptProjectController.adoptProjectDetail.value!,
           ),
         );

@@ -25,7 +25,6 @@ class DonerHomeController extends GetxController {
   RxList<ProjectModel> empowermentList = <ProjectModel>[].obs;
   RxList<ProjectModel> searchProjectList = <ProjectModel>[].obs;
 
-
   Future<void> fetchEmpowermentProject() async {
     isLoading.value = true;
     final response = await _projectService.fetchProject(2);
@@ -79,7 +78,7 @@ class DonerHomeController extends GetxController {
 
   Future<void> search({required String searchText}) async {
     isLoading.value = true;
-    final response = await _searchService.search(searchText: searchText);
+    final response = await _searchService.searchHome(searchText: searchText);
 
     if (response.data != null) {
       isLoading.value = false;

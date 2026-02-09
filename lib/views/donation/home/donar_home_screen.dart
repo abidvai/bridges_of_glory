@@ -1,6 +1,5 @@
 import 'package:bridges_of_glory/core/common_widgets/custom_text_field.dart';
 import 'package:bridges_of_glory/utils/constant/color.dart';
-import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/views/donation/explore/controller/empowerment_controller.dart';
 import 'package:bridges_of_glory/views/donation/explore/empowerment_detail_screen.dart';
 import 'package:bridges_of_glory/views/donation/explore/empowerment_screen.dart';
@@ -118,7 +117,7 @@ class DonerHomeScreen extends StatelessWidget {
                               donerHomeController.searchProjectList[index];
 
                           return Padding(
-                            padding: EdgeInsets.only(bottom: 12.h, left: 20.w),
+                            padding: EdgeInsets.only(bottom: 12.h),
                             child: ShowingCard(
                               image:
                                   item.coverImage ??

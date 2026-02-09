@@ -1,7 +1,6 @@
 import 'package:bridges_of_glory/core/common_widgets/info_widget.dart';
 import 'package:bridges_of_glory/core/common_widgets/primary_button.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
-import 'package:bridges_of_glory/views/donation/explore/controller/explore_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -33,7 +32,7 @@ class WelcomingInfoScreen extends StatelessWidget {
       bottomSheet: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
         child: PrimaryButton(
-          text: 'Skip',
+          text: 'Next',
           onTap: () {
             Get.toNamed(AppRoutes.login);
           },

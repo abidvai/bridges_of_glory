@@ -28,7 +28,7 @@ class AdoptProjectController extends GetxController {
   RxString selectedSupport = ''.obs;
   RxString searchText = ''.obs;
 
-  List<String> menuList = ['All', 'Chicken', 'Cow', 'Goat', 'pig', 'Business'];
+  // List<String> menuList = ['All', 'Chicken', 'Cow', 'Goat', 'pig', 'Business'];
 
   RxString selected = RxString('All');
   TextEditingController searchController = TextEditingController();
@@ -36,6 +36,7 @@ class AdoptProjectController extends GetxController {
 
   final CategoryService _categoryService = CategoryService();
   RxList<CategoryModel> categoryList = <CategoryModel>[].obs;
+  RxInt selectedCategoryId = RxInt(0);
 
   Future<void> fetchVillageProject(int id) async {
     isLoading.value = true;
@@ -95,7 +96,8 @@ class AdoptProjectController extends GetxController {
     isLoading.value = true;
     final response = await _searchService.search(
       searchText: searchText,
-      categoryID: id,
+      categoryID: selectedCategoryId.value,
+      projectID: 4,
     );
 
     if (response.data != null) {

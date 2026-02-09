@@ -16,7 +16,7 @@ class EmpowermentController extends GetxController {
 
   TextEditingController searchController = TextEditingController();
 
-  List<String> menuList = ['All', 'Chicken', 'Cow', 'Goat', 'pig', 'Business'];
+  // List<String> menuList = ['All', 'Chicken', 'Cow', 'Goat', 'pig', 'Business'];
   RxString selectedSupport = ''.obs;
   RxString searchText = ''.obs;
   RxString selected = RxString('All');
@@ -34,6 +34,7 @@ class EmpowermentController extends GetxController {
 
   final CategoryService _categoryService = CategoryService();
   RxList<CategoryModel> categoryList = <CategoryModel>[].obs;
+  RxInt selectedCategoryId = RxInt(-1);
 
   Future<void> fetchEmpowermentProject(int id) async {
     isLoading.value = true;
@@ -93,7 +94,8 @@ class EmpowermentController extends GetxController {
     isLoading.value = true;
     final response = await _searchService.search(
       searchText: searchText,
-      categoryID: id,
+      categoryID: selectedCategoryId.value,
+      projectID: 2,
     );
 
     if (response.data != null) {

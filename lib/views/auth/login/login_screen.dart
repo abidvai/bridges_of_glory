@@ -49,7 +49,7 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: 8.h),
                   CustomTextField(
                     controller: loginController.emailController,
-                    hintText: 'justin45@company.com',
+                    hintText: 'enter your email',
                   ),
                   SizedBox(height: 12.h),
                   Text(

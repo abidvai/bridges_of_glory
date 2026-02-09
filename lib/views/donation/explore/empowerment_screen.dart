@@ -94,10 +94,9 @@ class _EmpowermentScreenState extends State<EmpowermentScreen> {
         return Center(
           child: Text(
             'No search results found',
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge
-                ?.copyWith(color: AppColors.hintText),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyLarge?.copyWith(color: AppColors.hintText),
           ),
         );
       }
@@ -138,6 +137,7 @@ class _EmpowermentScreenState extends State<EmpowermentScreen> {
               return GestureDetector(
                 onTap: () {
                   empowermentController.selected.value = item.name ?? 'All';
+                  empowermentController.selectedCategoryId.value = item.id ?? 0;
                 },
                 child: Container(
                   height: 40.h,
@@ -178,10 +178,9 @@ class _EmpowermentScreenState extends State<EmpowermentScreen> {
             padding: EdgeInsets.symmetric(vertical: 120.h),
             child: Text(
               'No result found in ${empowermentController.selected.value} category',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  ?.copyWith(color: AppColors.hintText),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(color: AppColors.hintText),
             ),
           ),
         );
@@ -195,9 +194,9 @@ class _EmpowermentScreenState extends State<EmpowermentScreen> {
   }
 
   Widget _buildProjectList(
-      List<dynamic> projects, {
-        bool showHorizontalPadding = false,
-      }) {
+    List<dynamic> projects, {
+    bool showHorizontalPadding = false,
+  }) {
     return ListView.builder(
       padding: showHorizontalPadding
           ? EdgeInsets.symmetric(horizontal: 20.w)
@@ -234,7 +233,7 @@ class _EmpowermentScreenState extends State<EmpowermentScreen> {
 
       if (empowermentController.empowermentDetail.value != null) {
         Get.to(
-              () => EmpowermentDetailScreen(
+          () => EmpowermentDetailScreen(
             details: empowermentController.empowermentDetail.value!,
           ),
         );

@@ -2,8 +2,8 @@ import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:bridges_of_glory/core/di/app_bindings.dart';
 import 'package:bridges_of_glory/core/route/app_pages.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
-import 'package:bridges_of_glory/views/auth/splash/welcoming_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/route_manager.dart';
@@ -16,6 +16,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: ".env");
+
+    await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+  
   runApp(const MyApp());
 }
 

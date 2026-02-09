@@ -69,7 +69,7 @@ class SignupScreen extends StatelessWidget {
                       SizedBox(height: 8.h),
                       CustomTextField(
                         controller: signupController.emailController,
-                        hintText: 'justin45@company.com',
+                        hintText: 'enter your email',
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Email is required';
