@@ -34,7 +34,7 @@ class EmpowermentController extends GetxController {
 
   final CategoryService _categoryService = CategoryService();
   RxList<CategoryModel> categoryList = <CategoryModel>[].obs;
-  RxInt selectedCategoryId = RxInt(-1);
+  RxInt selectedCategoryId = RxInt(0);
 
   Future<void> fetchEmpowermentProject(int id) async {
     isLoading.value = true;
