@@ -40,7 +40,6 @@ class ExploreScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20.r),
                   child: Container(
                     width: 335.w,
-                    height: 550.h,
                     padding: EdgeInsets.symmetric(
                       horizontal: 16.w,
                       vertical: 32.h,
@@ -153,7 +152,7 @@ class ExploreMenu extends StatelessWidget {
       onTap: onTap,
       child: SizedBox(
         width: 100.w,
-        height: 99.h,
+        // height: 99.h,
         child: CachedNetworkImage(
           imageUrl: image,
           placeholder: (context, url) =>

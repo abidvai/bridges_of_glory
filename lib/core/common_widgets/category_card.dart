@@ -24,17 +24,16 @@ class CategoryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            padding: EdgeInsets.all(12.h),
+            padding: EdgeInsets.all(14.h),
             width: 60.w,
-            height: 60.h,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: AppColors.blueish,
             ),
             child: Image.network(
               image,
-              width: 32.w,
-              height: 32.h,
+              // width: 32.w,
+              // height: 32.h,
               fit: BoxFit.cover,
             ),
           ),

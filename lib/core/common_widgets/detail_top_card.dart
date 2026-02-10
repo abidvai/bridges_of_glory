@@ -3,8 +3,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../gen/assets.gen.dart';
-import '../../views/donation/explore/adopt_detail_screen.dart';
 import 'detail_info_text.dart';
 
 class DetailTopCard extends StatelessWidget {
@@ -29,63 +27,160 @@ class DetailTopCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 195.h + 180.h,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12.r),
+    return Column(
+      children: [
+        // Image Section
+        Container(
+          width: double.infinity,
+          height: 200.h,
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(12.r),
+              topRight: Radius.circular(12.r),
+            ),
             child: CachedNetworkImage(
               imageUrl: image,
-              height: 164.h,
-              width: 335.w,
+              width: double.infinity,
+              height: 200.h,
               fit: BoxFit.cover,
-            ),
-          ),
-
-          Positioned(
-            top: 140,
-            right: 0,
-            left: 0,
-            child: Material(
-              elevation: 2,
-              borderRadius: BorderRadius.circular(12.r),
-              child: Container(
-                width: 335.w,
-                height: 240.h,
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.r),
-                  border: Border.all(
-                    width: 0.5,
-                    color: AppColors.border.withValues(alpha: 0.4),
+              placeholder: (context, url) => Container(
+                color: Colors.grey[200],
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.red,
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(height: 2.h),
-                    Text(title, style: Theme.of(context).textTheme.titleMedium),
-                    SizedBox(height: 8.h),
-                    DetailInfoText(title: 'Location', value: location),
-                    SizedBox(height: 8.h),
-                    DetailInfoText(title: 'Pastor', value: pastor),
-                    SizedBox(height: 8.h),
-                    DetailInfoText(title: 'Sponsor', value: sponsor),
-                    SizedBox(height: 8.h),
-                    DetailInfoText(title: 'Established', value: establish),
-                    SizedBox(height: 8.h),
-                    DetailInfoText(title: 'Category', value: category),
-                  ],
+              ),
+              errorWidget: (context, url, error) => Container(
+                color: Colors.grey[200],
+                child: Icon(
+                  Icons.image_not_supported,
+                  color: Colors.grey[400],
+                  size: 40.w,
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+
+        // Details Card (attached below image)
+        Container(
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+            vertical: 20.h,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(12.r),
+              bottomRight: Radius.circular(12.r),
+            ),
+            border: Border.all(
+              width: 0.5,
+              color: AppColors.border.withOpacity(0.4),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: _buildCardContent(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCardContent() {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isTablet = constraints.maxWidth > 600;
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Title
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: isTablet ? 20.sp : 18.sp,
+                fontWeight: FontWeight.w600,
+                color: AppColors.text,
+              ),
+            ),
+            SizedBox(height: isTablet ? 20.h : 16.h),
+
+            // Content Grid
+            if (isTablet)
+              _buildTabletLayout()
+            else
+              _buildMobileLayout(),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildMobileLayout() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        DetailInfoText(title: 'Location', value: location),
+        SizedBox(height: 12.h),
+        DetailInfoText(title: 'Pastor', value: pastor),
+        SizedBox(height: 12.h),
+        DetailInfoText(title: 'Sponsor', value: sponsor),
+        SizedBox(height: 12.h),
+        DetailInfoText(
+            title: 'Established',
+            value: '${establish.year}'
+        ),
+        SizedBox(height: 12.h),
+        DetailInfoText(title: 'Category', value: category),
+      ],
+    );
+  }
+
+  Widget _buildTabletLayout() {
+    return Column(
+      children: [
+        // First Row
+        Row(
+          children: [
+            Expanded(
+              child: DetailInfoText(title: 'Location', value: location),
+            ),
+            SizedBox(width: 24.w),
+            Expanded(
+              child: DetailInfoText(title: 'Pastor', value: pastor),
+            ),
+          ],
+        ),
+        SizedBox(height: 16.h),
+
+        // Second Row
+        Row(
+          children: [
+            Expanded(
+              child: DetailInfoText(title: 'Sponsor', value: sponsor),
+            ),
+            SizedBox(width: 24.w),
+            Expanded(
+              child: DetailInfoText(
+                  title: 'Established',
+                  value: '${establish.year}'
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 16.h),
+
+        // Third Row
+        DetailInfoText(title: 'Category', value: category),
+      ],
     );
   }
 }

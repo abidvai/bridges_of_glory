@@ -4,6 +4,8 @@ import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:flutter/services.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class WelcomingInfoScreen extends StatelessWidget {
   const WelcomingInfoScreen({super.key});
@@ -23,7 +25,7 @@ class WelcomingInfoScreen extends StatelessWidget {
                     'Walking Witness is a nonprofit platform that connects donors in the United States with Village Leaders in rural Uganda. These leaders support 20–30 families who may farm, raise livestock, or run small businesses. Donors can fund a project or adopt a family, helping create sustainable growth and support for the community.',
                 onTap: () {},
                 showMovement: true,
-                url: 'https://www.youtube.com/watch?v=dGiW5_m4Ihc',
+                url: 'https://www.youtube.com/watch?v=SVP6gG198Dw',
               ),
             ),
           ],
@@ -41,3 +43,5 @@ class WelcomingInfoScreen extends StatelessWidget {
     );
   }
 }
+
+

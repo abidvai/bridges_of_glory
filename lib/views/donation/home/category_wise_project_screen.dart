@@ -61,7 +61,10 @@ class _CategoryWiseProjectScreenState extends State<CategoryWiseProjectScreen> {
               children: [
                 ...donerHomeController.categoryProjectList.map((item) {
                   return Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5.h),
+                    padding: EdgeInsets.symmetric(
+                      vertical: 5.h,
+                      horizontal: 20.w,
+                    ),
                     child: ShowingCard(
                       image: item.coverImage ?? '',
                       title: item.title ?? 'title',

@@ -45,7 +45,7 @@ class ShowingCard extends StatelessWidget {
                     ? CachedNetworkImage(
                         imageUrl: image,
                         width: 104.w,
-                        // height: 110.h,
+                        height: 110.h,
                         fit: BoxFit.cover,
                       )
                     : Image.asset(image),

@@ -46,7 +46,7 @@ class AdoptDetailScreen extends StatelessWidget {
                         pastor: details.pastorName ?? 'pastor name',
                         sponsor: details.sponsorName ?? 'sponsor name',
                         establish: details.establishedDate ?? DateTime.now(),
-                        category: details.category?.name ?? 'category name',
+                        category: details.category.name ?? 'category name',
                       ),
 
                       SizedBox(height: 32.h),

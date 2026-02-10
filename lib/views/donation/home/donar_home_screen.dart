@@ -166,7 +166,7 @@ class DonerHomeScreen extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 335.w,
+          // width: 335.w,
           height: 119.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.r),
@@ -177,23 +177,24 @@ class DonerHomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Assets.images.appLogo2.image(),
+                  Assets.images.appLogo2.image(width: 250.w, fit: BoxFit.cover),
                   SizedBox(height: 8.h),
                   Text(
                     '#BecomeTheMovement',
                     style: Theme.of(context).textTheme.bodyLarge,
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
-              SizedBox(width: 14.w),
-              Assets.images.jar.image(
-                width: 116.w,
-                height: 82.h,
-                fit: BoxFit.cover,
-              ),
+              // SizedBox(width: 14.w),
+              // Assets.images.jar.image(
+              //   width: 116.w,
+              //   height: 82.h,
+              //   fit: BoxFit.cover,
+              // ),
             ],
           ),
         ),

@@ -13,14 +13,21 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Row(
+        mainAxisSize: MainAxisSize.max,
         children: [
           AppBackButton(),
           Spacer(),
-          Center(
-            child: Text(text, style: Theme.of(context).textTheme.titleMedium),
-          ),
-          Spacer(),
-          Opacity(opacity: 0, child: AppBackButton()),
+          // Expanded(
+          //   child: Center(
+          //     child: Text(
+          //       text,
+          //       style: Theme.of(context).textTheme.titleMedium,
+          //       maxLines: 1,
+          //       overflow: TextOverflow.ellipsis,
+          //     ),
+          //   ),
+          // ),
+          // Spacer()
         ],
       ),
     );
@@ -29,4 +36,3 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(58.h);
 }
-
