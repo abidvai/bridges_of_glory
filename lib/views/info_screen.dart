@@ -9,8 +9,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../core/common_widgets/primary_button.dart';
-import '../core/route/app_routes.dart';
-import '../utils/constant/color.dart';
 import 'donation/library/library_screen.dart';
 
 class InfoScreen extends StatefulWidget {

@@ -73,7 +73,14 @@ class BoardingPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        image.image(width: 335.w, height: 218.h, fit: BoxFit.cover),
+        ClipRRect(
+          borderRadius: BorderRadiusGeometry.circular(10.r),
+          child: image.image(
+            width: double.infinity,
+            height: 218.h,
+            fit: BoxFit.cover,
+          ),
+        ),
         SizedBox(height: 85.h),
         Text(
           title,

@@ -249,7 +249,7 @@ class _InfoWidgetState extends State<InfoWidget> {
                           title: 'Mail Address',
                           value: 'info@walkingwitness.org',
                           path: Assets.icons.mail.path,
-                          urlScheme: 'mailto:info@walkingwitness.org',
+                          urlScheme: 'mailto:info.walkingwitness@gmail.com',
                         ),
                       ],
 

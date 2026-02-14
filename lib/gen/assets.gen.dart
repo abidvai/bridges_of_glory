@@ -207,6 +207,18 @@ class $AssetsImagesGen {
   AssetGenImage get onboarding3 =>
       const AssetGenImage('assets/images/onboarding_3.png');
 
+  /// File path: assets/images/onboarding_client_1.jpg
+  AssetGenImage get onboardingClient1 =>
+      const AssetGenImage('assets/images/onboarding_client_1.jpg');
+
+  /// File path: assets/images/onboarding_client_2.png
+  AssetGenImage get onboardingClient2 =>
+      const AssetGenImage('assets/images/onboarding_client_2.png');
+
+  /// File path: assets/images/onboarding_client_3.jpg
+  AssetGenImage get onboardingClient3 =>
+      const AssetGenImage('assets/images/onboarding_client_3.jpg');
+
   /// File path: assets/images/park.png
   AssetGenImage get park => const AssetGenImage('assets/images/park.png');
 
@@ -261,6 +273,9 @@ class $AssetsImagesGen {
     onboarding1,
     onboarding2,
     onboarding3,
+    onboardingClient1,
+    onboardingClient2,
+    onboardingClient3,
     park,
     pig,
     pigFarm,

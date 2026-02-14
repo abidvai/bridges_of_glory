@@ -1,6 +1,7 @@
 import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../model/onboarding_data_model.dart';
 
@@ -10,6 +11,7 @@ class OnboardingController extends GetxController {
 
   void next() {
     if (currentPage.value == pages.length - 1) {
+      saveOnboardingSeen();
       Get.offAllNamed(AppRoutes.welcoming);
     }
     pageController.nextPage(
@@ -20,19 +22,25 @@ class OnboardingController extends GetxController {
 
   List<OnboardingDataModel> pages = [
     OnboardingDataModel(
-      image: Assets.images.onboarding1,
-      title: 'Choose local and empower small businesses to succeed.',
-    ),
-    OnboardingDataModel(
-      image: Assets.images.onboarding2,
-      title: 'Every purchase contributes to something meaningful',
-    ),
-    OnboardingDataModel(
-      image: Assets.images.onboarding3,
+      image: Assets.images.onboardingClient1,
       title:
-          'Make a difference—purchase an item that will be passed on to someone in need.',
+          'This app is a tool to help answer the command of the great Commission - making disciples throught the world',
+    ),
+    OnboardingDataModel(
+      image: Assets.images.onboardingClient2,
+      title: 'Every Empowerment project contributes to improving communities',
+    ),
+    OnboardingDataModel(
+      image: Assets.images.onboardingClient3,
+      title:
+          'Become the Movement: You are invited to take part in this soul-winnig strategy',
     ),
   ];
+
+  Future<void> saveOnboardingSeen() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('seen_onboarding', true);
+  }
 
   @override
   void onClose() {

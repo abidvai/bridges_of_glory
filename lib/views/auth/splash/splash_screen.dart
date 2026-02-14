@@ -4,6 +4,7 @@ import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:bridges_of_glory/utils/helper/app_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -74,8 +75,10 @@ class _SplashScreenState extends State<SplashScreen>
 
   void isLogin() async {
     final token = await AppHelper.instance.getAccessToken();
+    final prefs = await SharedPreferences.getInstance();
+    final isOnboarding = prefs.getBool("seen_onboarding");
 
-    if (token != null) {
+    if (token != null || isOnboarding != false) {
       Get.offAllNamed(AppRoutes.donationBottomNav);
     } else {
       Get.offNamed(AppRoutes.onboardingScreen);
