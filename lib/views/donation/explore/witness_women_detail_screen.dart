@@ -13,6 +13,7 @@ import '../../../core/common_widgets/primary_button.dart';
 import '../../../core/route/app_routes.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../utils/formate_date.dart';
+import '../../auth/login/controller/login_controller.dart';
 
 class WitnessWomenDetailScreen extends StatelessWidget {
   final ProjectDetailsModel details;
@@ -22,36 +23,35 @@ class WitnessWomenDetailScreen extends StatelessWidget {
   final WitnessWomenController witnessWomenController =
       Get.find<WitnessWomenController>();
 
-  // var isVerify = false;
+  final LoginController controller = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.surfaceBg,
-      appBar: AppTopBar(text: details.title ?? 'title'),
+      appBar: AppTopBar(text: details.title),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 20.h),
               DetailTopCard(
-                image:
-                    details.coverImage ??
-                    'http://10.10.12.62:8000/media/projects/covers/Rectangle_4_gwWg3fv.png',
-                title: details.title ?? 'title',
-                location: details.location ?? 'location',
-                pastor: details.pastorName ?? 'pastor name',
-                sponsor: details.sponsorName ?? 'sponsor name',
-                category: details.category?.name ?? 'category',
-                establish: details.establishedDate ?? DateTime.now(),
+                image: details.coverImage,
+                title: details.title,
+                location: details.location,
+                pastor: details.pastorName,
+                sponsor: details.sponsorName,
+                category: details.category.name,
+                establish: details.establishedDate,
               ),
 
               SizedBox(height: 32.h),
               Text('Stories', style: Theme.of(context).textTheme.titleSmall),
               SizedBox(height: 12.h),
               Text(
-                details.projectStories ?? 'project stories',
+                details.projectStories,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   letterSpacing: 0.8,
                   wordSpacing: 1.2,
@@ -75,7 +75,7 @@ class WitnessWomenDetailScreen extends StatelessWidget {
               ),
               SizedBox(height: 8.h),
               Text(
-                details.recentUpdates ?? 'recent update',
+                details.recentUpdates,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   letterSpacing: 0.8,
                   wordSpacing: 1.2,
@@ -90,7 +90,7 @@ class WitnessWomenDetailScreen extends StatelessWidget {
               ),
               SizedBox(height: 12.h),
               Text(
-                details.impact ?? 'impact',
+                details.impact,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   letterSpacing: 0.8,
                   wordSpacing: 1.2,
@@ -117,9 +117,12 @@ class WitnessWomenDetailScreen extends StatelessWidget {
                           title: Text('\$${item.amount}'),
                           value: item.amount,
                           groupValue:
-                              witnessWomenController.selectedSupport.value,
+                              witnessWomenController.selectedSupportValue.value,
                           onChanged: (val) {
-                            witnessWomenController.selectedSupport.value = val!;
+                            witnessWomenController.selectedSupportValue.value =
+                                val!;
+                            witnessWomenController.selectedSupportTitle.value =
+                                'pastor';
                           },
                           activeColor: AppColors.red,
                         );
@@ -142,9 +145,12 @@ class WitnessWomenDetailScreen extends StatelessWidget {
                           ),
                           value: item.amount,
                           groupValue:
-                              witnessWomenController.selectedSupport.value,
+                              witnessWomenController.selectedSupportValue.value,
                           onChanged: (val) {
-                            witnessWomenController.selectedSupport.value = val!;
+                            witnessWomenController.selectedSupportValue.value =
+                                val!;
+                            witnessWomenController.selectedSupportTitle.value =
+                                'livestock';
                           },
                           activeColor: AppColors.red,
                         );
@@ -164,9 +170,12 @@ class WitnessWomenDetailScreen extends StatelessWidget {
                           title: Text('\$${item.amount}'),
                           value: item.amount,
                           groupValue:
-                              witnessWomenController.selectedSupport.value,
+                              witnessWomenController.selectedSupportValue.value,
                           onChanged: (val) {
-                            witnessWomenController.selectedSupport.value = val!;
+                            witnessWomenController.selectedSupportValue.value =
+                                val!;
+                            witnessWomenController.selectedSupportTitle.value =
+                                'other';
                           },
                           activeColor: AppColors.red,
                         );
@@ -183,71 +192,92 @@ class WitnessWomenDetailScreen extends StatelessWidget {
       ),
       bottomSheet: Padding(
         padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-        child: PrimaryButton(
-          // text : isVerify ? 'Sponsor' : 'Click to Sponsor'
-          text: 'Click to Sponsor',
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  backgroundColor: AppColors.surfaceBg,
-                  title: Text(
-                    'Check your email',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Center(
-                        child: Text(
-                          'Please enter the 4-digit code we sent to you to view the price',
-                          textAlign: TextAlign.center,
-                        ),
+        child: Obx(() {
+          return PrimaryButton(
+            text: 'Click to Support this Village',
+            loading: witnessWomenController.isLoading.value,
+            onTap: () async {
+              final ok = await witnessWomenController.getOtp();
+
+              if (ok) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      backgroundColor: AppColors.surfaceBg,
+                      title: Text(
+                        'Check your email',
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      SizedBox(height: 6.h),
-                      Text(
-                        'example@gmail.com',
-                        style: TextStyle(color: AppColors.red),
-                        textAlign: TextAlign.center,
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Center(
+                            child: Text(
+                              'Please enter the four-digit code we sent to you to view the price',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          SizedBox(height: 6.h),
+                          Text(
+                            controller.emailController.text,
+                            style: TextStyle(color: AppColors.red),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(height: 20.h),
+                          OtpTextField(
+                            numberOfFields: 4,
+                            cursorColor: AppColors.text,
+                            fillColor: AppColors.surface,
+                            filled: true,
+                            focusedBorderColor: AppColors.red,
+                            enabledBorderColor: AppColors.border,
+                            showFieldAsBox: true,
+                            borderRadius: BorderRadius.circular(12.r),
+                            fieldWidth: 48.w,
+                            borderWidth: 1.5,
+                            fieldHeight: 48.w,
+                            textStyle: TextStyle(
+                              color: AppColors.text,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            onCodeChanged: (String code) {},
+                            onSubmit: (String verificationCode) {
+                              witnessWomenController.otp = verificationCode;
+                            },
+                          ),
+                          SizedBox(height: 32.h),
+                          Obx(() {
+                            return PrimaryButton(
+                              text: 'verify',
+                              loading: witnessWomenController.isLoading.value,
+                              onTap: () async {
+                                final amount = double.parse(
+                                  witnessWomenController
+                                      .selectedSupportValue
+                                      .value,
+                                );
+                                await witnessWomenController.submitOtp(
+                                  details.id,
+                                  details.title,
+                                  witnessWomenController
+                                      .selectedSupportTitle
+                                      .value,
+                                  amount,
+                                );
+                              },
+                            );
+                          }),
+                        ],
                       ),
-                      SizedBox(height: 20.h),
-                      OtpTextField(
-                        numberOfFields: 4,
-                        cursorColor: AppColors.text,
-                        fillColor: AppColors.surface,
-                        filled: true,
-                        focusedBorderColor: AppColors.red,
-                        enabledBorderColor: AppColors.border,
-                        showFieldAsBox: true,
-                        borderRadius: BorderRadius.circular(12.r),
-                        fieldWidth: 48.w,
-                        borderWidth: 1.5,
-                        fieldHeight: 48.w,
-                        textStyle: TextStyle(
-                          color: AppColors.text,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        onCodeChanged: (String code) {},
-                        onSubmit: (String verificationCode) {
-                          // forgotController.otp = verificationCode;
-                        },
-                      ),
-                      SizedBox(height: 32.h),
-                      PrimaryButton(
-                        text: 'verify',
-                        onTap: () {
-                          Get.toNamed(AppRoutes.paymentScreen);
-                        },
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 );
-              },
-            );
-          },
-        ),
+              }
+            },
+          );
+        }),
       ),
     );
   }

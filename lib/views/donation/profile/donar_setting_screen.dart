@@ -5,6 +5,7 @@ import 'package:bridges_of_glory/core/common_widgets/image_uploader.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
 import 'package:bridges_of_glory/gen/assets.gen.dart';
 import 'package:bridges_of_glory/utils/helper/app_helper.dart';
+import 'package:bridges_of_glory/views/auth/signup/controller/signup_Controller.dart';
 import 'package:bridges_of_glory/views/donation/profile/controller/profile_controller.dart';
 import 'package:bridges_of_glory/views/donation/profile/notification_screen.dart';
 import 'package:bridges_of_glory/views/donation/profile/privacy_screen.dart';
@@ -44,7 +45,8 @@ class DonerSettingScreen extends StatelessWidget {
                 return ImageUploaderVOne(
                   currentImage:
                       _donerProfileController.profileInfo.value?.data?.avatar,
-                  defaultImage: _donerProfileController.profileInfo.value?.data?.avatar,
+                  defaultImage:
+                      _donerProfileController.profileInfo.value?.data?.avatar,
                   onImageSelected: (file) {
                     _donerProfileController.selectedImage.value = file;
                     if (_donerProfileController.selectedImage.value != null) {
@@ -190,6 +192,7 @@ class DonerSettingScreen extends StatelessWidget {
                     height: 48.h,
                     onTap: () async {
                       AppHelper.instance.clearAllPrefValue();
+                      Get.delete<SignupController>();
                       Get.offAllNamed(AppRoutes.login);
                     },
                     backgroundColor: AppColors.text.withValues(alpha: 0.9),

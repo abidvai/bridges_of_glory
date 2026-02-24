@@ -33,6 +33,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/cash.svg
   SvgGenImage get cash => const SvgGenImage('assets/icons/cash.svg');
 
+  /// File path: assets/icons/cash_app.svg
+  SvgGenImage get cashApp => const SvgGenImage('assets/icons/cash_app.svg');
+
   /// File path: assets/icons/exlore.svg
   SvgGenImage get exlore => const SvgGenImage('assets/icons/exlore.svg');
 
@@ -87,6 +90,7 @@ class $AssetsIconsGen {
     bookNoFIll,
     call,
     cash,
+    cashApp,
     exlore,
     fillHome,
     fillLibrary,

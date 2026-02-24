@@ -75,8 +75,8 @@ class AuthService {
         final loginModel = LoginModel.fromJson(response.data);
         return ApiResponse.success(loginModel);
       } else {
-        final json = jsonDecode(response.error!);
-        final errorMessage = json['message'];
+        // final json = jsonDecode(response.error!);
+        final errorMessage = response.error;
 
         return ApiResponse.error(errorMessage!);
       }

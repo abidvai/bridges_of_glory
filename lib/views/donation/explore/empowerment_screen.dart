@@ -222,10 +222,10 @@ class _EmpowermentScreenState extends State<EmpowermentScreen> {
 
   Future<void> _handleProjectTap(dynamic item) async {
     try {
-      Get.dialog(
-        Center(child: CircularProgressIndicator()),
-        barrierDismissible: false,
-      );
+      // Get.dialog(
+      //   Center(child: CircularProgressIndicator()),
+      //   barrierDismissible: false,
+      // );
 
       await empowermentController.fetchProjectDetails(item.id ?? 0);
 

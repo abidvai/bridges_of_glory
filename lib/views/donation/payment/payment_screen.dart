@@ -9,14 +9,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
-class PaymentScreen extends StatelessWidget {
-  PaymentScreen({super.key});
+class PaymentScreen extends StatefulWidget {
+  const PaymentScreen({super.key});
 
+  @override
+  State<PaymentScreen> createState() => _PaymentScreenState();
+}
+
+class _PaymentScreenState extends State<PaymentScreen> {
+  late WebViewController controller;
   final PaymentController paymentController = Get.put(PaymentController());
+
+  Future<void> startPayment(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch payment page';
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final data = Get.arguments as Map;
+
+    print(data['amount']);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.surfaceBg,
@@ -33,7 +58,6 @@ class PaymentScreen extends StatelessWidget {
                   children: [
                     Container(
                       width: 335.w,
-                      height: 215.h,
                       padding: EdgeInsets.symmetric(
                         horizontal: 16.w,
                         vertical: 16.h,
@@ -57,13 +81,13 @@ class PaymentScreen extends StatelessWidget {
                             value: 'stripe',
                             selectedPayment: paymentController.selectedPayment,
                           ),
-                          Divider(),
-                          PaymentOption(
-                            icon: Assets.icons.cash.svg(),
-                            title: 'Cash App',
-                            value: 'cashApp',
-                            selectedPayment: paymentController.selectedPayment,
-                          ),
+                          // Divider(),
+                          // PaymentOption(
+                          //   icon: Assets.icons.cashApp.svg(),
+                          //   title: 'Cash App',
+                          //   value: 'cashApp',
+                          //   selectedPayment: paymentController.selectedPayment,
+                          // ),
                         ],
                       ),
                     ),
@@ -82,13 +106,25 @@ class PaymentScreen extends StatelessWidget {
                     SizedBox(height: 12.h),
                     Align(
                       alignment: Alignment.centerRight,
-                      child: PrimaryButton(
-                        text: 'Send',
-                        width: 100.w,
-                        height: 40.h,
-                        backgroundColor: AppColors.text,
-                        onTap: () {},
-                      ),
+                      child: Obx(() {
+                        return PrimaryButton(
+                          text: 'Send',
+                          width: 100.w,
+                          height: 40.h,
+                          loading: paymentController.isLoading2.value,
+                          backgroundColor: AppColors.text,
+                          onTap: () async {
+                            final response = await paymentController
+                                .sendEmailPay(
+                                  data['projectId'],
+                                  paymentController.noticeController.text,
+                                );
+                            if (response) {
+                              Get.offAllNamed(AppRoutes.donationBottomNav);
+                            }
+                          },
+                        );
+                      }),
                     ),
                   ],
                 ),
@@ -99,12 +135,23 @@ class PaymentScreen extends StatelessWidget {
       ),
       bottomSheet: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-        child: PrimaryButton(
-          text: 'Next',
-          onTap: () {
-            Get.toNamed(AppRoutes.paymentSuccessScreen);
-          },
-        ),
+        child: Obx(() {
+          return PrimaryButton(
+            loading: paymentController.isLoading.value,
+            text: 'Next',
+            onTap: () async {
+              final url = await paymentController.payment(
+                data['projectId'],
+                data['projectName'],
+                data['supportType'],
+                data['amount'],
+              );
+              if (url != null) {
+                startPayment(url);
+              }
+            },
+          );
+        }),
       ),
     );
   }

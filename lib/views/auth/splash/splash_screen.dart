@@ -75,13 +75,18 @@ class _SplashScreenState extends State<SplashScreen>
 
   void isLogin() async {
     final token = await AppHelper.instance.getAccessToken();
-    final prefs = await SharedPreferences.getInstance();
-    final isOnboarding = prefs.getBool("seen_onboarding");
+    print('Access Token: $token');
 
-    if (token != null || isOnboarding != false) {
+    final prefs = await SharedPreferences.getInstance();
+    final isOnboarding = prefs.getBool("seen_onboarding") ?? false;
+    print('Seen onboarding: $isOnboarding');
+
+    if (token != null) {
       Get.offAllNamed(AppRoutes.donationBottomNav);
-    } else {
+    } else if (!isOnboarding) {
       Get.offNamed(AppRoutes.onboardingScreen);
+    } else {
+      Get.offNamed(AppRoutes.login);
     }
   }
 

@@ -41,6 +41,7 @@ dependencies:
   skeletonizer: ^2.1.2
   syncfusion_flutter_pdfviewer: ^32.1.23
   youtube_player_flutter: ^9.1.3
+  webview_flutter: ^4.13.1
 
 
 dev_dependencies:

@@ -53,9 +53,9 @@ class AppHelper {
     return pref.getString('access_token');
   }
 
-  Future<bool> setRefToken(String refresh_token) async {
+  Future<bool> setRefToken(String refreshToken) async {
     final pref = await SharedPreferences.getInstance();
-    return pref.setString('refresh_token', refresh_token);
+    return pref.setString('refresh_token', refreshToken);
   }
 
   Future<String?>getRefToken() async {

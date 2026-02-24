@@ -1,6 +1,8 @@
 import 'package:bridges_of_glory/core/common_widgets/app_top_bar.dart';
 import 'package:bridges_of_glory/core/common_widgets/primary_button.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
+import 'package:bridges_of_glory/views/auth/login/controller/login_controller.dart';
+import 'package:bridges_of_glory/views/auth/signup/controller/signup_Controller.dart';
 import 'package:bridges_of_glory/views/donation/explore/controller/adopt_project_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
@@ -21,6 +23,8 @@ class AdoptDetailScreen extends StatelessWidget {
   final AdoptProjectController adoptProjectController =
       Get.find<AdoptProjectController>();
 
+  final LoginController controller = Get.find<LoginController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,14 +43,13 @@ class AdoptDetailScreen extends StatelessWidget {
                     children: [
                       DetailTopCard(
                         image:
-                            details.coverImage ??
-                            'https://walkingwitness.org/wp-content/uploads/2025/02/Black-Ivory-Classy-Feminine-Real-Estate-Logo.png',
-                        title: details.title ?? 'title',
-                        location: details.location ?? 'location',
-                        pastor: details.pastorName ?? 'pastor name',
-                        sponsor: details.sponsorName ?? 'sponsor name',
-                        establish: details.establishedDate ?? DateTime.now(),
-                        category: details.category.name ?? 'category name',
+                            details.coverImage,
+                        title: details.title,
+                        location: details.location,
+                        pastor: details.pastorName,
+                        sponsor: details.sponsorName,
+                        establish: details.establishedDate,
+                        category: details.category.name,
                       ),
 
                       SizedBox(height: 32.h),
@@ -56,7 +59,7 @@ class AdoptDetailScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 12.h),
                       Text(
-                        details.projectStories ?? 'project story',
+                        details.projectStories,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           letterSpacing: 0.8,
                           wordSpacing: 1.2,
@@ -80,7 +83,7 @@ class AdoptDetailScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 8.h),
                       Text(
-                        details.recentUpdates ?? 'recent update',
+                        details.recentUpdates,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           letterSpacing: 0.8,
                           wordSpacing: 1.2,
@@ -95,7 +98,7 @@ class AdoptDetailScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 12.h),
                       Text(
-                        details.impact ?? 'impact so far',
+                        details.impact,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           letterSpacing: 0.8,
                           wordSpacing: 1.2,
@@ -122,13 +125,17 @@ class AdoptDetailScreen extends StatelessWidget {
                                   title: Text('\$${item.amount}'),
                                   value: item.amount,
                                   groupValue: adoptProjectController
-                                      .selectedSupport
+                                      .selectedSupportValue
                                       .value,
                                   onChanged: (val) {
                                     adoptProjectController
-                                            .selectedSupport
+                                            .selectedSupportValue
                                             .value =
                                         val!;
+                                    adoptProjectController
+                                            .selectedSupportTitle
+                                            .value =
+                                        'pastor';
                                   },
                                   activeColor: AppColors.red,
                                 );
@@ -151,13 +158,17 @@ class AdoptDetailScreen extends StatelessWidget {
                                   ),
                                   value: item.amount,
                                   groupValue: adoptProjectController
-                                      .selectedSupport
+                                      .selectedSupportValue
                                       .value,
                                   onChanged: (val) {
                                     adoptProjectController
-                                            .selectedSupport
+                                            .selectedSupportValue
                                             .value =
                                         val!;
+                                    adoptProjectController
+                                            .selectedSupportTitle
+                                            .value =
+                                        'livestock';
                                   },
                                   activeColor: AppColors.red,
                                 );
@@ -177,13 +188,17 @@ class AdoptDetailScreen extends StatelessWidget {
                                   title: Text('\$${item.amount}'),
                                   value: item.amount,
                                   groupValue: adoptProjectController
-                                      .selectedSupport
+                                      .selectedSupportValue
                                       .value,
                                   onChanged: (val) {
                                     adoptProjectController
-                                            .selectedSupport
+                                            .selectedSupportValue
                                             .value =
                                         val!;
+                                    adoptProjectController
+                                            .selectedSupportTitle
+                                            .value =
+                                        'other';
                                   },
                                   activeColor: AppColors.red,
                                 );
@@ -203,70 +218,92 @@ class AdoptDetailScreen extends StatelessWidget {
       ),
       bottomSheet: Padding(
         padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-        child: PrimaryButton(
-          text: 'Click to Support this Village',
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  backgroundColor: AppColors.surfaceBg,
-                  title: Text(
-                    'Check your email',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Center(
-                        child: Text(
-                          'Please enter the four-digit code we sent to you to view the price',
-                          textAlign: TextAlign.center,
-                        ),
+        child: Obx(() {
+          return PrimaryButton(
+            text: 'Click to Support this Village',
+            loading: adoptProjectController.isLoading.value,
+            onTap: () async {
+              final ok = await adoptProjectController.getOtp();
+
+              if (ok) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      backgroundColor: AppColors.surfaceBg,
+                      title: Text(
+                        'Check your email',
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      SizedBox(height: 6.h),
-                      Text(
-                        'example@gmail.com',
-                        style: TextStyle(color: AppColors.red),
-                        textAlign: TextAlign.center,
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Center(
+                            child: Text(
+                              'Please enter the four-digit code we sent to you to view the price',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          SizedBox(height: 6.h),
+                          Text(
+                            controller.emailController.text,
+                            style: TextStyle(color: AppColors.red),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(height: 20.h),
+                          OtpTextField(
+                            numberOfFields: 4,
+                            cursorColor: AppColors.text,
+                            fillColor: AppColors.surface,
+                            filled: true,
+                            focusedBorderColor: AppColors.red,
+                            enabledBorderColor: AppColors.border,
+                            showFieldAsBox: true,
+                            borderRadius: BorderRadius.circular(12.r),
+                            fieldWidth: 48.w,
+                            borderWidth: 1.5,
+                            fieldHeight: 48.w,
+                            textStyle: TextStyle(
+                              color: AppColors.text,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            onCodeChanged: (String code) {},
+                            onSubmit: (String verificationCode) {
+                              adoptProjectController.otp = verificationCode;
+                            },
+                          ),
+                          SizedBox(height: 32.h),
+                          Obx(() {
+                            return PrimaryButton(
+                              text: 'verify',
+                              loading: adoptProjectController.isLoading.value,
+                              onTap: () async {
+                                final amount = double.parse(
+                                  adoptProjectController
+                                      .selectedSupportValue
+                                      .value,
+                                );
+                                await adoptProjectController.submitOtp(
+                                  details.id,
+                                  details.title,
+                                  adoptProjectController
+                                      .selectedSupportTitle
+                                      .value,
+                                  amount,
+                                );
+                              },
+                            );
+                          }),
+                        ],
                       ),
-                      SizedBox(height: 20.h),
-                      OtpTextField(
-                        numberOfFields: 4,
-                        cursorColor: AppColors.text,
-                        fillColor: AppColors.surface,
-                        filled: true,
-                        focusedBorderColor: AppColors.red,
-                        enabledBorderColor: AppColors.border,
-                        showFieldAsBox: true,
-                        borderRadius: BorderRadius.circular(12.r),
-                        fieldWidth: 48.w,
-                        borderWidth: 1.5,
-                        fieldHeight: 48.w,
-                        textStyle: TextStyle(
-                          color: AppColors.text,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        onCodeChanged: (String code) {},
-                        onSubmit: (String verificationCode) {
-                          // forgotController.otp = verificationCode;
-                        },
-                      ),
-                      SizedBox(height: 32.h),
-                      PrimaryButton(
-                        text: 'verify',
-                        onTap: () {
-                          Get.toNamed(AppRoutes.paymentScreen);
-                        },
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 );
-              },
-            );
-          },
-        ),
+              }
+            },
+          );
+        }),
       ),
     );
   }

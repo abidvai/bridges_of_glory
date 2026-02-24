@@ -145,7 +145,7 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Obx(() {
           if (adoptProjectController.isLoading.value) {
-            return Center(child: CircularProgressIndicator());
+            return Center(child: Text(''));
           }
 
           return Row(
@@ -249,10 +249,10 @@ class _AdoptProjectScreenState extends State<AdoptProjectScreen> {
 
   Future<void> _handleProjectTap(dynamic item) async {
     try {
-      Get.dialog(
-        Center(child: CircularProgressIndicator()),
-        barrierDismissible: false,
-      );
+      // Get.dialog(
+      //   Center(child: CircularProgressIndicator()),
+      //   barrierDismissible: false,
+      // );
 
       await adoptProjectController.fetchProjectDetails(item.id ?? 0);
 
