@@ -32,7 +32,7 @@ class AdoptDetailScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            AppTopBar(text: details.title ?? 'title'),
+            AppTopBar(text: details.title),
             SizedBox(height: 14.h),
             Expanded(
               child: SingleChildScrollView(
@@ -42,8 +42,7 @@ class AdoptDetailScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       DetailTopCard(
-                        image:
-                            details.coverImage,
+                        image: details.coverImage,
                         title: details.title,
                         location: details.location,
                         pastor: details.pastorName,
@@ -123,7 +122,7 @@ class AdoptDetailScreen extends StatelessWidget {
                               children: details.pastorSupportPrices.map((item) {
                                 return RadioListTile<String>(
                                   title: Text('\$${item.amount}'),
-                                  value: item.amount,
+                                  value: 'pastor ${item.amount}',
                                   groupValue: adoptProjectController
                                       .selectedSupportValue
                                       .value,
@@ -156,7 +155,7 @@ class AdoptDetailScreen extends StatelessWidget {
                                   title: Text(
                                     '\$${item.amount} ${item.name} (${item.quantity})',
                                   ),
-                                  value: item.amount,
+                                  value: 'livestock ${item.amount}',
                                   groupValue: adoptProjectController
                                       .selectedSupportValue
                                       .value,
@@ -186,7 +185,7 @@ class AdoptDetailScreen extends StatelessWidget {
                               children: details.otherSupports.map((item) {
                                 return RadioListTile<String>(
                                   title: Text('\$${item.amount}'),
-                                  value: item.amount,
+                                  value: 'other ${item.amount}',
                                   groupValue: adoptProjectController
                                       .selectedSupportValue
                                       .value,

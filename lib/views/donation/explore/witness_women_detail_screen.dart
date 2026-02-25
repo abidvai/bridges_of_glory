@@ -115,7 +115,7 @@ class WitnessWomenDetailScreen extends StatelessWidget {
                       children: details.pastorSupportPrices.map((item) {
                         return RadioListTile<String>(
                           title: Text('\$${item.amount}'),
-                          value: item.amount,
+                          value: 'pastor ${item.amount}',
                           groupValue:
                               witnessWomenController.selectedSupportValue.value,
                           onChanged: (val) {
@@ -143,7 +143,7 @@ class WitnessWomenDetailScreen extends StatelessWidget {
                           title: Text(
                             '\$${item.amount} ${item.name} (${item.quantity})',
                           ),
-                          value: item.amount,
+                          value: 'livestock ${item.amount}',
                           groupValue:
                               witnessWomenController.selectedSupportValue.value,
                           onChanged: (val) {
@@ -168,7 +168,7 @@ class WitnessWomenDetailScreen extends StatelessWidget {
                       children: details.otherSupports.map((item) {
                         return RadioListTile<String>(
                           title: Text('\$${item.amount}'),
-                          value: item.amount,
+                          value: 'other ${item.amount}',
                           groupValue:
                               witnessWomenController.selectedSupportValue.value,
                           onChanged: (val) {

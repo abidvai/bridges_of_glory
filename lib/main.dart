@@ -2,6 +2,7 @@ import 'package:bridges_of_glory/utils/constant/color.dart';
 import 'package:bridges_of_glory/core/di/app_bindings.dart';
 import 'package:bridges_of_glory/core/route/app_pages.dart';
 import 'package:bridges_of_glory/core/route/app_routes.dart';
+import 'package:bridges_of_glory/views/donation/bottom_nav_donation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -17,10 +18,8 @@ void main() async {
 
   await dotenv.load(fileName: ".env");
 
-    await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
-  
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   runApp(const MyApp());
 }
 
@@ -69,6 +68,16 @@ class MyApp extends StatelessWidget {
         initialRoute: AppRoutes.splashScreen,
         initialBinding: AppBindings(),
         scaffoldMessengerKey: scaffoldMessengerKey,
+        onGenerateRoute: (settings) {
+          final uri = Uri.parse(settings.name ?? '');
+
+          if (uri.path == '/paypal-success') {
+            final paymentToken = uri.queryParameters['token'];
+
+            return MaterialPageRoute(builder: (_) => BottomNavDonation());
+          }
+          return null;
+        },
       ),
     );
   }
